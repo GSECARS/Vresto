@@ -18,13 +18,4 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 
-from vresto.controller import MainController
-from vresto import _version
-
-__version__ = _version.get_versions()['version']
-__static_version__ = "0.1.4"
-
-if __version__ == "0+unknown":
-    __version__ = __static_version__
-
-app = MainController()
+from vresto.controller.main_controller import MainController

@@ -18,13 +18,19 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 
-from vresto.controller import MainController
-from vresto import _version
+import sys
+from qtpy.QtWidgets import QApplication
 
-__version__ = _version.get_versions()['version']
-__static_version__ = "0.1.4"
+from vresto.widget import MainWidget
+from vresto.model import MainModel
 
-if __version__ == "0+unknown":
-    __version__ = __static_version__
 
-app = MainController()
+class MainController:
+    def __init__(self) -> None:
+        self._app = QApplication(sys.argv)
+        self._model = MainModel()
+        self._widget = MainWidget()
+
+    def run(self, version: str) -> None:
+        self._widget.display(version=version)
+        sys.exit(self._app.exec())

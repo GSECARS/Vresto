@@ -18,13 +18,25 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 
-from vresto.controller import MainController
-from vresto import _version
+from qtpy.QtWidgets import QMainWindow, QTabWidget
 
-__version__ = _version.get_versions()['version']
-__static_version__ = "0.1.4"
 
-if __version__ == "0+unknown":
-    __version__ = __static_version__
+class MainWidget(QMainWindow):
+    """The main application widget."""
 
-app = MainController()
+    _title = f"Vresto"
+
+    def __init__(self) -> None:
+        super(MainWidget, self).__init__()
+
+        self._tab_widget = QTabWidget()
+
+        # Enable the status bar
+        self.statusBar()
+
+    def display(self, version: str) -> None:
+
+        # Set the title
+        self.setWindowTitle(f"{self._title} {version}")
+
+        self.showNormal()

@@ -19,7 +19,24 @@
 # ----------------------------------------------------------------------
 
 import os
+from dataclasses import dataclass, field
 
-assets_path = os.path.join(os.getcwd(), "vresto/assets")
-qss_path = os.path.join(assets_path, "qss")
-icon_path = os.path.join(assets_path, "icons")
+
+@dataclass(frozen=True, slots=True)
+class PathModel:
+    _assets_path: str = field(init=False, compare=False, repr=False)
+    _qss_path: str = field(init=False, compare=False, repr=False)
+    _icon_path: str = field(init=False, compare=False, repr=False)
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "_assets_path", os.path.join(os.getcwd(), "vresto/assets"))
+        object.__setattr__(self, "_qss_path", os.path.join(self._assets_path, "qss"))
+        object.__setattr__(self, "_icon_path", os.path.join(self._assets_path, "icons"))
+
+    @property
+    def qss_path(self) -> str:
+        return self._qss_path
+
+    @property
+    def icon_path(self) -> str:
+        return self._icon_path

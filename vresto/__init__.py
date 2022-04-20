@@ -19,7 +19,6 @@
 # ----------------------------------------------------------------------
 
 from vresto.controller import MainController
-from vresto._paths import qss_path, icon_path
 from vresto import _version
 
 __version__ = _version.get_versions()['version']

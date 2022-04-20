@@ -29,7 +29,7 @@ class MainController:
     def __init__(self) -> None:
         self._app = QApplication(sys.argv)
         self._model = MainModel()
-        self._widget = MainWidget()
+        self._widget = MainWidget(self._model.paths)
 
     def run(self, version: str) -> None:
         self._widget.display(version=version)

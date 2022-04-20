@@ -18,7 +18,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 
-from vresto.model import EpicsModel, CorrectionsModel
+from vresto.model import EpicsModel, CorrectionsModel, PathModel
 
 
 class MainModel:
@@ -26,3 +26,4 @@ class MainModel:
     def __init__(self):
         self.epics = EpicsModel()
         self.corrections = CorrectionsModel()
+        self.paths = PathModel()

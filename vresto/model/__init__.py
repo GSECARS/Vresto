@@ -18,4 +18,5 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 
+from vresto.model.pv_model import PVModel, DoubleValuePV, StringValuePV
 from vresto.model.main_model import MainModel

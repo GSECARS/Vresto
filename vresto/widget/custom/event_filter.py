@@ -18,6 +18,20 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 
-from vresto.widget.custom.event_filter import EventFilter
-from vresto.widget.custom.msg_box import MsgBox
-from vresto.widget.custom.q_line import QLine
+from qtpy.QtCore import QObject, QEvent
+from qtpy.QtWidgets import QLineEdit
+
+from vresto.model import DoubleValuePV
+
+
+class EventFilter(QObject):
+    def __init__(self, stage: DoubleValuePV) -> None:
+        super(EventFilter, self).__init__()
+        self.stage = stage
+
+    def eventFilter(self, widget: QLineEdit, event: QEvent):
+        if event.type() == QEvent.FocusOut:
+            if not self.stage.moving:
+                widget.setText(str("{0:.4f}".format(self.stage.readback)))
+
+        return False

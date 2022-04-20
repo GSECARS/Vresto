@@ -20,6 +20,8 @@
 
 
 class CorrectionsModel:
+    """Base correction model. It provides methods to get diamond thickness, position and real position."""
+
     _diamond_index: float = 2.4195
     _fused_silica_index: float = 1.459
     _moissanite_index: float = 2.67
@@ -27,11 +29,15 @@ class CorrectionsModel:
 
     _abort_status: bool = False
 
-    def get_diamond_thickness(self, virtual_position: float, diamond_position: float) -> float:
+    def get_diamond_thickness(
+        self, virtual_position: float, diamond_position: float
+    ) -> float:
         """Calculates and returns the diamond thickness."""
         return round((diamond_position - virtual_position) * self._refraction_index, 4)
 
-    def get_diamond_position(self, virtual_position: float, diamond_thickness: float) -> float:
+    def get_diamond_position(
+        self, virtual_position: float, diamond_thickness: float
+    ) -> float:
         """Calculates and returns the diamond position."""
         diamond_thickness /= self._refraction_index
         return round(virtual_position + diamond_thickness + self._refraction_index, 4)

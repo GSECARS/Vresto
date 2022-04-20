@@ -17,7 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
-import datetime
+
 import sys
 import time
 from qtpy.QtWidgets import QApplication
@@ -53,7 +53,8 @@ class MainController(QObject):
         self._widget.lbl_epics_status.setEnabled(status)
 
     def _check_epics_connection(self) -> None:
-
+        """Checks the epics connection every 5 minutes."""
+        #
         if self._time_started is None:
             self._time_started = time.time()
             self._model.epics.connect()

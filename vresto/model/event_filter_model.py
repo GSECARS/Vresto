@@ -25,11 +25,14 @@ from vresto.model import DoubleValuePV
 
 
 class EventFilterModel(QObject):
+    """Custom event filter model to be used for focus out events."""
+
     def __init__(self, stage: DoubleValuePV) -> None:
         super(EventFilterModel, self).__init__()
         self.stage = stage
 
-    def eventFilter(self, widget: QLineEdit, event: QEvent):
+    def eventFilter(self, widget: QLineEdit, event: QEvent) -> bool:
+        # Make available only for FocusOut events.
         if event.type() == QEvent.FocusOut:
             if not self.stage.moving:
                 widget.setText(str("{0:.4f}".format(self.stage.readback)))

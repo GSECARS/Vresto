@@ -22,6 +22,7 @@ from vresto.model import EpicsModel, CorrectionsModel, PathModel
 
 
 class MainModel:
+    """Base model class that creates necessary sub-models."""
 
     def __init__(self):
         self.epics = EpicsModel()

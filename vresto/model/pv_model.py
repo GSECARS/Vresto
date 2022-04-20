@@ -70,7 +70,7 @@ class PVModel(ABC):
         camonitor_clear(self._rbv_string)
 
 
-@dataclass(frozen=False, slots=True)
+@dataclass(slots=True)
 class DoubleValuePV(PVModel):
     """Used to interact with PVs that work with floats."""
 
@@ -123,7 +123,7 @@ class DoubleValuePV(PVModel):
         self.set_low_limit(limit=low)
 
 
-@dataclass(frozen=False, slots=True)
+@dataclass(slots=True)
 class StringValuePV(PVModel):
     """Used to interact with PVs that work with strings."""
 

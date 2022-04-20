@@ -40,11 +40,13 @@ class EpicsConnectionError(Exception):
 
 class EpicsConfig(Enum):
     """Empty Enum to be populated with PVs"""
+
     pass
 
 
 @dataclass(frozen=False, slots=True)
 class EpicsModel:
+    """Base epics model, used for testing the connection with all PVs given."""
 
     _connected: bool = field(init=False, compare=False, repr=False, default=False)
 

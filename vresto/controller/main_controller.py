@@ -17,20 +17,58 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
-
+import datetime
 import sys
+import time
 from qtpy.QtWidgets import QApplication
+from qtpy.QtCore import QObject, Signal
 
 from vresto.widget import MainWidget
-from vresto.model import MainModel
+from vresto.model import MainModel, QtWorkerModel
 
 
-class MainController:
+class MainController(QObject):
+    _epics_connection_changed: Signal = Signal(bool)
+
     def __init__(self) -> None:
+        super(MainController, self).__init__()
+
         self._app = QApplication(sys.argv)
         self._model = MainModel()
         self._widget = MainWidget(self._model.paths)
 
+        # Event helpers
+        self._time_started = None
+
+        self._epics_connection_changed.connect(self._update_epics_status_label)
+
+        self._main_worker = QtWorkerModel(self._worker_methods, ())
+        self._main_worker.start()
+
     def run(self, version: str) -> None:
         self._widget.display(version=version)
         sys.exit(self._app.exec())
+
+    def _update_epics_status_label(self, status: bool) -> None:
+        self._widget.lbl_epics_status.setEnabled(status)
+
+    def _check_epics_connection(self) -> None:
+
+        if self._time_started is None:
+            self._time_started = time.time()
+            self._model.epics.connect()
+
+        now = time.time()
+        if now - self._time_started > 300:
+            self._time_started = time.time()
+
+            self._model.epics.connect()
+
+        self._epics_connection_changed.emit(self._model.epics.connected)
+
+    def _worker_methods(self) -> None:
+        while not self._widget.terminated:
+            self._check_epics_connection()
+            time.sleep(0.05)
+
+        self._widget.worker_finished = True

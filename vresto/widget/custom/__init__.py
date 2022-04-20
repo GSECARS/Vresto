@@ -18,6 +18,5 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 
-from vresto.widget.custom.event_filter import EventFilter
 from vresto.widget.custom.msg_box import MsgBox
 from vresto.widget.custom.q_line import QLine

@@ -24,9 +24,9 @@ from qtpy.QtWidgets import QLineEdit
 from vresto.model import DoubleValuePV
 
 
-class EventFilter(QObject):
+class EventFilterModel(QObject):
     def __init__(self, stage: DoubleValuePV) -> None:
-        super(EventFilter, self).__init__()
+        super(EventFilterModel, self).__init__()
         self.stage = stage
 
     def eventFilter(self, widget: QLineEdit, event: QEvent):

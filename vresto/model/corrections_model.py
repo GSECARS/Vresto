@@ -18,6 +18,19 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 
-from vresto.model.corrections_model import CorrectionsModel
-from vresto.model.pv_model import PVModel, DoubleValuePV, StringValuePV
-from vresto.model.main_model import MainModel
+
+class CorrectionsModel:
+
+    _abort_status: bool
+
+    def __init__(self) -> None:
+        self._abort_status = False
+
+    @property
+    def abort_status(self):
+        return self._abort_status
+
+    @abort_status.setter
+    def abort_status(self, value):
+        if isinstance(value, bool):
+            self._abort_status = value

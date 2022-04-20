@@ -24,7 +24,7 @@ from qtpy.QtWidgets import QApplication
 from qtpy.QtCore import QObject, Signal
 
 from vresto.widget import MainWidget
-from vresto.model import MainModel, QtWorkerModel
+from vresto.model import MainModel, QtWorkerModel, IDDModel, ImportExportModel
 
 
 class MainController(QObject):
@@ -37,6 +37,12 @@ class MainController(QObject):
 
         self._app = QApplication(sys.argv)
         self._model = MainModel()
+        self._idd = IDDModel()
+        self._import_export = ImportExportModel(
+            vertical=self._idd.sample_vertical,
+            horizontal=self._idd.sample_horizontal,
+            focus=self._idd.sample_focus
+        )
         self._widget = MainWidget(self._model.paths)
 
         # Event helpers
@@ -82,6 +88,11 @@ class MainController(QObject):
         while not self._widget.terminated:
             self._check_epics_connection()
             time.sleep(0.05)
+
+        # Clear camonitor instances after exiting the loop
+        for pv in self._idd.collection:
+            pv.moving = False
+            del pv
 
         # Set as finished so UI can exit
         self._widget.worker_finished = True

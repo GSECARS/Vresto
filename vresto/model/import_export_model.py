@@ -26,9 +26,9 @@ from vresto.model import DoubleValuePV
 @dataclass(frozen=True)
 class ImportExportModel:
 
-    idd_vertical: DoubleValuePV = field(init=True, compare=False, repr=False)
-    idd_horizontal: DoubleValuePV = field(init=True, compare=False, repr=False)
-    idd_focus: DoubleValuePV = field(init=True, compare=False, repr=False)
+    vertical: DoubleValuePV = field(init=True, compare=False, repr=False)
+    horizontal: DoubleValuePV = field(init=True, compare=False, repr=False)
+    focus: DoubleValuePV = field(init=True, compare=False, repr=False)
 
     def save_correction(
         self,
@@ -41,8 +41,8 @@ class ImportExportModel:
         """Saves the correction positions to a .cor file."""
 
         # IDD Position
-        vertical_position = self.idd_vertical.readback
-        horizontal_position = self.idd_horizontal.readback
+        vertical_position = self.vertical.readback
+        horizontal_position = self.horizontal.readback
 
         with open(filename, "w") as correction_file:
 
@@ -65,6 +65,6 @@ class ImportExportModel:
     def load_position(
         self, vertical_pos: float, horizontal_pos: float, real_pos: float
     ) -> None:
-        self.idd_vertical.move(value=vertical_pos)
-        self.idd_horizontal.move(value=horizontal_pos)
-        self.idd_focus.move(value=real_pos)
+        self.vertical.move(value=vertical_pos)
+        self.horizontal.move(value=horizontal_pos)
+        self.focus.move(value=real_pos)

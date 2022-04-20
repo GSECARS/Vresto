@@ -51,6 +51,8 @@ class MainController(QObject):
             vertical=self._idd.sample_vertical,
             horizontal=self._idd.sample_horizontal,
             focus=self._idd.sample_focus,
+            us_mirror_focus=self._idd.us_mirror_focus,
+            ds_mirror_focus=self._idd.ds_mirror_focus
         )
         self._widget = MainWidget(self._model.paths)
 

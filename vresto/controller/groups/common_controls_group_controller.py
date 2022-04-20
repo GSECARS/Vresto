@@ -26,7 +26,14 @@ from epics import caput
 from qtpy.QtCore import QObject, Signal
 from qtpy.QtWidgets import QFileDialog, QLineEdit
 
-from vresto.model import CorrectionsModel, StringValuePV, DoubleValuePV, ImportExportModel, EpicsModel, EpicsConfig
+from vresto.model import (
+    CorrectionsModel,
+    StringValuePV,
+    DoubleValuePV,
+    ImportExportModel,
+    EpicsModel,
+    EpicsConfig,
+)
 from vresto.widget.groups import CommonControlsGroup
 from vresto.widget.custom import MsgBox
 
@@ -57,8 +64,7 @@ class CommonControlsGroupController(QObject):
         omega_stage: DoubleValuePV,
         xps_stop: DoubleValuePV,
         station_stop: DoubleValuePV,
-        mirror_stop: DoubleValuePV
-
+        mirror_stop: DoubleValuePV,
     ) -> None:
         super(CommonControlsGroupController, self).__init__()
 
@@ -106,13 +112,13 @@ class CommonControlsGroupController(QObject):
             virtual_position = float(self._lne_virtual_position.text())
             real_position = float(self._lne_real_position.text())
         except ValueError:
-            MsgBox(
-                msg="Real and virtual positions are required to save a correction."
-            )
+            MsgBox(msg="Real and virtual positions are required to save a correction.")
             return None
 
         timestamp = datetime.now().strftime("%m.%d.%Y_%H.%M.%S")
-        filepath = os.path.join("\\".join(list(self._path.readback.split("\\")[0:-2])), "Corrections")
+        filepath = os.path.join(
+            "\\".join(list(self._path.readback.split("\\")[0:-2])), "Corrections"
+        )
 
         if not os.path.exists(filepath):
             os.mkdir(filepath)
@@ -120,7 +126,10 @@ class CommonControlsGroupController(QObject):
         filename = os.path.join(filepath, f"correction_{timestamp}.cor")
 
         self._ie_model.save_correction(
-            filename=filename, virtual_position=virtual_position, real_position=real_position, timestamp=timestamp
+            filename=filename,
+            virtual_position=virtual_position,
+            real_position=real_position,
+            timestamp=timestamp,
         )
 
     def _btn_save_as_clicked(self) -> None:
@@ -128,26 +137,29 @@ class CommonControlsGroupController(QObject):
             virtual_position = float(self._lne_virtual_position.text())
             real_position = float(self._lne_real_position.text())
         except ValueError:
-            MsgBox(
-                msg="Real and virtual positions are required to save a correction."
-            )
+            MsgBox(msg="Real and virtual positions are required to save a correction.")
             return None
 
         timestamp = datetime.now().strftime("%m.%d.%Y_%H.%M.%S")
         options = QFileDialog.Options()
-        filepath = os.path.join("\\".join(list(self._path.readback.split("\\")[0:-2])), "Corrections")
+        filepath = os.path.join(
+            "\\".join(list(self._path.readback.split("\\")[0:-2])), "Corrections"
+        )
 
         filename, _ = QFileDialog.getSaveFileName(
             parent=self._widget,
             caption="Save File",
             directory=filepath,
             filter="Correction File (*.cor)",
-            options=options
+            options=options,
         )
 
         if filename:
             self._ie_model.save_correction(
-                filename=filename, virtual_position=virtual_position, real_position=real_position, timestamp=timestamp
+                filename=filename,
+                virtual_position=virtual_position,
+                real_position=real_position,
+                timestamp=timestamp,
             )
         else:
             return None
@@ -157,7 +169,9 @@ class CommonControlsGroupController(QObject):
         dialog = QFileDialog()
         dialog.setFileMode(QFileDialog.ExistingFile)
 
-        filepath = os.path.join("\\".join(list(self._path.readback.split("\\")[0:-2])), "Corrections")
+        filepath = os.path.join(
+            "\\".join(list(self._path.readback.split("\\")[0:-2])), "Corrections"
+        )
         options = QFileDialog.Options()
 
         filename, _ = QFileDialog.getOpenFileName(
@@ -176,6 +190,7 @@ class CommonControlsGroupController(QObject):
                 horizontal_position: float
                 virtual_position: float
                 real_position: float
+                objective_focus: float
 
                 for line in correction_file.readlines():
 
@@ -186,8 +201,15 @@ class CommonControlsGroupController(QObject):
                             horizontal_position = float(line.split("=")[1].strip())
                         if line.startswith("real"):
                             real_position = float(line.split("=")[1].strip())
+                        if line.startswith("objective_focus"):
+                            objective_focus = float(line.split("=")[1].strip())
 
-                if vertical_position is not None and horizontal_position is not None and real_position is not None:
+                if (
+                    vertical_position is not None
+                    and horizontal_position is not None
+                    and real_position is not None
+                    and objective_focus is not None
+                ):
 
                     # Check mirrors
                     if self._us_mirror.moving or self._ds_mirror.moving:
@@ -195,8 +217,8 @@ class CommonControlsGroupController(QObject):
                         return None
 
                     if (
-                            round(self._us_mirror.readback) != self._us_mirror_out
-                            or round(self._ds_mirror.readback) != self._ds_mirror_out
+                        round(self._us_mirror.readback) != self._us_mirror_out
+                        or round(self._ds_mirror.readback) != self._ds_mirror_out
                     ):
                         MsgBox(msg="First move the mirrors out.")
                         return None
@@ -215,10 +237,10 @@ class CommonControlsGroupController(QObject):
                         MsgBox(msg="Wait for the pinhole to stop moving.")
                         return None
 
-                    if (
-                            self._pinhole_stage.readback > self._pinhole_limit
-                    ):
-                        MsgBox(msg="First move the PINHOLE to the IN, OUT or OFF position.")
+                    if self._pinhole_stage.readback > self._pinhole_limit:
+                        MsgBox(
+                            msg="First move the PINHOLE to the IN, OUT or OFF position."
+                        )
                         return None
 
                     if self._omega_stage.moving:
@@ -234,7 +256,8 @@ class CommonControlsGroupController(QObject):
                     self._ie_model.load_position(
                         vertical_pos=vertical_position,
                         horizontal_pos=horizontal_position,
-                        real_pos=real_position
+                        real_pos=real_position,
+                        objective_focus=objective_focus,
                     )
                 else:
                     MsgBox(
@@ -246,7 +269,7 @@ class CommonControlsGroupController(QObject):
         self._widget.lbl_path.setText(path)
 
     def update_correction_position(self) -> None:
-        """Updates the US and DS mirror focus moving status. """
+        """Updates the US and DS mirror focus moving status."""
         if self._epics.connected:
 
             if self._xps_stop.moving:
@@ -258,7 +281,9 @@ class CommonControlsGroupController(QObject):
             if self._mirror_stop.moving:
                 self._mirror_stop.moving = False
 
-            custom_path = os.path.join("\\".join(list(self._path.readback.split("\\")[0:-2])))
+            custom_path = os.path.join(
+                "\\".join(list(self._path.readback.split("\\")[0:-2]))
+            )
 
             if custom_path != self._latest_path:
                 self._latest_path = custom_path

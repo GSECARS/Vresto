@@ -29,6 +29,8 @@ class ImportExportModel:
     vertical: DoubleValuePV = field(init=True, compare=False, repr=False)
     horizontal: DoubleValuePV = field(init=True, compare=False, repr=False)
     focus: DoubleValuePV = field(init=True, compare=False, repr=False)
+    us_mirror_focus: DoubleValuePV = field(init=True, compare=False, repr=False)
+    ds_mirror_focus: DoubleValuePV = field(init=True, compare=False, repr=False)
 
     def save_correction(
         self,
@@ -58,12 +60,15 @@ class ImportExportModel:
                 f"horizontal={horizontal_position}\n"
                 f"virtual={virtual_position}\n"
                 f"real={real_position}\n"
+                f"objective_focus={(virtual_position - real_position) * -1}"
                 f"\n"
             )
 
     def load_position(
-        self, vertical_pos: float, horizontal_pos: float, real_pos: float
+        self, vertical_pos: float, horizontal_pos: float, real_pos: float, objective_focus: float
     ) -> None:
         self.vertical.move(value=vertical_pos)
         self.horizontal.move(value=horizontal_pos)
         self.focus.move(value=real_pos)
+        self.us_mirror_focus.move(value=objective_focus)
+        self.ds_mirror_focus.move(value=objective_focus)

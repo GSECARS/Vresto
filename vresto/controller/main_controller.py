@@ -181,6 +181,7 @@ class MainController(QObject):
         """Runs all the worker methods."""
 
         while not self._widget.terminated:
+            self._check_epics_connection()
             self.pinhole_group.update_pinhole_position()
             self.microscope_group.update_microscope_positions()
             self.common_controls_group.update_correction_position()
@@ -188,7 +189,6 @@ class MainController(QObject):
             self.corrections_group.update_correction_position()
             self.mirror_group.update_mirror_positions()
             self.sample_group.update_sample_positions()
-            self._check_epics_connection()
             time.sleep(0.05)
 
         # Clear camonitor instances after exiting the loop

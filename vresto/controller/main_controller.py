@@ -25,6 +25,7 @@ from qtpy.QtCore import QObject, Signal
 
 from vresto.widget import MainWidget
 from vresto.model import MainModel, QtWorkerModel, IDDModel, ImportExportModel
+from vresto.controller.groups import PinholeGroupController
 
 
 class MainController(QObject):
@@ -44,6 +45,15 @@ class MainController(QObject):
             focus=self._idd.sample_focus
         )
         self._widget = MainWidget(self._model.paths)
+
+        # Init controller groups
+        self.pinhole_group = PinholeGroupController(
+            widget=self._widget.pinhole_widget,
+            epics_model=self._model.epics,
+            pinhole_stage=self._idd.pinhole,
+            omega_stage=self._idd.sample_omega,
+            us_mirror=self._idd.us_mirror,
+        )
 
         # Event helpers
         self._time_started = None
@@ -86,6 +96,7 @@ class MainController(QObject):
         """Runs all the worker methods."""
 
         while not self._widget.terminated:
+            self.pinhole_group.update_pinhole_position()
             self._check_epics_connection()
             time.sleep(0.05)
 

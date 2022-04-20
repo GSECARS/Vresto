@@ -18,14 +18,8 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 
-from vresto.controller import MainController
-from vresto._paths import qss_path, icon_path
-from vresto import _version
+import os
 
-__version__ = _version.get_versions()['version']
-__static_version__ = "0.1.4"
-
-if __version__ == "0+unknown":
-    __version__ = __static_version__
-
-app = MainController()
+assets_path = os.path.join(os.getcwd(), "vresto/assets")
+qss_path = os.path.join(assets_path, "qss")
+icon_path = os.path.join(assets_path, "icons")

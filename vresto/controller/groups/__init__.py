@@ -28,3 +28,4 @@ from vresto.controller.groups.common_controls_group_controller import (
 from vresto.controller.groups.diamond_images_group_controller import (
     DiamondImagesGroupController,
 )
+from vresto.controller.groups.mirror_group_controller import MirrorGroupController

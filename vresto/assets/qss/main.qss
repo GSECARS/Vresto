@@ -1,0 +1,62 @@
+/* ----------------------------------------------------------------------
+* vresto - Diamond Anvil Cell Corrections GUI software.
+* Author: Christofanis Skordas (skordasc@uchicago.edu)
+* Copyright (C) 2022  GSECARS, The University of Chicago
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <https://www.gnu.org/licenses/>.
+---------------------------------------------------------------------- */
+
+#QMainWindow {
+    background: #222a35;
+}
+
+QStatusBar {
+    color: #afabab;
+}
+
+QTabWidget::pane {
+    border: 1px solid #afabab;
+    background: #222a35;
+    margin: 2px 5px 5px;
+}
+QTabWidget::tab-bar {
+    left: 5px;
+}
+
+QTabBar::tab {
+    padding: 10px;
+    margin-top: 5px;
+    margin-right: 2px;
+}
+
+QTabBar::tab {
+    background: #3b3838;
+    border: 2px solid #afabab;
+    color: #afabab;
+    font-family: "Times New Roman";
+    font-size: 16px;
+    width: 100px;
+}
+
+QTabBar::tab:focus, QTabBar::tab:hover {
+    border-bottom: 2px solid #c55911;
+}
+
+QTabBar::tab:selected {
+    border-color: #c55911;
+}
+
+QTabBar::tab:!selected {
+    margin-top: 10px;
+}

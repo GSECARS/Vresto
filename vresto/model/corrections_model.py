@@ -20,17 +20,45 @@
 
 
 class CorrectionsModel:
+    _diamond_index: float = 2.4195
+    _fused_silica_index: float = 1.459
+    _moissanite_index: float = 2.67
+    _refraction_index: float = _diamond_index
 
-    _abort_status: bool
+    _abort_status: bool = False
 
-    def __init__(self) -> None:
-        self._abort_status = False
+    def get_diamond_thickness(self, virtual_position: float, diamond_position: float) -> float:
+        """Calculates and returns the diamond thickness."""
+        return round((diamond_position - virtual_position) * self._refraction_index, 4)
+
+    def get_diamond_position(self, virtual_position: float, diamond_thickness: float) -> float:
+        """Calculates and returns the diamond position."""
+        diamond_thickness /= self._refraction_index
+        return round(virtual_position + diamond_thickness + self._refraction_index, 4)
+
+    @staticmethod
+    def get_real_position(diamond_thickness: float, diamond_position: float) -> float:
+        """Calculates and returns the real position."""
+        return round(diamond_position - diamond_thickness, 4)
 
     @property
-    def abort_status(self):
+    def refraction_index(self) -> float:
+        return self._refraction_index
+
+    @property
+    def abort_status(self) -> bool:
         return self._abort_status
 
+    @refraction_index.setter
+    def refraction_index(self, value: str) -> None:
+        value = value.lower()
+        if value == "diamond":
+            self._refraction_index = self._diamond_index
+        elif value == "fused silica":
+            self._refraction_index = self._fused_silica_index
+        elif value == "moissanite":
+            self._refraction_index = self._moissanite_index
+
     @abort_status.setter
-    def abort_status(self, value):
-        if isinstance(value, bool):
-            self._abort_status = value
+    def abort_status(self, value: bool) -> None:
+        self._abort_status = value

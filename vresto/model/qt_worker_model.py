@@ -18,9 +18,20 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 
-from vresto.model.corrections_model import CorrectionsModel
-from vresto.model.epics_model import EpicsModel
-from vresto.model.path_model import PathModel
-from vresto.model.pv_model import PVModel, DoubleValuePV, StringValuePV
-from vresto.model.qt_worker_model import QtWorkerModel
-from vresto.model.main_model import MainModel
+from qtpy.QtCore import QThread
+from typing import Any, Callable
+
+
+class QtWorkerModel(QThread):
+    """
+    The worker class that's been used for threading.
+    """
+
+    def __init__(self, method: Callable, args: Any) -> None:
+        super(QtWorkerModel, self).__init__()
+
+        self._method = method
+        self._args = args
+
+    def run(self) -> None:
+        self._method(*self._args)

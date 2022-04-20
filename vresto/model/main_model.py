@@ -18,6 +18,11 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 
+from vresto.model import EpicsModel, CorrectionsModel
+
 
 class MainModel:
-    pass
+
+    def __init__(self):
+        self.epics = EpicsModel()
+        self.corrections = CorrectionsModel()

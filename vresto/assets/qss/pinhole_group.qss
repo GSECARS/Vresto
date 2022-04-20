@@ -1,0 +1,67 @@
+/* ----------------------------------------------------------------------
+* DAC-Corrections - Diamond Anvil Cell Corrections GUI software.
+* Author: Christofanis Skordas (skordasc@uchicago.edu)
+* Copyright (C) 2022  GSECARS, The University of Chicago
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <https://www.gnu.org/licenses/>.
+---------------------------------------------------------------------- */
+
+#lbl-pinhole-positions {
+    color: #4acf6e;
+    font-family: "Calibri";
+    font-size: 16px;
+}
+
+#lbl-custom {
+    color: #e6e6e6;
+    font-family: "Times New Roman";
+    font-size: 16px;
+}
+
+#btn-pinhole {
+    background: #344152;
+    color: #e6e6e6;
+    border: 1px solid #e6e6e6;
+    font-family: "Times New Roman";
+    font-size: 16px;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+#btn-pinhole:hover, #btn-pinhole:focus {
+    background: #e6e6e6;
+    color: #344152;
+}
+
+#btn-pinhole:disabled, #btn-pinhole:pressed {
+    background: #4acf6e;
+    color: #222a35;
+    border: none;
+}
+
+#lne-custom {
+    background-color: #344152;
+    color: #e6e6e6;
+    border: 1px solid #e6e6e6;
+    padding: 5px;
+    font-size: 16px;
+}
+
+#group-pinhole {
+    border: 2px solid #4acf6e;
+}
+
+#group-pinhole::title {
+    color: #4acf6e;
+}

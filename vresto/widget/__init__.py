@@ -18,4 +18,5 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 
+from vresto.widget.alignment_widget import AlignmentWidget
 from vresto.widget.main_widget import MainWidget

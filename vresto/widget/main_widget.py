@@ -33,6 +33,16 @@ from qtpy.QtCore import QSize
 from qtpy.QtGui import QIcon, QCloseEvent
 
 from vresto.model import PathModel
+from vresto.widget import AlignmentWidget
+from vresto.widget.groups import (
+    PinholeGroup,
+    MicroscopeGroup,
+    CorrectionsGroup,
+    CommonControlsGroup,
+    DiamondImagesGroup,
+    MirrorGroup,
+    SampleGroup,
+)
 
 
 class MainWidget(QMainWindow):
@@ -47,10 +57,27 @@ class MainWidget(QMainWindow):
         self._paths = paths
 
         # Groups - Define groups below
+        self.pinhole_widget = PinholeGroup(paths=self._paths)
+        self.microscope_widget = MicroscopeGroup(paths=self._paths)
+        self.corrections_widget = CorrectionsGroup(paths=self._paths)
+        self.common_controls_widget = CommonControlsGroup(paths=self._paths)
+        self.diamond_images_widget = DiamondImagesGroup(paths=self._paths)
+        self.mirror_widget = MirrorGroup(paths=self._paths)
+        self.sample_widget = SampleGroup(paths=self._paths)
+
+        self.alignment_widget = AlignmentWidget(
+            paths=self._paths,
+            pinhole_group=self.pinhole_widget,
+            microscope_group=self.microscope_widget,
+            corrections_group=self.corrections_widget,
+            common_controls_group=self.common_controls_widget,
+            diamond_images_group=self.diamond_images_widget,
+            mirror_group=self.mirror_widget,
+            sample_group=self.sample_widget,
+        )
 
         self._main_frame = QFrame()
         self._tab_widget = QTabWidget()
-        self.alignment_widget = None
         self.lbl_epics_status = QLabel()
         self._lbl_hutch = QLabel(self._hutch)
 

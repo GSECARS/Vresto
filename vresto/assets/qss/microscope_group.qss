@@ -1,0 +1,98 @@
+/* ----------------------------------------------------------------------
+* DAC-Corrections - Diamond Anvil Cell Corrections GUI software.
+* Author: Christofanis Skordas (skordasc@uchicago.edu)
+* Copyright (C) 2022  GSECARS, The University of Chicago
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <https://www.gnu.org/licenses/>.
+---------------------------------------------------------------------- */
+
+#lbl-microscope {
+    color: #59aee3;
+    font-family: "Calibri";
+    font-size: 16px;
+}
+
+#btn-microscope {
+    background: #344152;
+    color: #e6e6e6;
+    border: 1px solid #e6e6e6;
+    font-family: "Times New Roman";
+    font-size: 16px;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+#btn-microscope:hover, #btn-microscope:focus {
+    background: #e6e6e6;
+    color: #344152;
+}
+
+#btn-microscope:disabled, #btn-microscope:pressed {
+    background: #59aee3;
+    border: none;
+    color: #222a35;
+}
+
+#slider::grove:vertical {
+    border: 1px solid #595959;
+    background-color: #595959;
+    height: 10px;
+}
+
+#slider::sub-page:vertical {
+    background: #222a35;
+    border: 2px solid #595959;
+    height: 10px;
+}
+
+#slider::handle:vertical {
+    background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1,stop: 0 #9e9e9e, stop: 1 #595959);
+    border: 1px solid #595959;
+    width: 13px;
+    margin: 0 -2px;
+}
+
+#slider::add-page:vertical {
+    background: #e0da2b;
+    border: 1px solid #595959;
+    height: 10px;
+}
+
+#slider::handle:vertical:hover {
+    background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 #9e9e9e, stop: 1 #595959);
+    border: 1px solid #595959;
+}
+
+#slider::sub-page:vertical:disabled {
+    background: #595959;
+    border-color: #595959;
+}
+
+#slider::add-page:vertical:disabled {
+    background: #595959;
+    border-color: #595959;
+}
+
+#slider::handle:vertical:disabled {
+    background: #595959;
+    border: 1px solid #595959;
+}
+
+#group-microscope {
+    border: 2px solid #59aee3;
+}
+
+#group-microscope::title {
+    color: #59aee3;
+}

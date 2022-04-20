@@ -25,7 +25,12 @@ from qtpy.QtCore import QObject, Signal
 
 from vresto.widget import MainWidget
 from vresto.model import MainModel, QtWorkerModel, IDDModel, ImportExportModel
-from vresto.controller.groups import PinholeGroupController, MicroscopeGroupController, CommonControlsGroupController
+from vresto.controller.groups import (
+    PinholeGroupController,
+    MicroscopeGroupController,
+    CommonControlsGroupController,
+    DiamondImagesGroupController,
+)
 
 
 class MainController(QObject):
@@ -42,7 +47,7 @@ class MainController(QObject):
         self._import_export = ImportExportModel(
             vertical=self._idd.sample_vertical,
             horizontal=self._idd.sample_horizontal,
-            focus=self._idd.sample_focus
+            focus=self._idd.sample_focus,
         )
         self._widget = MainWidget(self._model.paths)
 
@@ -80,6 +85,16 @@ class MainController(QObject):
             xps_stop=self._idd.xps_stop,
             station_stop=self._idd.station_stop,
             mirror_stop=self._idd.mirror_stop,
+        )
+
+        self.diamond_images_group = DiamondImagesGroupController(
+            widget=self._widget.diamond_images_widget,
+            epics_model=self._model.epics,
+            sample_focus_stage=self._idd.sample_focus,
+            omega_stage=self._idd.sample_omega,
+            check_focus_sample=self._widget.corrections_widget.check_focus_sample,
+            check_focus_diamond=self._widget.corrections_widget.check_focus_diamond_table,
+            check_focus_thickness=self._widget.corrections_widget.check_diamond_thickness,
         )
 
         # Event helpers
@@ -126,6 +141,7 @@ class MainController(QObject):
             self.pinhole_group.update_pinhole_position()
             self.microscope_group.update_microscope_positions()
             self.common_controls_group.update_correction_position()
+            self.diamond_images_group.update_diamond_image_widgets()
             self._check_epics_connection()
             time.sleep(0.05)
 

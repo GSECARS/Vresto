@@ -25,3 +25,6 @@ from vresto.controller.groups.microscope_group_controller import (
 from vresto.controller.groups.common_controls_group_controller import (
     CommonControlsGroupController,
 )
+from vresto.controller.groups.diamond_images_group_controller import (
+    DiamondImagesGroupController,
+)

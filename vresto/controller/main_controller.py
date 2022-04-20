@@ -31,6 +31,7 @@ from vresto.controller.groups import (
     CommonControlsGroupController,
     DiamondImagesGroupController,
     MirrorGroupController,
+    SampleGroupController,
 )
 
 
@@ -107,6 +108,20 @@ class MainController(QObject):
             pinhole_stage=self._idd.pinhole,
         )
 
+        self.sample_group = SampleGroupController(
+            widget=self._widget.sample_widget,
+            epics_model=self._model.epics,
+            sample_vertical_stage=self._idd.sample_vertical,
+            sample_horizontal_stage=self._idd.sample_horizontal,
+            sample_focus_stage=self._idd.sample_focus,
+            sample_omega_stage=self._idd.sample_omega,
+            us_mirror=self._idd.us_mirror,
+            ds_mirror=self._idd.ds_mirror,
+            microscope=self._idd.microscope,
+            reflected_light=self._idd.microscope_light,
+            pinhole=self._idd.pinhole,
+        )
+
         # Event helpers
         self._time_started = None
 
@@ -153,6 +168,7 @@ class MainController(QObject):
             self.common_controls_group.update_correction_position()
             self.diamond_images_group.update_diamond_image_widgets()
             self.mirror_group.update_mirror_positions()
+            self.sample_group.update_sample_positions()
             self._check_epics_connection()
             time.sleep(0.05)
 

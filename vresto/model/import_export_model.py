@@ -36,7 +36,6 @@ class ImportExportModel:
         real_position: float,
         virtual_position: float,
         timestamp: str,
-        version: str,
     ) -> None:
         """Saves the correction positions to a .cor file."""
 
@@ -49,7 +48,7 @@ class ImportExportModel:
             timestamp = timestamp.split("_")
 
             correction_file.write(
-                f"# Vresto {version}\n"
+                f"# Vresto\n"
                 f"# Automatically generated correction file, {timestamp[0]} {timestamp[1]}\n"
                 f"\n"
                 f"Hutch=13IDD\n\n"

@@ -39,6 +39,9 @@ class IDDModel:
     us_mirror_focus: DoubleValuePV = field(init=False, repr=False, compare=False)
     ds_mirror: DoubleValuePV = field(init=False, repr=False, compare=False)
     ds_mirror_focus: DoubleValuePV = field(init=False, repr=False, compare=False)
+    xps_stop: DoubleValuePV = field(init=False, repr=False, compare=False)
+    station_stop: DoubleValuePV = field(init=False, repr=False, compare=False)
+    mirror_stop: DoubleValuePV = field(init=False, repr=False, compare=False)
 
     path: StringValuePV = field(init=False, repr=False, compare=False)
 
@@ -195,4 +198,25 @@ class IDDModel:
             rbv_extension=False,
             monitor=True,
             as_string=True,
+        )
+        self._add_pv(
+            pv_name="xps_stop",
+            movable=True,
+            limited=False,
+            rbv_extension=False,
+            monitor=False,
+        )
+        self._add_pv(
+            pv_name="station_stop",
+            movable=True,
+            limited=False,
+            rbv_extension=False,
+            monitor=False,
+        )
+        self._add_pv(
+            pv_name="mirror_stop",
+            movable=True,
+            limited=False,
+            rbv_extension=False,
+            monitor=False,
         )

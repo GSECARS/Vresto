@@ -25,7 +25,7 @@ from qtpy.QtCore import QObject, Signal
 
 from vresto.widget import MainWidget
 from vresto.model import MainModel, QtWorkerModel, IDDModel, ImportExportModel
-from vresto.controller.groups import PinholeGroupController, MicroscopeGroupController
+from vresto.controller.groups import PinholeGroupController, MicroscopeGroupController, CommonControlsGroupController
 
 
 class MainController(QObject):
@@ -54,6 +54,7 @@ class MainController(QObject):
             omega_stage=self._idd.sample_omega,
             us_mirror=self._idd.us_mirror,
         )
+
         self.microscope_group = MicroscopeGroupController(
             widget=self._widget.microscope_widget,
             epics_model=self._model.epics,
@@ -61,6 +62,24 @@ class MainController(QObject):
             microscope_zoom=self._idd.microscope_zoom,
             light_reflected=self._idd.microscope_light,
             sample_omega_stage=self._idd.sample_omega,
+        )
+
+        self.common_controls_group = CommonControlsGroupController(
+            widget=self._widget.common_controls_widget,
+            corrections_model=self._model.corrections,
+            epics_model=self._model.epics,
+            ie_model=self._import_export,
+            path=self._idd.path,
+            lne_virtual_position=self._widget.diamond_images_widget.lne_virtual_position,
+            lne_real_position=self._widget.diamond_images_widget.lne_real_position,
+            us_mirror=self._idd.us_mirror,
+            ds_mirror=self._idd.ds_mirror,
+            microscope_stage=self._idd.microscope,
+            pinhole_stage=self._idd.pinhole,
+            omega_stage=self._idd.sample_omega,
+            xps_stop=self._idd.xps_stop,
+            station_stop=self._idd.station_stop,
+            mirror_stop=self._idd.mirror_stop,
         )
 
         # Event helpers
@@ -106,6 +125,7 @@ class MainController(QObject):
         while not self._widget.terminated:
             self.pinhole_group.update_pinhole_position()
             self.microscope_group.update_microscope_positions()
+            self.common_controls_group.update_correction_position()
             self._check_epics_connection()
             time.sleep(0.05)
 

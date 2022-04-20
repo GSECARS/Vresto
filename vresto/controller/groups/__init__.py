@@ -22,3 +22,6 @@ from vresto.controller.groups.pinhole_group_controller import PinholeGroupContro
 from vresto.controller.groups.microscope_group_controller import (
     MicroscopeGroupController,
 )
+from vresto.controller.groups.common_controls_group_controller import (
+    CommonControlsGroupController,
+)

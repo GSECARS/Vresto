@@ -19,7 +19,16 @@
 # ----------------------------------------------------------------------
 
 import os
-from qtpy.QtWidgets import QMainWindow, QTabWidget, QMessageBox, QLabel, QFrame, QGridLayout, QHBoxLayout, QVBoxLayout
+from qtpy.QtWidgets import (
+    QMainWindow,
+    QTabWidget,
+    QMessageBox,
+    QLabel,
+    QFrame,
+    QGridLayout,
+    QHBoxLayout,
+    QVBoxLayout,
+)
 from qtpy.QtCore import QSize
 from qtpy.QtGui import QIcon, QCloseEvent
 
@@ -66,7 +75,9 @@ class MainWidget(QMainWindow):
         self.setWindowIcon(QIcon(os.path.join(self._paths.icon_path, "diamond.png")))
 
         # Load qss
-        self.setStyleSheet(open(os.path.join(self._paths.qss_path, "main.qss"), "r").read())
+        self.setStyleSheet(
+            open(os.path.join(self._paths.qss_path, "main.qss"), "r").read()
+        )
 
         # Set maximum size
         self.setMaximumSize(self._size)
@@ -75,11 +86,12 @@ class MainWidget(QMainWindow):
         self.setCentralWidget(self._main_frame)
 
     def _configure_tab_widget(self) -> None:
-        """Configures the main tab widget (central widget)."""
+        """Configures the main tab widget."""
         # Add tabs
         self._tab_widget.addTab(self.alignment_widget, "ALIGNMENT")
 
     def _configure_epics_status_widgets(self) -> None:
+        """Configures the epics status widgets."""
         # Circle indicator
         self.lbl_epics_status.setEnabled(False)
         self.lbl_epics_status.setObjectName("lbl-epics")
@@ -88,7 +100,7 @@ class MainWidget(QMainWindow):
         self._lbl_hutch.setObjectName("lbl-hutch")
 
     def _configure_main_frame(self) -> None:
-
+        """Configures the main frame widget (central widget)."""
         horiz_layout = QHBoxLayout()
         horiz_layout.setSpacing(0)
         horiz_layout.addStretch(1)

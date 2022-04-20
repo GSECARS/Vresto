@@ -30,6 +30,7 @@ from vresto.controller.groups import (
     MicroscopeGroupController,
     CommonControlsGroupController,
     DiamondImagesGroupController,
+    CorrectionsGroupController,
     MirrorGroupController,
     SampleGroupController,
 )
@@ -97,6 +98,23 @@ class MainController(QObject):
             check_focus_sample=self._widget.corrections_widget.check_focus_sample,
             check_focus_diamond=self._widget.corrections_widget.check_focus_diamond_table,
             check_focus_thickness=self._widget.corrections_widget.check_diamond_thickness,
+        )
+
+        self.corrections_group = CorrectionsGroupController(
+            widget=self._widget.corrections_widget,
+            corrections_model=self._model.corrections,
+            epics_model=self._model.epics,
+            btn_reset=self._widget.common_controls_widget.btn_reset,
+            check_c_mirrors=self._widget.common_controls_widget.check_c_mirrors,
+            lne_virtual_position=self._widget.diamond_images_widget.lne_virtual_position,
+            lne_diamond_table=self._widget.diamond_images_widget.lne_diamond_table,
+            lne_real_position=self._widget.diamond_images_widget.lne_real_position,
+            cmb_refraction_index=self._widget.common_controls_widget.cmb_refraction_index,
+            sample_focus_stage=self._idd.sample_focus,
+            us_mirror_focus=self._idd.us_mirror_focus,
+            ds_mirror_focus=self._idd.ds_mirror_focus,
+            microscope_zoom=self._idd.microscope_zoom,
+            stacked_img_widget=self._widget.diamond_images_widget.stacked_images,
         )
 
         self.mirror_group = MirrorGroupController(
@@ -167,6 +185,7 @@ class MainController(QObject):
             self.microscope_group.update_microscope_positions()
             self.common_controls_group.update_correction_position()
             self.diamond_images_group.update_diamond_image_widgets()
+            self.corrections_group.update_correction_position()
             self.mirror_group.update_mirror_positions()
             self.sample_group.update_sample_positions()
             self._check_epics_connection()

@@ -60,3 +60,23 @@ QTabBar::tab:selected {
 QTabBar::tab:!selected {
     margin-top: 10px;
 }
+
+#lbl-epics {
+    background-color: #519154;
+    border-radius: 4px;
+    min-height: 12px;
+    min-width: 12px;
+    margin-top: 17px;
+    margin-bottom: 17px;
+}
+
+#lbl-epics:disabled {
+    background-color: #823741;
+}
+
+#lbl-hutch {
+    color: #afabab;
+    font-family: "Times New Roman";
+    font-size: 16px;
+    margin-right: 5px;
+}

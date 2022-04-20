@@ -25,7 +25,7 @@ from qtpy.QtCore import QObject, Signal
 
 from vresto.widget import MainWidget
 from vresto.model import MainModel, QtWorkerModel, IDDModel, ImportExportModel
-from vresto.controller.groups import PinholeGroupController
+from vresto.controller.groups import PinholeGroupController, MicroscopeGroupController
 
 
 class MainController(QObject):
@@ -53,6 +53,14 @@ class MainController(QObject):
             pinhole_stage=self._idd.pinhole,
             omega_stage=self._idd.sample_omega,
             us_mirror=self._idd.us_mirror,
+        )
+        self.microscope_group = MicroscopeGroupController(
+            widget=self._widget.microscope_widget,
+            epics_model=self._model.epics,
+            microscope_stage=self._idd.microscope,
+            microscope_zoom=self._idd.microscope_zoom,
+            light_reflected=self._idd.microscope_light,
+            sample_omega_stage=self._idd.sample_omega,
         )
 
         # Event helpers
@@ -97,6 +105,7 @@ class MainController(QObject):
 
         while not self._widget.terminated:
             self.pinhole_group.update_pinhole_position()
+            self.microscope_group.update_microscope_positions()
             self._check_epics_connection()
             time.sleep(0.05)
 

@@ -74,7 +74,7 @@ class SampleGroupController(QObject):
         super(SampleGroupController, self).__init__()
 
         self._widget = widget
-        self._epics = EpicsModel
+        self._epics = epics_model
 
         self._sample_vertical_stage = sample_vertical_stage
         self._sample_horizontal_stage = sample_horizontal_stage

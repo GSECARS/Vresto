@@ -150,6 +150,8 @@ class SampleGroupController(QObject):
         self._widget.lne_focus.installEventFilter(self.focus_filter)
 
     def _btn_step_clicked(self, value: float) -> None:
+        self._step = value
+
         if value == self._step_1:
             self._widget.btn_step_1.setChecked(True)
             self._widget.btn_step_2.setChecked(False)

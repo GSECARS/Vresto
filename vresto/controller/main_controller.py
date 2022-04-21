@@ -24,7 +24,7 @@ from qtpy.QtWidgets import QApplication
 from qtpy.QtCore import QObject, Signal
 
 from vresto.widget import MainWidget
-from vresto.model import MainModel, QtWorkerModel, RamanModel
+from vresto.model import MainModel, QtWorkerModel, RamanModel, ImportExportModel
 from vresto.controller.groups import (
     DiamondImagesGroupController,
     SampleGroupController,
@@ -42,6 +42,11 @@ class MainController(QObject):
         self._app = QApplication(sys.argv)
         self._model = MainModel()
         self._raman = RamanModel()
+        self._import_export = ImportExportModel(
+            vertical=self._raman.sample_vertical,
+            horizontal=self._raman.sample_horizontal,
+            focus=self._raman.sample_focus,
+        )
         self._widget = MainWidget(self._model.paths)
 
         # Init controller groups

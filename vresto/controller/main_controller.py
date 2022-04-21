@@ -27,7 +27,9 @@ from vresto.widget import MainWidget
 from vresto.model import MainModel, QtWorkerModel, RamanModel, ImportExportModel
 from vresto.controller.groups import (
     CorrectionsGroupController,
+    CommonControlsGroupController,
     DiamondImagesGroupController,
+    CameraGroupController,
     SampleGroupController,
 )
 
@@ -64,6 +66,17 @@ class MainController(QObject):
             stacked_img_widget=self._widget.diamond_images_widget.stacked_images,
         )
 
+        self.common_controls_group = CommonControlsGroupController(
+            widget=self._widget.common_controls_widget,
+            corrections_model=self._model.corrections,
+            epics_model=self._model.epics,
+            ie_model=self._import_export,
+            path=self._raman.path,
+            lne_virtual_position=self._widget.diamond_images_widget.lne_virtual_position,
+            lne_real_position=self._widget.diamond_images_widget.lne_real_position,
+            station_stop=self._raman.station_stop,
+        )
+
         self.diamond_images_group = DiamondImagesGroupController(
             widget=self._widget.diamond_images_widget,
             epics_model=self._model.epics,
@@ -71,6 +84,18 @@ class MainController(QObject):
             check_focus_sample=self._widget.corrections_widget.check_focus_sample,
             check_focus_diamond=self._widget.corrections_widget.check_focus_diamond_table,
             check_focus_thickness=self._widget.corrections_widget.check_diamond_thickness,
+        )
+
+        self.camera_group = CameraGroupController(
+            widget=self._widget.camera_widget,
+            epics_model=self._model.epics,
+            camera=self._raman.camera,
+            reflected=self._raman.light_reflected,
+            transmitted=self._raman.light_transmitted,
+            transmitted_switch=self._raman.transmitted_switch,
+            shutter_switch_1=self._raman.shutter_switch_1,
+            shutter_switch_3=self._raman.shutter_switch_3,
+            shutter_switch_4=self._raman.shutter_switch_4,
         )
 
         self.sample_group = SampleGroupController(
@@ -123,7 +148,9 @@ class MainController(QObject):
 
         while not self._widget.terminated:
             self._check_epics_connection()
+            self.common_controls_group.update_correction_position()
             self.diamond_images_group.update_diamond_image_widgets()
+            self.camera_group.update_camera()
             self.sample_group.update_sample_positions()
             time.sleep(0.05)
 

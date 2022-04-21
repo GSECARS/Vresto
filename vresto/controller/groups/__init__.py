@@ -21,7 +21,11 @@
 from vresto.controller.groups.corrections_group_controller import (
     CorrectionsGroupController,
 )
+from vresto.controller.groups.common_controls_group_controller import (
+    CommonControlsGroupController,
+)
 from vresto.controller.groups.diamond_images_group_controller import (
     DiamondImagesGroupController,
 )
+from vresto.controller.groups.camera_group_controller import CameraGroupController
 from vresto.controller.groups.sample_group_controller import SampleGroupController

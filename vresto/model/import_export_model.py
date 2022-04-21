@@ -51,7 +51,7 @@ class ImportExportModel:
                 f"# Vresto\n"
                 f"# Automatically generated correction file, {timestamp[0]} {timestamp[1]}\n"
                 f"\n"
-                f"Hutch=13IDD\n\n"
+                f"Hutch=RAMAN\n\n"
                 f"# Below are the relative positions of the vertical, horizontal, virtual\n"
                 f"# focus and real focus positions.\n"
                 f"vertical={vertical_position}\n"

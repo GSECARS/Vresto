@@ -33,7 +33,7 @@ from vresto.model import PathModel
 
 class CommonControlsGroup(QFrame):
 
-    _max_size = QSize(280, 230)
+    _max_size = QSize(280, 200)
 
     def __init__(self, paths: PathModel) -> None:
         super(CommonControlsGroup, self).__init__()

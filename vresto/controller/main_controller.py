@@ -25,6 +25,9 @@ from qtpy.QtCore import QObject, Signal
 
 from vresto.widget import MainWidget
 from vresto.model import MainModel, QtWorkerModel, RamanModel
+from vresto.controller.groups import (
+    SampleGroupController
+)
 
 
 class MainController(QObject):
@@ -39,6 +42,15 @@ class MainController(QObject):
         self._model = MainModel()
         self._raman = RamanModel()
         self._widget = MainWidget(self._model.paths)
+
+        # Init controller groups
+        self.sample_group = SampleGroupController(
+            widget=self._widget.sample_widget,
+            epics_model=self._model.epics,
+            sample_vertical_stage=self._raman.sample_vertical,
+            sample_horizontal_stage=self._raman.sample_horizontal,
+            sample_focus_stage=self._raman.sample_focus,
+        )
 
         # Event helpers
         self._time_started = None
@@ -82,6 +94,7 @@ class MainController(QObject):
 
         while not self._widget.terminated:
             self._check_epics_connection()
+            self.sample_group.update_sample_positions()
             time.sleep(0.05)
 
         # Set as finished so UI can exit

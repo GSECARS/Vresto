@@ -26,6 +26,7 @@ from qtpy.QtCore import QObject, Signal
 from vresto.widget import MainWidget
 from vresto.model import MainModel, QtWorkerModel, RamanModel, ImportExportModel
 from vresto.controller.groups import (
+    CorrectionsGroupController,
     DiamondImagesGroupController,
     SampleGroupController,
 )
@@ -50,6 +51,18 @@ class MainController(QObject):
         self._widget = MainWidget(self._model.paths)
 
         # Init controller groups
+        self.corrections_group = CorrectionsGroupController(
+            widget=self._widget.corrections_widget,
+            corrections_model=self._model.corrections,
+            epics_model=self._model.epics,
+            btn_reset=self._widget.common_controls_widget.btn_reset,
+            lne_virtual_position=self._widget.diamond_images_widget.lne_virtual_position,
+            lne_diamond_table=self._widget.diamond_images_widget.lne_diamond_table,
+            lne_real_position=self._widget.diamond_images_widget.lne_real_position,
+            cmb_refraction_index=self._widget.common_controls_widget.cmb_refraction_index,
+            sample_focus_stage=self._raman.sample_focus,
+            stacked_img_widget=self._widget.diamond_images_widget.stacked_images,
+        )
 
         self.diamond_images_group = DiamondImagesGroupController(
             widget=self._widget.diamond_images_widget,

@@ -41,13 +41,20 @@ class EpicsConnectionError(Exception):
 class EpicsConfig(Enum):
     """Empty Enum to be populated with PVs"""
     sample_horizontal = "13RAMAN2:m1"
-    sample_focus = "13RAMAN2:m2"
-    sample_vertical = "13RAMAN2:m3"
+    sample_focus = "13RAMAN2:m3"
+    sample_vertical = "13RAMAN2:m2"
 
     camera = "rpi_4:Switch11"
 
     light_reflected = "rpi_dac:Chan0Volt"
     light_transmitted = "rpi_dac:Chan2Volt"
+    transmitted_switch = "rpi_4:Switch13"
+
+    shutter_switch_1 = "rpi_4:Switch01"
+    shutter_switch_3 = "rpi_4:Switch03"
+    shutter_switch_4 = "rpi_4:Switch04"
+
+    station_stop = "13RAMAN2:allstop"
 
     path = "13RamanLF1:cam1:FilePath"
 

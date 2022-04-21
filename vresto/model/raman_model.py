@@ -31,9 +31,13 @@ class RamanModel:
     sample_focus: DoubleValuePV = field(init=False, repr=False, compare=False)
     sample_vertical: DoubleValuePV = field(init=False, repr=False, compare=False)
     camera: DoubleValuePV = field(init=False, repr=False, compare=False)
+    transmitted_switch: DoubleValuePV = field(init=False, repr=False, compare=False)
+    shutter_switch_1: DoubleValuePV = field(init=False, repr=False, compare=False)
+    shutter_switch_3: DoubleValuePV = field(init=False, repr=False, compare=False)
+    shutter_switch_4: DoubleValuePV = field(init=False, repr=False, compare=False)
     light_reflected: DoubleValuePV = field(init=False, repr=False, compare=False)
     light_transmitted: DoubleValuePV = field(init=False, repr=False, compare=False)
-
+    station_stop: DoubleValuePV = field(init=False, repr=False, compare=False)
     path: StringValuePV = field(init=False, repr=False, compare=False)
 
     collection: List[PVModel] = field(
@@ -106,6 +110,34 @@ class RamanModel:
             monitor=True,
         )
         self._add_pv(
+            pv_name="transmitted_switch",
+            movable=True,
+            limited=False,
+            rbv_extension=False,
+            monitor=True,
+        )
+        self._add_pv(
+            pv_name="shutter_switch_1",
+            movable=True,
+            limited=False,
+            rbv_extension=False,
+            monitor=True,
+        )
+        self._add_pv(
+            pv_name="shutter_switch_3",
+            movable=True,
+            limited=False,
+            rbv_extension=False,
+            monitor=True,
+        )
+        self._add_pv(
+            pv_name="shutter_switch_4",
+            movable=True,
+            limited=False,
+            rbv_extension=False,
+            monitor=True,
+        )
+        self._add_pv(
             pv_name="light_reflected",
             movable=True,
             limited=False,
@@ -118,6 +150,13 @@ class RamanModel:
             limited=False,
             rbv_extension=False,
             monitor=True,
+        )
+        self._add_pv(
+            pv_name="station_stop",
+            movable=True,
+            limited=False,
+            rbv_extension=False,
+            monitor=False,
         )
         self._add_pv(
             pv_name="path",

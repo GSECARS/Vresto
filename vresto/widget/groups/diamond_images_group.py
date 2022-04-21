@@ -47,7 +47,6 @@ class DiamondImagesGroup(QGroupBox):
         )
         self._pic_table_focus = os.path.join(self._paths.icon_path, "diamond_table.png")
         self._pic_real_focus = os.path.join(self._paths.icon_path, "diamond_real.png")
-        self._pic_xray_focus = os.path.join(self._paths.icon_path, "diamond_xray.png")
 
         self.lbl_diamond_table = QLabel("Diamond Table")
         self.lbl_virtual_position = QLabel("Virtual Position")
@@ -80,7 +79,6 @@ class DiamondImagesGroup(QGroupBox):
         self.pix_sample_focus = QPixmap(self._pic_sample_focus)
         self.pix_table_focus = QPixmap(self._pic_table_focus)
         self.pix_real_focus = QPixmap(self._pic_real_focus)
-        self.pix_xray_focus = QPixmap(self._pic_xray_focus)
 
         self.setStyleSheet(
             open(
@@ -100,7 +98,6 @@ class DiamondImagesGroup(QGroupBox):
         self.label_pic_sample_focus.setPixmap(self.pix_sample_focus)
         self.label_pic_table_focus.setPixmap(self.pix_table_focus)
         self.label_pic_real_focus.setPixmap(self.pix_real_focus)
-        self.label_pic_xray_focus.setPixmap(self.pix_xray_focus)
         self.pix_sample_focus.scaled(
             self.label_pic_sample_focus.width(), self.label_pic_sample_focus.height()
         )
@@ -110,19 +107,15 @@ class DiamondImagesGroup(QGroupBox):
         self.pix_real_focus.scaled(
             self.label_pic_real_focus.width(), self.label_pic_real_focus.height()
         )
-        self.pix_xray_focus.scaled(
-            self.label_pic_xray_focus.width(), self.label_pic_xray_focus.height()
-        )
         self.label_pic_sample_focus.setScaledContents(True)
         self.label_pic_table_focus.setScaledContents(True)
         self.label_pic_real_focus.setScaledContents(True)
         self.label_pic_xray_focus.setScaledContents(True)
 
     def _configure_stacked_widget(self) -> None:
-        self.stacked_images.addWidget(self.label_pic_xray_focus)  # Index: 0
-        self.stacked_images.addWidget(self.label_pic_sample_focus)  # Index: 1
-        self.stacked_images.addWidget(self.label_pic_table_focus)  # Index: 2
-        self.stacked_images.addWidget(self.label_pic_real_focus)  # Index: 3
+        self.stacked_images.addWidget(self.label_pic_sample_focus)  # Index: 0
+        self.stacked_images.addWidget(self.label_pic_table_focus)  # Index: 1
+        self.stacked_images.addWidget(self.label_pic_real_focus)  # Index: 2
 
     def _configure_lne_boxes(self) -> None:
         self.lne_diamond_table.setAlignment(Qt.AlignmentFlag.AlignCenter)

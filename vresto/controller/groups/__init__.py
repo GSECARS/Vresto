@@ -18,4 +18,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 
+from vresto.controller.groups.diamond_images_group_controller import (
+    DiamondImagesGroupController,
+)
 from vresto.controller.groups.sample_group_controller import SampleGroupController

@@ -26,7 +26,8 @@ from qtpy.QtCore import QObject, Signal
 from vresto.widget import MainWidget
 from vresto.model import MainModel, QtWorkerModel, RamanModel
 from vresto.controller.groups import (
-    SampleGroupController
+    DiamondImagesGroupController,
+    SampleGroupController,
 )
 
 
@@ -44,6 +45,16 @@ class MainController(QObject):
         self._widget = MainWidget(self._model.paths)
 
         # Init controller groups
+
+        self.diamond_images_group = DiamondImagesGroupController(
+            widget=self._widget.diamond_images_widget,
+            epics_model=self._model.epics,
+            sample_focus_stage=self._raman.sample_focus,
+            check_focus_sample=self._widget.corrections_widget.check_focus_sample,
+            check_focus_diamond=self._widget.corrections_widget.check_focus_diamond_table,
+            check_focus_thickness=self._widget.corrections_widget.check_diamond_thickness,
+        )
+
         self.sample_group = SampleGroupController(
             widget=self._widget.sample_widget,
             epics_model=self._model.epics,
@@ -94,6 +105,7 @@ class MainController(QObject):
 
         while not self._widget.terminated:
             self._check_epics_connection()
+            self.diamond_images_group.update_diamond_image_widgets()
             self.sample_group.update_sample_positions()
             time.sleep(0.05)
 

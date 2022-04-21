@@ -24,7 +24,7 @@ from qtpy.QtWidgets import QApplication
 from qtpy.QtCore import QObject, Signal
 
 from vresto.widget import MainWidget
-from vresto.model import MainModel, QtWorkerModel
+from vresto.model import MainModel, QtWorkerModel, RamanModel
 
 
 class MainController(QObject):
@@ -37,6 +37,7 @@ class MainController(QObject):
 
         self._app = QApplication(sys.argv)
         self._model = MainModel()
+        self._raman = RamanModel()
         self._widget = MainWidget(self._model.paths)
 
         # Event helpers

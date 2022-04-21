@@ -46,7 +46,7 @@ class MainWidget(QMainWindow):
     """The main application widget."""
 
     _size: QSize = QSize(780, 860)
-    _hutch: str = ""
+    _hutch: str = "RAMAN"
 
     def __init__(self, paths: PathModel) -> None:
         super(MainWidget, self).__init__()

@@ -18,6 +18,7 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 
+from vresto.widget.groups.corrections_group_widget import CorrectionsGroup
 from vresto.widget.groups.common_controls_group import CommonControlsGroup
 from vresto.widget.groups.diamond_images_group import DiamondImagesGroup
 from vresto.widget.groups.sample_group import SampleGroup

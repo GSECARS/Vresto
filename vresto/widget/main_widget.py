@@ -38,14 +38,15 @@ from vresto.widget.groups import (
     CorrectionsGroup,
     CommonControlsGroup,
     DiamondImagesGroup,
-    SampleGroup
+    CameraGroup,
+    SampleGroup,
 )
 
 
 class MainWidget(QMainWindow):
     """The main application widget."""
 
-    _size: QSize = QSize(780, 860)
+    _size: QSize = QSize(780, 650)
     _hutch: str = "RAMAN"
 
     def __init__(self, paths: PathModel) -> None:
@@ -57,6 +58,7 @@ class MainWidget(QMainWindow):
         self.corrections_widget = CorrectionsGroup(paths=self._paths)
         self.common_controls_widget = CommonControlsGroup(paths=self._paths)
         self.diamond_images_widget = DiamondImagesGroup(paths=self._paths)
+        self.camera_widget = CameraGroup(paths=self._paths)
         self.sample_widget = SampleGroup(paths=self._paths)
 
         self._main_frame = QFrame()
@@ -66,6 +68,7 @@ class MainWidget(QMainWindow):
             corrections_group=self.corrections_widget,
             common_controls_group=self.common_controls_widget,
             diamond_images_group=self.diamond_images_widget,
+            camera_group=self.camera_widget,
             sample_group=self.sample_widget,
         )
         self.lbl_epics_status = QLabel()

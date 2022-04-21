@@ -37,7 +37,7 @@ from vresto.model import PathModel
 class SampleGroup(QGroupBox):
 
     _title = " Sample "
-    _max_size = QSize(510, 180)
+    _max_size = QSize(510, 155)
 
     def __init__(self, paths: PathModel) -> None:
         super(SampleGroup, self).__init__()

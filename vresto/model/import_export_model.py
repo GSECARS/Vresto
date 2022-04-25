@@ -75,7 +75,8 @@ class ImportExportModel:
         self.us_mirror_focus.move(value=objective_focus)
         self.ds_mirror_focus.move(value=objective_focus)
 
-    def is_writable(self, filepath: str) -> bool:
+    @staticmethod
+    def is_writable(filepath: str) -> bool:
         """Checks if there are sufficient permission to write to the specified directory."""
         filepath += "\\permissions.txt"
         try:

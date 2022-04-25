@@ -21,10 +21,8 @@
 import os
 import time
 from datetime import datetime
-from typing import List
-from epics import caput
 from qtpy.QtCore import QObject, Signal
-from qtpy.QtWidgets import QFileDialog, QLineEdit
+from qtpy.QtWidgets import QFileDialog, QLineEdit, QMessageBox
 
 from vresto.model import (
     CorrectionsModel,
@@ -32,7 +30,6 @@ from vresto.model import (
     DoubleValuePV,
     ImportExportModel,
     EpicsModel,
-    EpicsConfig,
 )
 from vresto.widget.groups import CommonControlsGroup
 from vresto.widget.custom import MsgBox
@@ -261,12 +258,22 @@ class CommonControlsGroupController(QObject):
                         )
                         return None
 
-                    self._ie_model.load_position(
-                        vertical_pos=vertical_position,
-                        horizontal_pos=horizontal_position,
-                        real_pos=real_position,
-                        objective_focus=objective_focus,
+                    user_response = QMessageBox.question(
+                        self._widget, "Move confirmation",
+                        f"Are you sure you want to move to the following positions?\n"
+                        f"Vertical: {vertical_position}\n"
+                        f"Horizontal: {horizontal_position}\n"
+                        f"Focus: {virtual_position}\n"
+                        f"Objective focus: {objective_focus}"
                     )
+
+                    if user_response == QMessageBox.Yes:
+                        self._ie_model.load_position(
+                            vertical_pos=vertical_position,
+                            horizontal_pos=horizontal_position,
+                            real_pos=real_position,
+                            objective_focus=objective_focus,
+                        )
                 else:
                     MsgBox(
                         msg="Loading the file failed. Please make sure that the file format is correct."

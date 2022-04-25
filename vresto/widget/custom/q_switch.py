@@ -21,7 +21,7 @@
 from typing import Optional
 from qtpy.QtWidgets import QAbstractButton, QWidget, QSizePolicy
 from qtpy.QtGui import QColor, QPalette, QPainter
-from qtpy.QtCore import QSize, QEvent, Qt, QPropertyAnimation
+from qtpy.QtCore import QSize, QEvent, Qt, QPropertyAnimation, Property
 
 
 class QSwitch(QAbstractButton):
@@ -137,28 +137,28 @@ class QSwitch(QAbstractButton):
             2 * self._thumb_radius,
         )
 
-    def setChecked(self, checked):
-        super().setChecked(checked)
-        self.offset = self._end_offset[checked]()
+    def setChecked(self, status: bool) -> None:
+        super().setChecked(status)
+        self._offset = self._end_offset[status]()
 
-    def mouseReleaseEvent(self, event):
+    def mouseReleaseEvent(self, event: QEvent) -> None:
         super().mouseReleaseEvent(event)
         if event.button() == Qt.LeftButton:
-            anim = QPropertyAnimation(self, b'offset', self)
-            anim.setDuration(120)
-            anim.setStartValue(self._offset)
-            anim.setEndValue(self._end_offset[self.isChecked()]())
-            anim.start()
+            animation = QPropertyAnimation(self, b'offset', self)
+            animation.setDuration(120)
+            animation.setStartValue(self._offset)
+            animation.setEndValue(self._end_offset[self.isChecked()]())
+            animation.start()
 
-    def enterEvent(self, event):
+    def enterEvent(self, event: QEvent) -> None:
         self.setCursor(Qt.PointingHandCursor)
         super().enterEvent(event)
 
-    @property
-    def offset(self) -> float:
+    @Property(int)
+    def offset(self):
         return self._offset
 
     @offset.setter
-    def offset(self, value: float) -> None:
+    def offset(self, value):
         self._offset = value
         self.update()

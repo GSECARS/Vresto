@@ -20,3 +20,4 @@
 
 from vresto.widget.custom.msg_box import MsgBox
 from vresto.widget.custom.q_line import QLine
+from vresto.widget.custom.q_switch import QSwitch

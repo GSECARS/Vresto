@@ -18,6 +18,36 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 
-from vresto.widget.alignment_widget import AlignmentWidget
-from vresto.widget.expert_widget import ExpertWidget
-from vresto.widget.main_widget import MainWidget
+import os
+from qtpy.QtWidgets import QWidget, QGridLayout
+
+from vresto.model import PathModel
+
+
+class ExpertWidget(QWidget):
+    """Creates an instance of the alignment widget."""
+
+    def __init__(
+        self,
+        paths: PathModel,
+    ) -> None:
+        super(ExpertWidget, self).__init__()
+
+        self._paths = paths
+
+        self._configure_expert_widget()
+        self._layout_expert_widget()
+
+    def _configure_expert_widget(self) -> None:
+        # Load expert qss
+        self.setStyleSheet(
+            open(os.path.join(self._paths.qss_path, "expert.qss"), "r").read()
+        )
+
+    def _layout_expert_widget(self) -> None:
+        """Creates the layout for the expert widget."""
+        # Add widgets to layout
+        layout = QGridLayout()
+
+        # Set the layout
+        self.setLayout(layout)

@@ -33,7 +33,7 @@ from qtpy.QtCore import QSize
 from qtpy.QtGui import QIcon, QCloseEvent
 
 from vresto.model import PathModel
-from vresto.widget import AlignmentWidget
+from vresto.widget import AlignmentWidget, ExpertWidget
 from vresto.widget.groups import (
     PinholeGroup,
     MicroscopeGroup,
@@ -76,6 +76,10 @@ class MainWidget(QMainWindow):
             sample_group=self.sample_widget,
         )
 
+        self.expert_widget = ExpertWidget(
+            paths=self._paths
+        )
+
         self._main_frame = QFrame()
         self._tab_widget = QTabWidget()
         self.lbl_epics_status = QLabel()
@@ -116,6 +120,7 @@ class MainWidget(QMainWindow):
         """Configures the main tab widget."""
         # Add tabs
         self._tab_widget.addTab(self.alignment_widget, "ALIGNMENT")
+        self._tab_widget.addTab(self.expert_widget, "EXPERT")
 
     def _configure_epics_status_widgets(self) -> None:
         """Configures the epics status widgets."""

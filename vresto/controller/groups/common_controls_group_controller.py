@@ -123,8 +123,8 @@ class CommonControlsGroupController(QObject):
         # Check filepath permissions
         filepath = "\\".join(list(self._path.readback.split("\\")[0:-1]))
 
-        if not self._ie_model.is_writable(current_filepath):
-            MsgBox(msg="Unsufficient directory permission.")
+        if not self._ie_model.is_writable(filepath):
+            MsgBox(msg="Insufficient directory permission.")
             return None
 
         filename, _ = QFileDialog.getSaveFileName(
@@ -189,9 +189,9 @@ class CommonControlsGroupController(QObject):
 
                     user_response = QMessageBox.question(
                         self._widget, "Move confirmation",
-                        f"Are you sure you want to move to the following positions?"
-                        f"Vertical: {vertical_position}"
-                        f"Horizontal: {horizontal_position}"
+                        f"Are you sure you want to move to the following positions?\n"
+                        f"Vertical: {vertical_position}\n"
+                        f"Horizontal: {horizontal_position}\n"
                         f"Focus: {virtual_position}"
                     )
 

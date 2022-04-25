@@ -43,7 +43,7 @@ class CommonControlsGroup(QFrame):
 
         self.btn_stop_all = QPushButton("STOP")
         self.btn_reset = QPushButton("RESET")
-        self.btn_save = QPushButton("SAVE")
+        self.btn_save = QPushButton("QUICK SAVE")
         self.btn_save_as = QPushButton("SAVE AS")
         self.btn_load_correction = QPushButton("LOAD POSITION")
 

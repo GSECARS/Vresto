@@ -151,7 +151,7 @@ class CommonControlsGroupController(QObject):
         # Check filepath permissions
         filepath = "\\".join(list(self._path.readback.split("\\")[0:-2]))
         if not self._ie_model.is_writable(filepath):
-            MsgBox(msg="Unsufficient directory permission.")
+            MsgBox(msg="Insufficient directory permission.")
             return None
 
         filename, _ = QFileDialog.getSaveFileName(

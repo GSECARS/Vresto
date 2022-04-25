@@ -263,7 +263,7 @@ class CommonControlsGroupController(QObject):
                         f"Are you sure you want to move to the following positions?\n"
                         f"Vertical: {vertical_position}\n"
                         f"Horizontal: {horizontal_position}\n"
-                        f"Focus: {virtual_position}\n"
+                        f"Focus: {real_position}\n"
                         f"Objective focus: {objective_focus}"
                     )
 

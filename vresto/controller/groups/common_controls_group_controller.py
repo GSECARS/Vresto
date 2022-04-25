@@ -128,7 +128,7 @@ class CommonControlsGroupController(QObject):
         if not os.path.exists(filepath):
             os.mkdir(filepath)
 
-        filename = os.path.join(filepath, f"correction_{timestamp}.cor")
+        filename = os.path.join(filepath, f"correction_{timestamp}.txt")
 
         self._ie_model.save_correction(
             filename=filename,
@@ -150,7 +150,7 @@ class CommonControlsGroupController(QObject):
 
         # Check filepath permissions
         filepath = "\\".join(list(self._path.readback.split("\\")[0:-2]))
-        if not self._ie_model.is_writable(current_filepath):
+        if not self._ie_model.is_writable(filepath):
             MsgBox(msg="Unsufficient directory permission.")
             return None
 
@@ -158,7 +158,7 @@ class CommonControlsGroupController(QObject):
             parent=self._widget,
             caption="Save File",
             directory=filepath,
-            filter="Correction File (*.cor)",
+            filter="Text File (*.txt)",
             options=options,
         )
 
@@ -186,7 +186,7 @@ class CommonControlsGroupController(QObject):
             parent=self._widget,
             caption="Open file",
             directory=filepath,
-            filter="Correction File (*.cor)",
+            filter="Text File (*.txt)",
             options=options,
         )
 

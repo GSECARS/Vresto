@@ -41,7 +41,7 @@ class ImportExportModel:
         virtual_position: float,
         timestamp: str,
     ) -> None:
-        """Saves the correction positions to a .cor file."""
+        """Saves the correction positions to a .txt file."""
 
         # IDD Position
         vertical_position = self.vertical.readback

@@ -40,7 +40,7 @@ class CorrectionsModel:
     ) -> float:
         """Calculates and returns the diamond position."""
         diamond_thickness /= self._refraction_index
-        return round(virtual_position + diamond_thickness + self._refraction_index, 4)
+        return round(virtual_position + diamond_thickness, 4)
 
     @staticmethod
     def get_real_position(diamond_thickness: float, diamond_position: float) -> float:

@@ -39,7 +39,7 @@ class ImportExportModel:
         virtual_position: float,
         timestamp: str,
     ) -> None:
-        """Saves the correction positions to a .cor file."""
+        """Saves the correction positions to a .txt file."""
 
         # IDD Position
         vertical_position = self.vertical.readback
@@ -82,5 +82,4 @@ class ImportExportModel:
         except OSError as error:
             if error.errno == errno.EACCES:
                 return False
-            raise
         return True

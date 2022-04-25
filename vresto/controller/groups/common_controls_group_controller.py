@@ -22,7 +22,7 @@ import os
 import time
 from datetime import datetime
 from qtpy.QtCore import QObject, Signal
-from qtpy.QtWidgets import QFileDialog, QLineEdit
+from qtpy.QtWidgets import QFileDialog, QLineEdit, QMessageBox
 
 from vresto.model import (
     CorrectionsModel,
@@ -100,7 +100,7 @@ class CommonControlsGroupController(QObject):
         if not os.path.exists(filepath):
             os.mkdir(filepath)
 
-        filename = os.path.join(filepath, f"correction_{timestamp}.cor")
+        filename = os.path.join(filepath, f"correction_{timestamp}.txt")
 
         self._ie_model.save_correction(
             filename=filename,
@@ -121,7 +121,8 @@ class CommonControlsGroupController(QObject):
         options = QFileDialog.Options()
 
         # Check filepath permissions
-        filepath = "\\".join(list(self._path.readback.split("\\")[0:-2]))
+        filepath = "\\".join(list(self._path.readback.split("\\")[0:-1]))
+
         if not self._ie_model.is_writable(current_filepath):
             MsgBox(msg="Unsufficient directory permission.")
             return None
@@ -130,7 +131,7 @@ class CommonControlsGroupController(QObject):
             parent=self._widget,
             caption="Save File",
             directory=filepath,
-            filter="Correction File (*.cor)",
+            filter="Text file (*.txt)",
             options=options,
         )
 
@@ -150,7 +151,7 @@ class CommonControlsGroupController(QObject):
         dialog.setFileMode(QFileDialog.ExistingFile)
 
         filepath = os.path.join(
-            "\\".join(list(self._path.readback.split("\\")[0:-2])), "Corrections"
+            "\\".join(list(self._path.readback.split("\\")[0:-1])), "Corrections"
         )
         options = QFileDialog.Options()
 
@@ -158,7 +159,7 @@ class CommonControlsGroupController(QObject):
             parent=self._widget,
             caption="Open file",
             directory=filepath,
-            filter="Correction File (*.cor)",
+            filter="Text file (*.txt)",
             options=options,
         )
 
@@ -185,11 +186,21 @@ class CommonControlsGroupController(QObject):
                     and horizontal_position is not None
                     and virtual_position is not None
                 ):
-                    self._ie_model.load_position(
-                        vertical_pos=vertical_position,
-                        horizontal_pos=horizontal_position,
-                        virtual_position=virtual_position,
+
+                    user_response = QMessageBox.question(
+                        self._widget, "Move confirmation",
+                        f"Are you sure you want to move to the following positions?"
+                        f"Vertical: {vertical_position}"
+                        f"Horizontal: {horizontal_position}"
+                        f"Focus: {virtual_position}"
                     )
+
+                    if user_response == QMessageBox.Yes:
+                        self._ie_model.load_position(
+                            vertical_pos=vertical_position,
+                            horizontal_pos=horizontal_position,
+                            virtual_position=virtual_position,
+                        )
                 else:
                     MsgBox(
                         msg="Loading the file failed. Please make sure that the file format is correct."
@@ -207,7 +218,7 @@ class CommonControlsGroupController(QObject):
                 self._station_stop.moving = False
 
             custom_path = os.path.join(
-                "\\".join(list(self._path.readback.split("\\")[0:-2]))
+                "\\".join(list(self._path.readback.split("\\")[0:-1]))
             )
 
             if custom_path != self._latest_path:

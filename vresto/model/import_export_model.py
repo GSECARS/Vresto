@@ -18,6 +18,8 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 
+import os
+import errno
 from dataclasses import dataclass, field
 
 from vresto.model import DoubleValuePV
@@ -68,3 +70,17 @@ class ImportExportModel:
         self.vertical.move(value=vertical_pos)
         self.horizontal.move(value=horizontal_pos)
         self.focus.move(value=virtual_position)
+
+    @staticmethod
+    def is_writable(filepath: str) -> bool:
+        """Checks if there are sufficient permission to write to the specified directory."""
+        filepath += "\\permissions.txt"
+        try:
+            with open(filepath, "w") as permissions_file:
+                permissions_file.write("Write test")
+            os.remove(filepath)
+        except OSError as error:
+            if error.errno == errno.EACCES:
+                return False
+            raise
+        return True

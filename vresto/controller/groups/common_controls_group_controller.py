@@ -88,9 +88,14 @@ class CommonControlsGroupController(QObject):
             return None
 
         timestamp = datetime.now().strftime("%m.%d.%Y_%H.%M.%S")
-        filepath = os.path.join(
-            "\\".join(list(self._path.readback.split("\\")[0:-2])), "Corrections"
-        )
+
+        # Check filepath permissions
+        current_filepath = "\\".join(list(self._path.readback.split("\\")[0:-2]))
+        if not self._ie_model.is_writable(current_filepath):
+            MsgBox(msg="Unsufficient directory permission.")
+            return None
+
+        filepath = os.path.join(current_filepath, "Corrections")
 
         if not os.path.exists(filepath):
             os.mkdir(filepath)
@@ -114,9 +119,12 @@ class CommonControlsGroupController(QObject):
 
         timestamp = datetime.now().strftime("%m.%d.%Y_%H.%M.%S")
         options = QFileDialog.Options()
-        filepath = os.path.join(
-            "\\".join(list(self._path.readback.split("\\")[0:-2])), "Corrections"
-        )
+
+        # Check filepath permissions
+        current_filepath = "\\".join(list(self._path.readback.split("\\")[0:-2]))
+        if not self._ie_model.is_writable(current_filepath):
+            MsgBox(msg="Unsufficient directory permission.")
+            return None
 
         filename, _ = QFileDialog.getSaveFileName(
             parent=self._widget,

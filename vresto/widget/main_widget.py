@@ -38,6 +38,7 @@ from vresto.widget.groups import (
     PinholeGroup,
     PinholeExpertGroup,
     MicroscopeGroup,
+    MicroscopeExpertGroup,
     CorrectionsGroup,
     CommonControlsGroup,
     DiamondImagesGroup,
@@ -61,6 +62,7 @@ class MainWidget(QMainWindow):
         self.pinhole_widget = PinholeGroup(paths=self._paths)
         self.pinhole_expert_widget = PinholeExpertGroup(paths=self._paths)
         self.microscope_widget = MicroscopeGroup(paths=self._paths)
+        self.microscope_expert_widget = MicroscopeExpertGroup(paths=self._paths)
         self.corrections_widget = CorrectionsGroup(paths=self._paths)
         self.common_controls_widget = CommonControlsGroup(paths=self._paths)
         self.diamond_images_widget = DiamondImagesGroup(paths=self._paths)
@@ -81,6 +83,7 @@ class MainWidget(QMainWindow):
         self.expert_widget = ExpertWidget(
             paths=self._paths,
             pinhole_expert_group=self.pinhole_expert_widget,
+            microscope_expert_group=self.microscope_expert_widget,
         )
 
         self._main_frame = QFrame()

@@ -21,6 +21,7 @@
 from vresto.widget.groups.pinhole_group import PinholeGroup
 from vresto.widget.groups.pinhole_expert_group import PinholeExpertGroup
 from vresto.widget.groups.microscope_group import MicroscopeGroup
+from vresto.widget.groups.microscope_expert_group import MicroscopeExpertGroup
 from vresto.widget.groups.corrections_group import CorrectionsGroup
 from vresto.widget.groups.common_controls_group import CommonControlsGroup
 from vresto.widget.groups.diamond_images_group import DiamondImagesGroup

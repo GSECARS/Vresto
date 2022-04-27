@@ -24,6 +24,7 @@ from qtpy.QtWidgets import QWidget, QGridLayout
 from vresto.widget.groups import (
     PinholeExpertGroup,
     MicroscopeExpertGroup,
+    MirrorExpertGroup,
 )
 from vresto.model import PathModel
 
@@ -36,12 +37,14 @@ class ExpertWidget(QWidget):
         paths: PathModel,
         pinhole_expert_group: PinholeExpertGroup,
         microscope_expert_group: MicroscopeExpertGroup,
+        mirror_expert_group: MirrorExpertGroup,
     ) -> None:
         super(ExpertWidget, self).__init__()
 
         self._paths = paths
         self.pinhole_expert_widget = pinhole_expert_group
         self.microscope_expert_widget = microscope_expert_group
+        self.mirror_expert_widget = mirror_expert_group
 
         self._configure_expert_widget()
         self._layout_expert_widget()
@@ -58,6 +61,8 @@ class ExpertWidget(QWidget):
         layout = QGridLayout()
         layout.addWidget(self.pinhole_expert_widget, 0, 0, 1, 1)
         layout.addWidget(self.microscope_expert_widget, 0, 1, 1, 3)
+        layout.addWidget(self.mirror_expert_widget, 1, 0, 1, 1)
+        layout.setRowStretch(2, 1)
 
         # Set the layout
         self.setLayout(layout)

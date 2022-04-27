@@ -45,6 +45,7 @@ from vresto.widget.groups import (
     MirrorGroup,
     MirrorExpertGroup,
     SampleGroup,
+    SampleExpertGroup,
 )
 
 
@@ -70,6 +71,7 @@ class MainWidget(QMainWindow):
         self.mirror_widget = MirrorGroup(paths=self._paths)
         self.mirror_expert_widget = MirrorExpertGroup(paths=self._paths)
         self.sample_widget = SampleGroup(paths=self._paths)
+        self.sample_expert_widget = SampleExpertGroup(paths=self._paths)
 
         self.alignment_widget = AlignmentWidget(
             paths=self._paths,
@@ -87,6 +89,7 @@ class MainWidget(QMainWindow):
             pinhole_expert_group=self.pinhole_expert_widget,
             microscope_expert_group=self.microscope_expert_widget,
             mirror_expert_group=self.mirror_expert_widget,
+            sample_expert_group=self.sample_expert_widget,
         )
 
         self._main_frame = QFrame()

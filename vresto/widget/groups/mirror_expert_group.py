@@ -19,7 +19,7 @@
 # ----------------------------------------------------------------------
 
 import os
-from qtpy.QtWidgets import QGroupBox, QHBoxLayout, QPushButton, QLabel, QGridLayout, QLineEdit
+from qtpy.QtWidgets import QGroupBox, QVBoxLayout, QPushButton, QLabel, QGridLayout, QLineEdit
 from qtpy.QtCore import Qt, QSize
 
 from vresto.model import PathModel
@@ -28,7 +28,7 @@ from vresto.model import PathModel
 class MirrorExpertGroup(QGroupBox):
 
     _title = " Laser-mirrors "
-    _max_size = QSize(280, 250)
+    _max_size = QSize(280, 200)
 
     def __init__(self, paths: PathModel) -> None:
         super(MirrorExpertGroup, self).__init__()
@@ -112,7 +112,7 @@ class MirrorExpertGroup(QGroupBox):
     def _set_widget_sizes(self) -> None:
 
         for button in self._buttons:
-            button.setMinimumSize(100, 30)
+            button.setMinimumSize(100, 25)
             button.setMaximumHeight(50)
 
         [step_button.setFixedSize(40, 20) for step_button in self._step_buttons]
@@ -121,14 +121,14 @@ class MirrorExpertGroup(QGroupBox):
         self.setMaximumSize(self._max_size)
 
     def _layout_group(self) -> None:
-        layout_step_widgets = QHBoxLayout()
+        layout_step_widgets = QVBoxLayout()
         layout_step_widgets.setContentsMargins(0, 0, 0, 0)
         layout_step_widgets.setSpacing(2)
         layout_step_widgets.addWidget(self.lbl_step, alignment=Qt.AlignmentFlag.AlignCenter)
         layout_step_widgets.addStretch(1)
-        layout_step_widgets.addWidget(self.btn_step_1, alignment=Qt.AlignmentFlag.AlignRight)
+        layout_step_widgets.addWidget(self.btn_step_1, alignment=Qt.AlignmentFlag.AlignCenter)
         layout_step_widgets.addWidget(self.btn_step_2, alignment=Qt.AlignmentFlag.AlignHCenter)
-        layout_step_widgets.addWidget(self.btn_step_3, alignment=Qt.AlignmentFlag.AlignLeft)
+        layout_step_widgets.addWidget(self.btn_step_3, alignment=Qt.AlignmentFlag.AlignCenter)
 
         layout = QGridLayout()
         layout.setSpacing(10)
@@ -144,6 +144,6 @@ class MirrorExpertGroup(QGroupBox):
         layout.addWidget(self.btn_us_plus, 3, 2, 1, 2)
         layout.addWidget(self.lne_us, 4, 2, 1, 2)
         layout.addWidget(self.btn_us_minus, 5, 2, 1, 2)
-        layout.addLayout(layout_step_widgets, 6, 0, 1, 4)
+        layout.addLayout(layout_step_widgets, 3, 5, 3, 1)
 
         self.setLayout(layout)

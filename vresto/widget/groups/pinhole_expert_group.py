@@ -129,7 +129,7 @@ class PinholeExpertGroup(QGroupBox):
 
     def _set_widget_sizes(self) -> None:
         [step_button.setFixedSize(40, 20) for step_button in self._step_buttons]
-        [lne.setFixedSize(75, 25) for lne in self._lne_boxes]
+        [lne.setFixedSize(60, 20) for lne in self._lne_boxes]
 
         self.setMaximumSize(self._max_size)
 
@@ -168,7 +168,7 @@ class PinholeExpertGroup(QGroupBox):
         layout_pinhole_horizontal.addWidget(self.btn_pinhole_horizontal_plus)
 
         layout = QGridLayout()
-        layout.setSpacing(10)
+        layout.setSpacing(0)
         layout.addLayout(layout_pinhole_position, 0, 0, 1, 4)
         layout.addLayout(layout_pinhole_vertical, 1, 0, 1, 4)
         layout.addLayout(layout_pinhole_horizontal, 2, 0, 1, 4)

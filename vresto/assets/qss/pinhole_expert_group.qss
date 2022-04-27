@@ -1,0 +1,123 @@
+/* ----------------------------------------------------------------------
+* DAC-Corrections - Diamond Anvil Cell Corrections GUI software.
+* Author: Christofanis Skordas (skordasc@uchicago.edu)
+* Copyright (C) 2022  GSECARS, The University of Chicago
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* (at your option) any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <https://www.gnu.org/licenses/>.
+---------------------------------------------------------------------- */
+
+#lbl-step {
+    color: #e6e6e6;
+    font-family: "Times New Roman";
+    font-size: 12px;
+}
+
+#lbl-pinhole {
+    color: #e6e6e6;
+    font-family: "Times New Roman";
+    font-size: 16px;
+}
+
+#btn-pinhole {
+    background: #344152;
+    color: #e6e6e6;
+    border: 1px solid #e6e6e6;
+    font-family: "Times New Roman";
+    font-size: 16px;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+#btn-step {
+    background: #344152;
+    color: #bfbdbd;
+    font-family: "Times New Roman";
+    font-size: 12px;
+    border-radius: 4px;
+}
+
+#btn-step:hover{
+    background: #bfbdbd;
+    color: #344152;
+}
+
+#btn-step:pressed, #btn-step:checked{
+    background: #4acf6e;
+    border: none;
+    color: #222a35;
+}
+
+#btn-pinhole:hover, #btn-pinhole:focus {
+    background: #e6e6e6;
+    color: #344152;
+}
+
+#btn-pinhole:disabled, #btn-pinhole:pressed {
+    background: #4acf6e;
+    color: #222a35;
+    border: none;
+}
+
+#btn-plus {
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    color: #bfbdbd;
+    padding: 5px;
+    background: transparent;
+}
+
+#btn-plus:pressed {
+    border: none;
+    background: transparent;
+}
+
+#btn-plus:hover, #btn-plus:focus {
+    color: #4acf6e;
+}
+
+#btn-minus {
+    border: none;
+    font-size: 18px;
+    font-weight: bold;
+    color: #bfbdbd;
+    padding: 5px;
+    background: transparent;
+}
+
+#btn-minus:pressed {
+    border: none;
+    background: transparent;
+}
+
+#btn-minus:hover, #btn-minus:focus {
+    color: #4acf6e;
+}
+
+#lne-pinhole {
+    background-color: #344152;
+    color: #e6e6e6;
+    border: 1px solid #344152;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: "Times New Roman";
+}
+
+#group-pinhole {
+    border: 2px solid #4acf6e;
+}
+
+#group-pinhole::title {
+    color: #4acf6e;
+}

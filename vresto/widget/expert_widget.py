@@ -21,6 +21,9 @@
 import os
 from qtpy.QtWidgets import QWidget, QGridLayout
 
+from vresto.widget.groups import (
+    PinholeExpertGroup,
+)
 from vresto.model import PathModel
 
 
@@ -30,10 +33,12 @@ class ExpertWidget(QWidget):
     def __init__(
         self,
         paths: PathModel,
+        pinhole_expert_group: PinholeExpertGroup,
     ) -> None:
         super(ExpertWidget, self).__init__()
 
         self._paths = paths
+        self.pinhole_expert_widget = pinhole_expert_group
 
         self._configure_expert_widget()
         self._layout_expert_widget()
@@ -48,6 +53,7 @@ class ExpertWidget(QWidget):
         """Creates the layout for the expert widget."""
         # Add widgets to layout
         layout = QGridLayout()
+        layout.addWidget(self.pinhole_expert_widget, 0, 0, 1, 1)
 
         # Set the layout
         self.setLayout(layout)

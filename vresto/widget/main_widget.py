@@ -36,6 +36,7 @@ from vresto.model import PathModel
 from vresto.widget import AlignmentWidget, ExpertWidget
 from vresto.widget.groups import (
     PinholeGroup,
+    PinholeExpertGroup,
     MicroscopeGroup,
     CorrectionsGroup,
     CommonControlsGroup,
@@ -58,6 +59,7 @@ class MainWidget(QMainWindow):
 
         # Groups - Define groups below
         self.pinhole_widget = PinholeGroup(paths=self._paths)
+        self.pinhole_expert_widget = PinholeExpertGroup(paths=self._paths)
         self.microscope_widget = MicroscopeGroup(paths=self._paths)
         self.corrections_widget = CorrectionsGroup(paths=self._paths)
         self.common_controls_widget = CommonControlsGroup(paths=self._paths)
@@ -77,7 +79,8 @@ class MainWidget(QMainWindow):
         )
 
         self.expert_widget = ExpertWidget(
-            paths=self._paths
+            paths=self._paths,
+            pinhole_expert_group=self.pinhole_expert_widget,
         )
 
         self._main_frame = QFrame()

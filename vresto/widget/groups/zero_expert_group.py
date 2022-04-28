@@ -27,7 +27,7 @@ from vresto.model import PathModel
 class ZeroExpertGroup(QGroupBox):
 
     _title = " Zero "
-    _max_size = QSize(550, 200)
+    _max_size = QSize(850, 200)
 
     def __init__(self, paths: PathModel) -> None:
         super(ZeroExpertGroup, self).__init__()
@@ -82,7 +82,8 @@ class ZeroExpertGroup(QGroupBox):
         pass
 
     def _set_widget_sizes(self) -> None:
-        pass
+
+        self.setMaximumSize(self._max_size)
 
     def _layout_group(self) -> None:
         """Creates the layout for the zero expert group."""

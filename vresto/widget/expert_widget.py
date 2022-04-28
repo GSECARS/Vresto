@@ -22,6 +22,7 @@ import os
 from qtpy.QtWidgets import QWidget, QGridLayout
 
 from vresto.widget.groups import (
+    CommonControlsExpertGroup,
     PinholeExpertGroup,
     MicroscopeExpertGroup,
     MirrorExpertGroup,
@@ -37,6 +38,7 @@ class ExpertWidget(QWidget):
     def __init__(
         self,
         paths: PathModel,
+        common_control_expert_group: CommonControlsExpertGroup,
         pinhole_expert_group: PinholeExpertGroup,
         microscope_expert_group: MicroscopeExpertGroup,
         mirror_expert_group: MirrorExpertGroup,
@@ -46,6 +48,7 @@ class ExpertWidget(QWidget):
         super(ExpertWidget, self).__init__()
 
         self._paths = paths
+        self.common_control_expert_widget = common_control_expert_group
         self.pinhole_expert_widget = pinhole_expert_group
         self.microscope_expert_widget = microscope_expert_group
         self.mirror_expert_widget = mirror_expert_group
@@ -65,12 +68,13 @@ class ExpertWidget(QWidget):
         """Creates the layout for the expert widget."""
         # Add widgets to layout
         layout = QGridLayout()
-        layout.addWidget(self.pinhole_expert_widget, 0, 0, 1, 1)
-        layout.addWidget(self.microscope_expert_widget, 0, 1, 1, 3)
-        layout.addWidget(self.mirror_expert_widget, 1, 0, 1, 1)
-        layout.addWidget(self.sample_expert_widget, 1, 1, 1, 3)
-        layout.addWidget(self.zero_expert_widget, 2, 0, 1, 4)
-        layout.setRowStretch(3, 1)
+        layout.addWidget(self.common_control_expert_widget, 0, 0, 1, 4)
+        layout.addWidget(self.pinhole_expert_widget, 1, 0, 1, 1)
+        layout.addWidget(self.microscope_expert_widget, 1, 1, 1, 3)
+        layout.addWidget(self.mirror_expert_widget, 2, 0, 1, 1)
+        layout.addWidget(self.sample_expert_widget, 2, 1, 1, 3)
+        layout.addWidget(self.zero_expert_widget, 3, 0, 1, 4)
+        layout.setRowStretch(4, 1)
 
         # Set the layout
         self.setLayout(layout)

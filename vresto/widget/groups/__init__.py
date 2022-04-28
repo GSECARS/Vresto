@@ -24,6 +24,7 @@ from vresto.widget.groups.microscope_group import MicroscopeGroup
 from vresto.widget.groups.microscope_expert_group import MicroscopeExpertGroup
 from vresto.widget.groups.corrections_group import CorrectionsGroup
 from vresto.widget.groups.common_controls_group import CommonControlsGroup
+from vresto.widget.groups.common_controls_expert_group import CommonControlsExpertGroup
 from vresto.widget.groups.diamond_images_group import DiamondImagesGroup
 from vresto.widget.groups.mirror_group import MirrorGroup
 from vresto.widget.groups.mirror_expert_group import MirrorExpertGroup

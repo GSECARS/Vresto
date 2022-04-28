@@ -41,6 +41,7 @@ from vresto.widget.groups import (
     MicroscopeExpertGroup,
     CorrectionsGroup,
     CommonControlsGroup,
+    CommonControlsExpertGroup,
     DiamondImagesGroup,
     MirrorGroup,
     MirrorExpertGroup,
@@ -68,6 +69,7 @@ class MainWidget(QMainWindow):
         self.microscope_expert_widget = MicroscopeExpertGroup(paths=self._paths)
         self.corrections_widget = CorrectionsGroup(paths=self._paths)
         self.common_controls_widget = CommonControlsGroup(paths=self._paths)
+        self.common_controls_expert_widget = CommonControlsExpertGroup(paths=self._paths)
         self.diamond_images_widget = DiamondImagesGroup(paths=self._paths)
         self.mirror_widget = MirrorGroup(paths=self._paths)
         self.mirror_expert_widget = MirrorExpertGroup(paths=self._paths)
@@ -88,6 +90,7 @@ class MainWidget(QMainWindow):
 
         self.expert_widget = ExpertWidget(
             paths=self._paths,
+            common_control_expert_group=self.common_controls_expert_widget,
             pinhole_expert_group=self.pinhole_expert_widget,
             microscope_expert_group=self.microscope_expert_widget,
             mirror_expert_group=self.mirror_expert_widget,

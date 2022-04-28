@@ -88,10 +88,15 @@ class MirrorExpertGroup(QGroupBox):
             open(os.path.join(self._paths.qss_path, "mirror_expert_group.qss"), "r").read()
         )
 
+        self._configure_buttons()
         self._set_object_names()
         self._set_widget_sizes()
         self._set_tool_status_tips()
         self._layout_group()
+
+    def _configure_buttons(self) -> None:
+        for step_button in self._step_buttons:
+            step_button.setCheckable(True)
 
     def _set_object_names(self) -> None:
         """Sets all the object names for the group and the group widgets."""

@@ -28,6 +28,7 @@ from vresto.widget.groups import (
     MirrorExpertGroup,
     SampleExpertGroup,
     ZeroExpertGroup,
+    SavedPositionsExpertGroup,
 )
 from vresto.model import PathModel
 
@@ -44,6 +45,7 @@ class ExpertWidget(QWidget):
         mirror_expert_group: MirrorExpertGroup,
         sample_expert_group: SampleExpertGroup,
         zero_expert_group: ZeroExpertGroup,
+        saved_positions_expert_group: SavedPositionsExpertGroup,
     ) -> None:
         super(ExpertWidget, self).__init__()
 
@@ -54,6 +56,7 @@ class ExpertWidget(QWidget):
         self.mirror_expert_widget = mirror_expert_group
         self.sample_expert_widget = sample_expert_group
         self.zero_expert_widget = zero_expert_group
+        self.saved_positions_expert_widget = saved_positions_expert_group
 
         self._configure_expert_widget()
         self._layout_expert_widget()
@@ -74,7 +77,7 @@ class ExpertWidget(QWidget):
         layout.addWidget(self.mirror_expert_widget, 2, 0, 1, 1)
         layout.addWidget(self.sample_expert_widget, 2, 1, 1, 3)
         layout.addWidget(self.zero_expert_widget, 3, 0, 1, 4)
-        layout.setRowStretch(4, 1)
+        layout.addWidget(self.saved_positions_expert_widget, 4, 0, 1, 4)
 
         # Set the layout
         self.setLayout(layout)

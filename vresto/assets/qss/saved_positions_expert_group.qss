@@ -17,43 +17,52 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 ---------------------------------------------------------------------- */
 
-#lbl-mirror {
-    color: #e6e6e6;
-    font-family: "Times New Roman";
-    font-size: 13px;
-}
-
-#lbl-mirror-position {
-    color: #db8009;
-    font-family: "Calibri";
-    font-size: 16px;
-}
-
-#btn-mirrors {
+#btn-saved-positions {
     background: #344152;
     color: #e6e6e6;
     border: 1px solid #e6e6e6;
+    font-family: "Times New Roman";
+    font-size: 16px;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+#btn-saved-positions:hover, #btn-saved-positions:focus {
+    background: #e6e6e6;
+    color: #344152;
+}
+
+#btn-saved-positions:disabled, #btn-saved-positions:pressed {
+    background: #cf4a8f;
+    color: #222a35;
+    border: none;
+}
+
+#btn-update {
+    background: #cf4a8f;
+    color: #222a35;
+    border: 1px solid #cf4a8f;
     font-family: "Times New Roman";
     font-size: 13px;
     border-radius: 4px;
     padding: 5px;
 }
 
-#btn-mirrors:hover, #btn-mirrors:focus {
+#btn-update:hover, #btn-update:focus {
     background: #e6e6e6;
     color: #344152;
 }
 
-#btn-mirrors:disabled, #btn-mirrors:pressed {
-    background: #db8009;
+#btn-update:disabled, #btn-update:pressed {
+    background: #cf4a8f;
     color: #222a35;
     border: none;
 }
 
-#group-mirrors {
-    border: 2px solid #db8009;
+#group-saved-positions {
+    border: 2px solid #cf4a8f;
 }
 
-#group-mirrors::title {
-    color: #db8009;
+#group-saved-positions::title {
+    color: #cf4a8f;
 }

@@ -31,3 +31,4 @@ from vresto.widget.groups.mirror_expert_group import MirrorExpertGroup
 from vresto.widget.groups.sample_group import SampleGroup
 from vresto.widget.groups.sample_expert_group import SampleExpertGroup
 from vresto.widget.groups.zero_expert_group import ZeroExpertGroup
+from vresto.widget.groups.saved_positions_expert_group import SavedPositionsExpertGroup

@@ -48,6 +48,7 @@ from vresto.widget.groups import (
     SampleGroup,
     SampleExpertGroup,
     ZeroExpertGroup,
+    SavedPositionsExpertGroup,
 )
 
 
@@ -76,6 +77,7 @@ class MainWidget(QMainWindow):
         self.sample_widget = SampleGroup(paths=self._paths)
         self.sample_expert_widget = SampleExpertGroup(paths=self._paths)
         self.zero_expert_widget = ZeroExpertGroup(paths=self._paths)
+        self.saved_positions_expert_widget = SavedPositionsExpertGroup(paths=self._paths)
 
         self.alignment_widget = AlignmentWidget(
             paths=self._paths,
@@ -96,6 +98,7 @@ class MainWidget(QMainWindow):
             mirror_expert_group=self.mirror_expert_widget,
             sample_expert_group=self.sample_expert_widget,
             zero_expert_group=self.zero_expert_widget,
+            saved_positions_expert_group=self.saved_positions_expert_widget
         )
 
         self._main_frame = QFrame()

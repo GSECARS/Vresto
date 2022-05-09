@@ -19,7 +19,7 @@
 # ----------------------------------------------------------------------
 
 import os
-from qtpy.QtWidgets import QGroupBox, QVBoxLayout, QPushButton, QLabel, QGridLayout, QLineEdit
+from qtpy.QtWidgets import QGroupBox, QPushButton, QLabel, QGridLayout
 from qtpy.QtCore import Qt, QSize
 
 from vresto.model import PathModel
@@ -37,23 +37,13 @@ class MirrorExpertGroup(QGroupBox):
 
         self._lbl_ds = QLabel("DOWNSTREAM")
         self._lbl_us = QLabel("UPSTREAM")
+        self.lbl_ds_position = QLabel("Unknown")
+        self.lbl_us_position = QLabel("Unknown")
 
         self.btn_ds_out = QPushButton("OUT")
         self.btn_ds_in = QPushButton("IN")
         self.btn_us_out = QPushButton("OUT")
         self.btn_us_in = QPushButton("IN")
-        self.btn_us_plus = QPushButton("+")
-        self.btn_us_minus = QPushButton("-")
-        self.btn_ds_plus = QPushButton("+")
-        self.btn_ds_minus = QPushButton("-")
-        self.btn_step_1 = QPushButton()
-        self.btn_step_2 = QPushButton()
-        self.btn_step_3 = QPushButton()
-
-        self.lne_us = QLineEdit()
-        self.lne_ds = QLineEdit()
-
-        self.lbl_step = QLabel("Step (mm)")
 
         self._buttons = [
             self.btn_ds_out,
@@ -62,79 +52,43 @@ class MirrorExpertGroup(QGroupBox):
             self.btn_us_in,
         ]
 
-        self._plus_buttons = [
-            self.btn_us_plus,
-            self.btn_ds_plus,
-        ]
-
-        self._minus_buttons = [
-            self.btn_us_minus,
-            self.btn_ds_minus,
-        ]
-
-        self._step_buttons = [
-            self.btn_step_1,
-            self.btn_step_2,
-            self.btn_step_3,
-        ]
-
-        self._lne_boxes = [
-            self.lne_us,
-            self.lne_ds,
-        ]
-
         self.setTitle(self._title)
         self.setStyleSheet(
             open(os.path.join(self._paths.qss_path, "mirror_expert_group.qss"), "r").read()
         )
 
-        self._configure_buttons()
         self._set_object_names()
         self._set_widget_sizes()
         self._set_tool_status_tips()
         self._layout_group()
 
-    def _configure_buttons(self) -> None:
-        for step_button in self._step_buttons:
-            step_button.setCheckable(True)
-
     def _set_object_names(self) -> None:
         """Sets all the object names for the group and the group widgets."""
         self.setObjectName("group-mirrors")
         [button.setObjectName("btn-mirrors") for button in self._buttons]
-        [plus_button.setObjectName("btn-plus") for plus_button in self._plus_buttons]
-        [minus_button.setObjectName("btn-minus") for minus_button in self._minus_buttons]
-        [step_button.setObjectName("btn-step") for step_button in self._step_buttons]
-        [lne.setObjectName("lne-mirror") for lne in self._lne_boxes]
         self._lbl_ds.setObjectName("lbl-mirror")
         self._lbl_us.setObjectName("lbl-mirror")
-        self.lbl_step.setObjectName("lbl-step")
+        self.lbl_ds_position.setObjectName("lbl-mirror-position")
+        self.lbl_us_position.setObjectName("lbl-mirror-position")
 
     def _set_tool_status_tips(self) -> None:
         """Sets all the tool and status tips for the group."""
-        pass
+        self.lbl_ds_position.setStatusTip(
+            "The downstream mirror is currently located at the given value."
+        )
+        self.lbl_us_position.setStatusTip(
+            "The upstream mirror is currently located at the given value."
+        )
 
     def _set_widget_sizes(self) -> None:
 
         for button in self._buttons:
-            button.setMinimumSize(100, 25)
+            button.setMinimumSize(100, 30)
             button.setMaximumHeight(50)
-
-        [step_button.setFixedSize(40, 20) for step_button in self._step_buttons]
-        [lne.setFixedHeight(20) for lne in self._lne_boxes]
 
         self.setMaximumSize(self._max_size)
 
     def _layout_group(self) -> None:
-        layout_step_widgets = QVBoxLayout()
-        layout_step_widgets.setContentsMargins(0, 0, 0, 0)
-        layout_step_widgets.setSpacing(2)
-        layout_step_widgets.addWidget(self.lbl_step, alignment=Qt.AlignmentFlag.AlignCenter)
-        layout_step_widgets.addStretch(1)
-        layout_step_widgets.addWidget(self.btn_step_1, alignment=Qt.AlignmentFlag.AlignCenter)
-        layout_step_widgets.addWidget(self.btn_step_2, alignment=Qt.AlignmentFlag.AlignHCenter)
-        layout_step_widgets.addWidget(self.btn_step_3, alignment=Qt.AlignmentFlag.AlignCenter)
-
         layout = QGridLayout()
         layout.setSpacing(10)
         layout.addWidget(self._lbl_ds, 0, 0, 1, 2, alignment=Qt.AlignmentFlag.AlignCenter)
@@ -143,12 +97,7 @@ class MirrorExpertGroup(QGroupBox):
         layout.addWidget(self.btn_ds_in, 2, 0, 1, 2)
         layout.addWidget(self.btn_us_out, 1, 2, 1, 2)
         layout.addWidget(self.btn_us_in, 2, 2, 1, 2)
-        layout.addWidget(self.btn_ds_plus, 3, 0, 1, 2)
-        layout.addWidget(self.lne_ds, 4, 0, 1, 2)
-        layout.addWidget(self.btn_ds_minus, 5, 0, 1, 2)
-        layout.addWidget(self.btn_us_plus, 3, 2, 1, 2)
-        layout.addWidget(self.lne_us, 4, 2, 1, 2)
-        layout.addWidget(self.btn_us_minus, 5, 2, 1, 2)
-        layout.addLayout(layout_step_widgets, 3, 5, 3, 1)
+        layout.addWidget(self.lbl_ds_position, 3, 0, 1, 2, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(self.lbl_us_position, 3, 2, 1, 2, alignment=Qt.AlignmentFlag.AlignCenter)
 
         self.setLayout(layout)

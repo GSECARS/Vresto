@@ -104,7 +104,7 @@ class MicroscopeGroup(QGroupBox):
         layout.addWidget(self.btn_microscope_in, 1, 0, 1, 1)
         layout.addWidget(self.btn_zoom_out, 0, 1, 1, 1)
         layout.addWidget(self.slider_reflected, 0, 3, 2, 1)
-        layout.addWidget(self.slider_reflected, 0, 4, 2, 1)
+        layout.addWidget(self.slider_transmitted, 0, 4, 2, 1)
         layout.addWidget(self.btn_zoom_in, 1, 1, 1, 1)
         layout.addWidget(self.lbl_microscope_position, 2, 0, 1, 1, alignment=Qt.AlignmentFlag.AlignCenter)
         layout.addWidget(self.lbl_zoom_position, 2, 1, 1, 1, alignment=Qt.AlignmentFlag.AlignCenter)

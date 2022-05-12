@@ -37,7 +37,9 @@ from vresto.widget.groups import (
     PinholeGroup,
     MicroscopeGroup,
     CorrectionsGroup,
+    CommonControlsGroup,
     DiamondImagesGroup,
+    SampleGroup,
 )
 
 
@@ -56,11 +58,13 @@ class MainWidget(QMainWindow):
         self.pinhole_widget = PinholeGroup(paths=self._paths)
         self.microscope_widget = MicroscopeGroup(paths=self._paths)
         self.corrections_widget = CorrectionsGroup(paths=self._paths)
+        self.common_controls_widget = CommonControlsGroup(paths=self._paths)
         self.diamond_images_widget = DiamondImagesGroup(paths=self._paths)
+        self.sample_widget = SampleGroup(paths=self._paths)
 
         self._main_frame = QFrame()
         self._tab_widget = QTabWidget()
-        self.alignment_widget = None
+        self.alignment_widget = self.common_controls_widget
         self.lbl_epics_status = QLabel()
         self._lbl_hutch = QLabel(self._hutch)
 

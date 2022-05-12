@@ -40,8 +40,25 @@ class EpicsConnectionError(Exception):
 
 class EpicsConfig(Enum):
     """Empty Enum to be populated with PVs"""
+    pinhole = "13BMD:m27"
 
-    pass
+    sample_horizontal = "13BMD:m89"
+    sample_focus = "13BMD:m91"
+    sample_vertical = "13BMD:m90"
+    sample_omega = "13BMD:m92"
+
+    microscope = "13BMD:m23"
+    microscope_zoom = "13BMD:m71"
+    microscope_light_reflected = "13BMD:DAC1_7"
+    microscope_light_transmitted = "13BMD:DAC1_6"
+
+    us_mirror = "13BMD:m65"
+    ds_mirror = "13BMD:m68"
+
+    xps_stop = "13BMD_DAC_XPS:allstop"
+    station_stop = "13BMD:allstop"
+
+    path = "13BMDLF1:cam1:FilePath"
 
 
 @dataclass(frozen=False, slots=True)

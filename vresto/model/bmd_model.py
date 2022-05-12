@@ -156,6 +156,13 @@ class BMDModel:
             monitor=True,
         )
         self._add_pv(
+            pv_name="microscope_transmitted_switch",
+            movable=True,
+            limited=False,
+            rbv_extension=False,
+            monitor=True,
+        )
+        self._add_pv(
             pv_name="us_mirror",
             movable=True,
             limited=True,

@@ -52,6 +52,7 @@ class EpicsConfig(Enum):
     microscope_focus = "13BMD:m77"
     microscope_light_reflected = "13BMD:DAC1_7"
     microscope_light_transmitted = "13BMD:DAC1_6"
+    microscope_transmitted_switch = "13BMD:Unidig1Bo23"
 
     us_mirror = "13BMD:m65"
     ds_mirror = "13BMD:m68"

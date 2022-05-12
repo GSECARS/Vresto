@@ -19,10 +19,11 @@
 # ----------------------------------------------------------------------
 
 from vresto.model.corrections_model import CorrectionsModel
-from vresto.model.epics_model import EpicsModel
+from vresto.model.epics_model import EpicsModel, EpicsConfig
 from vresto.model.path_model import PathModel
 from vresto.model.pv_model import PVModel, DoubleValuePV, StringValuePV
 from vresto.model.event_filter_model import EventFilterModel
 from vresto.model.qt_worker_model import QtWorkerModel
+from vresto.model.bmd_model import BMDModel
 from vresto.model.import_export_model import ImportExportModel
 from vresto.model.main_model import MainModel

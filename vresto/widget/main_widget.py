@@ -33,13 +33,16 @@ from qtpy.QtCore import QSize
 from qtpy.QtGui import QIcon, QCloseEvent
 
 from vresto.model import PathModel
+from vresto.widget.groups import (
+    DiamondImagesGroup,
+)
 
 
 class MainWidget(QMainWindow):
     """The main application widget."""
 
     _size: QSize = QSize(780, 860)
-    _hutch: str = ""
+    _hutch: str = "13-BMD"
 
     def __init__(self, paths: PathModel) -> None:
         super(MainWidget, self).__init__()
@@ -47,6 +50,7 @@ class MainWidget(QMainWindow):
         self._paths = paths
 
         # Groups - Define groups below
+        self.diamond_images_widget = DiamondImagesGroup(paths=self._paths)
 
         self._main_frame = QFrame()
         self._tab_widget = QTabWidget()

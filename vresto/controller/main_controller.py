@@ -25,6 +25,9 @@ from qtpy.QtCore import QObject, Signal
 
 from vresto.widget import MainWidget
 from vresto.model import MainModel, QtWorkerModel, BMDModel, ImportExportModel
+from vresto.controller.groups import (
+    PinholeGroupController,
+)
 
 
 class MainController(QObject):
@@ -38,7 +41,22 @@ class MainController(QObject):
         self._app = QApplication(sys.argv)
         self._model = MainModel()
         self._bmd = BMDModel()
+        self._import_export = ImportExportModel(
+            vertical=self._bmd.sample_vertical,
+            horizontal=self._bmd.sample_horizontal,
+            focus=self._bmd.sample_focus,
+            microscope_focus=self._bmd.microscope_focus,
+        )
         self._widget = MainWidget(self._model.paths)
+
+        # Init controller groups
+        self.pinhole_group = PinholeGroupController(
+            widget=self._widget.pinhole_widget,
+            epics_model=self._model.epics,
+            pinhole_stage=self._bmd.pinhole,
+            omega_stage=self._bmd.sample_omega,
+            us_mirror=self._bmd.us_mirror,
+        )
 
         # Event helpers
         self._time_started = None
@@ -82,6 +100,7 @@ class MainController(QObject):
 
         while not self._widget.terminated:
             self._check_epics_connection()
+            self.pinhole_group.update_pinhole_position()
             time.sleep(0.05)
 
         # Clear camonitor instances after exiting the loop

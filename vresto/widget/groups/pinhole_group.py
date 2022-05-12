@@ -45,6 +45,8 @@ class PinholeGroup(QGroupBox):
 
         self.lbl_position = QLabel("Unknown")
         self.btn_in = QPushButton("IN")
+        self.btn_15 = QPushButton("-15")
+        self.btn_20 = QPushButton("-20")
         self.btn_out = QPushButton("OUT")
         self.lbl_custom = QLabel("Custom (mm):")
         self.lne_custom = QLineEdit()
@@ -67,6 +69,8 @@ class PinholeGroup(QGroupBox):
         """Sets all the object names for the group and the group widgets."""
         self.setObjectName("group-pinhole")
         self.btn_in.setObjectName("btn-pinhole")
+        self.btn_15.setObjectName("btn-pinhole")
+        self.btn_20.setObjectName("btn-pinhole")
         self.btn_out.setObjectName("btn-pinhole")
         self.lbl_custom.setObjectName("lbl-custom")
         self.lne_custom.setObjectName("lne-custom")
@@ -81,7 +85,7 @@ class PinholeGroup(QGroupBox):
         )
 
     def _set_widget_sizes(self) -> None:
-        buttons = [self.btn_in, self.btn_out]
+        buttons = [self.btn_in, self.btn_15, self.btn_20, self.btn_out]
 
         for button in buttons:
             button.setMinimumSize(60, 30)
@@ -98,6 +102,8 @@ class PinholeGroup(QGroupBox):
         layout_top_buttons.setContentsMargins(0, 0, 0, 0)
         layout_top_buttons.setSpacing(5)
         layout_top_buttons.addWidget(self.btn_in)
+        layout_top_buttons.addWidget(self.btn_15)
+        layout_top_buttons.addWidget(self.btn_20)
         layout_top_buttons.addWidget(self.btn_out)
 
         layout = QGridLayout()

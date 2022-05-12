@@ -37,6 +37,7 @@ class BMDModel:
     microscope_focus: DoubleValuePV = field(init=False, repr=False, compare=False)
     microscope_light_reflected: DoubleValuePV = field(init=False, repr=False, compare=False)
     microscope_light_transmitted: DoubleValuePV = field(init=False, repr=False, compare=False)
+    microscope_transmitted_switch: DoubleValuePV = field(init=False, repr=False, compare=False)
     us_mirror: DoubleValuePV = field(init=False, repr=False, compare=False)
     ds_mirror: DoubleValuePV = field(init=False, repr=False, compare=False)
     xps_stop: DoubleValuePV = field(init=False, repr=False, compare=False)

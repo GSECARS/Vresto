@@ -49,6 +49,7 @@ class EpicsConfig(Enum):
 
     microscope = "13BMD:m23"
     microscope_zoom = "13BMD:m71"
+    microscope_focus = "13BMD:m77"
     microscope_light_reflected = "13BMD:DAC1_7"
     microscope_light_transmitted = "13BMD:DAC1_6"
 

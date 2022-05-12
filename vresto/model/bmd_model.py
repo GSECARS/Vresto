@@ -34,6 +34,7 @@ class BMDModel:
     sample_omega: DoubleValuePV = field(init=False, repr=False, compare=False)
     microscope: DoubleValuePV = field(init=False, repr=False, compare=False)
     microscope_zoom: DoubleValuePV = field(init=False, repr=False, compare=False)
+    microscope_focus: DoubleValuePV = field(init=False, repr=False, compare=False)
     microscope_light_reflected: DoubleValuePV = field(init=False, repr=False, compare=False)
     microscope_light_transmitted: DoubleValuePV = field(init=False, repr=False, compare=False)
     us_mirror: DoubleValuePV = field(init=False, repr=False, compare=False)
@@ -128,6 +129,13 @@ class BMDModel:
         )
         self._add_pv(
             pv_name="microscope_zoom",
+            movable=True,
+            limited=True,
+            rbv_extension=True,
+            monitor=True,
+        )
+        self._add_pv(
+            pv_name="microscope_focus",
             movable=True,
             limited=True,
             rbv_extension=True,

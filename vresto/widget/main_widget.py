@@ -33,6 +33,7 @@ from qtpy.QtCore import QSize
 from qtpy.QtGui import QIcon, QCloseEvent
 
 from vresto.model import PathModel
+from vresto.widget import AlignmentWidget
 from vresto.widget.groups import (
     PinholeGroup,
     MicroscopeGroup,
@@ -62,9 +63,18 @@ class MainWidget(QMainWindow):
         self.diamond_images_widget = DiamondImagesGroup(paths=self._paths)
         self.sample_widget = SampleGroup(paths=self._paths)
 
+        self.alignment_widget = AlignmentWidget(
+            paths=self._paths,
+            pinhole_group=self.pinhole_widget,
+            microscope_group=self.microscope_widget,
+            corrections_group=self.corrections_widget,
+            common_controls_group=self.common_controls_widget,
+            diamond_images_group=self.diamond_images_widget,
+            sample_group=self.sample_widget,
+        )
+
         self._main_frame = QFrame()
         self._tab_widget = QTabWidget()
-        self.alignment_widget = self.common_controls_widget
         self.lbl_epics_status = QLabel()
         self._lbl_hutch = QLabel(self._hutch)
 

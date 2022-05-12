@@ -19,4 +19,5 @@
 # ----------------------------------------------------------------------
 
 from vresto.widget.groups.pinhole_group import PinholeGroup
+from vresto.widget.groups.microscope_group import MicroscopeGroup
 from vresto.widget.groups.diamond_images_group import DiamondImagesGroup

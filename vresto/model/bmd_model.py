@@ -160,7 +160,7 @@ class BMDModel:
             movable=True,
             limited=False,
             rbv_extension=False,
-            monitor=True,
+            monitor=False,
         )
         self._add_pv(
             pv_name="us_mirror",

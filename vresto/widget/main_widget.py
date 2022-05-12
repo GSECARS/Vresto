@@ -34,6 +34,7 @@ from qtpy.QtGui import QIcon, QCloseEvent
 
 from vresto.model import PathModel
 from vresto.widget.groups import (
+    PinholeGroup,
     DiamondImagesGroup,
 )
 
@@ -50,6 +51,7 @@ class MainWidget(QMainWindow):
         self._paths = paths
 
         # Groups - Define groups below
+        self.pinhole_widget = PinholeGroup(paths=self._paths)
         self.diamond_images_widget = DiamondImagesGroup(paths=self._paths)
 
         self._main_frame = QFrame()

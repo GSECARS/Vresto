@@ -32,7 +32,7 @@ class PinholeGroupController(QObject):
     _pinhole_in: float = 0.0
     _pinhole_out: float = -48
     _omega_limit: float = -90
-    _us_limit: float = -40.0
+    _us_limit: float = 40.0
 
     def __init__(
         self,
@@ -111,7 +111,7 @@ class PinholeGroupController(QObject):
 
                 if (
                     self._omega_stage.readback != self._omega_limit
-                    or self._us_mirror.readback > self._us_limit
+                    or self._us_mirror.readback < self._us_limit
                 ):
                     MsgBox(
                         msg=f"You forgot to remove the UPSTREAM MIRROR or the omega stage is not at {self._omega_limit}"

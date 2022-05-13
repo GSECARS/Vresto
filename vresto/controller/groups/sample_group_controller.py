@@ -43,8 +43,8 @@ class SampleGroupController(QObject):
     _step_omega_2: float = 1.0
     _step_omega_3: float = 0.1
 
-    _us_limit: float = -40.0
-    _ds_limit: float = -40.0
+    _us_limit: float = 40.0
+    _ds_limit: float = 40.0
 
     def __init__(
         self,
@@ -297,8 +297,8 @@ class SampleGroupController(QObject):
             return True
 
         if (
-            round(self._us_mirror.readback) > self._us_limit
-            or round(self._ds_mirror.readback) > self._ds_limit
+            round(self._us_mirror.readback) < self._us_limit
+            or round(self._ds_mirror.readback) < self._ds_limit
         ):
             MsgBox(msg="First move the mirrors out.")
             return True

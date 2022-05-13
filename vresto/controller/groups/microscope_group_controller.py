@@ -45,7 +45,7 @@ class MicroscopeGroupController(QObject):
     _slider_value_multiplier: int = 2
 
     _omega_limit: float = -90.0
-    _ds_limit: float = -40.0
+    _ds_limit: float = 40.0
 
     def __init__(
         self,
@@ -137,7 +137,7 @@ class MicroscopeGroupController(QObject):
             )
             return None
 
-        if self._ds_mirror.readback > self._ds_limit:
+        if self._ds_mirror.readback < self._ds_limit:
             MsgBox(
                 msg=f"First, move the downstream mirror up."
             )

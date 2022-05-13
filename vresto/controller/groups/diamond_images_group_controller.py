@@ -127,13 +127,11 @@ class DiamondImagesGroupController(QObject):
                 self._widget.lne_diamond_table.setText(text)
 
     def _update_diamond_images(self, position: float) -> None:
-        if -120 < position <= -60:
-            current_index = 0
+        current_index = 0
+        if not self._check_focus_thickness.isChecked():
+            current_index = 1
         else:
-            if not self._check_focus_thickness.isChecked():
-                current_index = 1
-            else:
-                current_index = 2
+            current_index = 2
 
         self._widget.stacked_images.setCurrentIndex(current_index)
 

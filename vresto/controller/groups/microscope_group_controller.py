@@ -53,6 +53,7 @@ class MicroscopeGroupController(QObject):
         epics_model: EpicsModel,
         microscope_stage: DoubleValuePV,
         microscope_zoom: DoubleValuePV,
+        microscope_focus: DoubleValuePV,
         light_reflected: DoubleValuePV,
         light_transmitted: DoubleValuePV,
         light_transmitted_switch: DoubleValuePV,
@@ -66,6 +67,7 @@ class MicroscopeGroupController(QObject):
 
         self.microscope_stage = microscope_stage
         self.microscope_zoom = microscope_zoom
+        self._microscope_focus = microscope_focus
         self.light_reflected = light_reflected
         self.light_transmitted = light_transmitted
         self.light_transmitted_switch = light_transmitted_switch
@@ -231,6 +233,9 @@ class MicroscopeGroupController(QObject):
 
     def update_microscope_positions(self) -> None:
         if self._epics.connected:
+
+            if self._microscope_focus.moving:
+                self._microscope_focus.moving = False
 
             if self.microscope_stage.moving:
                 self._microscope_position_changed.emit(

@@ -104,6 +104,7 @@ class MainController(QObject):
             ds_mirror=self._bmd.ds_mirror,
             pinhole_stage=self._bmd.pinhole,
             omega_stage=self._bmd.sample_omega,
+            microscope_focus=self._bmd.microscope_focus,
             xps_stop=self._bmd.xps_stop,
             station_stop=self._bmd.station_stop,
         )

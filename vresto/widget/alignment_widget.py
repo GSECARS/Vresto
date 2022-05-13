@@ -71,9 +71,9 @@ class AlignmentWidget(QWidget):
         layout.addWidget(self.pinhole_widget, 0, 0, 1, 1)
         layout.addWidget(self.microscope_widget, 0, 1, 1, 2)
         layout.addWidget(self.corrections_widget, 1, 0, 2, 1)
-        layout.addWidget(self.common_controls_widget, 3, 0, 2, 1)
+        layout.addWidget(self.common_controls_widget, 3, 0, 3, 1)
         layout.addWidget(self.diamond_images_widget, 1, 1, 4, 2)
-        layout.addWidget(self.sample_widget, 5, 0, 1, 3)
+        layout.addWidget(self.sample_widget, 5, 1, 1, 2)
 
         # Set the layout
         self.setLayout(layout)

@@ -30,7 +30,7 @@ class PinholeGroupController(QObject):
     _position: Signal = Signal(float)
 
     _pinhole_in: float = 0.0
-    _pinhole_out: float = -48
+    _pinhole_out: float = -48.0
     _omega_limit: float = -90
     _us_limit: float = 40.0
 
@@ -139,6 +139,11 @@ class PinholeGroupController(QObject):
             self._widget.btn_15.setEnabled(True)
             self._widget.btn_20.setEnabled(False)
             self._widget.btn_out.setEnabled(True)
+        elif position == self._pinhole_out:
+            self._widget.btn_in.setEnabled(True)
+            self._widget.btn_15.setEnabled(True)
+            self._widget.btn_20.setEnabled(True)
+            self._widget.btn_out.setEnabled(False)
         else:
             self._widget.btn_in.setEnabled(True)
             self._widget.btn_15.setEnabled(True)

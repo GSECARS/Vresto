@@ -37,10 +37,9 @@ from vresto.widget.custom import MsgBox
 
 class CommonControlsGroupController(QObject):
 
-    _us_mirror_out: float = -115.0
-    _ds_mirror_out: float = -115.0
-    _microscope_out: float = -70.0
-    _pinhole_limit: float = 0.0
+    _us_mirror_out: float = 40.0
+    _ds_mirror_out: float = 40.0
+    _pinhole_limit: float = -20.0
     _omega_limit: float = -90.0
 
     _path_changed: Signal = Signal(str)
@@ -56,12 +55,11 @@ class CommonControlsGroupController(QObject):
         lne_real_position: QLineEdit,
         us_mirror: DoubleValuePV,
         ds_mirror: DoubleValuePV,
-        microscope_stage: DoubleValuePV,
         pinhole_stage: DoubleValuePV,
         omega_stage: DoubleValuePV,
+        microscope_focus: DoubleValuePV,
         xps_stop: DoubleValuePV,
         station_stop: DoubleValuePV,
-        mirror_stop: DoubleValuePV,
     ) -> None:
         super(CommonControlsGroupController, self).__init__()
 
@@ -75,12 +73,11 @@ class CommonControlsGroupController(QObject):
         self._lne_real_position = lne_real_position
         self._us_mirror = us_mirror
         self._ds_mirror = ds_mirror
-        self._microscope_stage = microscope_stage
         self._pinhole_stage = pinhole_stage
         self._omega_stage = omega_stage
+        self._microscope_focus = microscope_focus
         self._xps_stop = xps_stop
         self._station_stop = station_stop
-        self._mirror_stop = mirror_stop
 
         self.correction_aborted = False
         self._latest_path: str = "Unknown"
@@ -92,6 +89,7 @@ class CommonControlsGroupController(QObject):
         self._widget.btn_save.clicked.connect(self._btn_save_clicked)
         self._widget.btn_save_as.clicked.connect(self._btn_save_as_clicked)
         self._widget.btn_load_correction.clicked.connect(self._btn_load_clicked)
+        self._widget.btn_microscope_focus_zero.clicked.connect(self._btn_zero_clicked)
 
         self._path_changed.connect(self.current_path_changed)
 
@@ -102,7 +100,9 @@ class CommonControlsGroupController(QObject):
 
         self._xps_stop.move(value=1)
         self._station_stop.move(value=1)
-        self._mirror_stop.move(value=1)
+
+    def _btn_zero_clicked(self) -> None:
+        self._microscope_focus.move(value=0.0)
 
     def _btn_save_clicked(self) -> None:
         try:
@@ -115,9 +115,9 @@ class CommonControlsGroupController(QObject):
         timestamp = datetime.now().strftime("%m.%d.%Y_%H.%M.%S")
 
         # Check filepath permissions
-        current_filepath = "\\".join(list(self._path.readback.split("\\")[0:-2]))
+        current_filepath = "\\".join(list(self._path.readback.split("\\")[0:-1]))
         if not self._ie_model.is_writable(current_filepath):
-            MsgBox(msg="Unsufficient directory permission.")
+            MsgBox(msg="Insufficient directory permission.")
             return None
 
         filepath = os.path.join(current_filepath, "Corrections")
@@ -146,7 +146,7 @@ class CommonControlsGroupController(QObject):
         options = QFileDialog.Options()
 
         # Check filepath permissions
-        filepath = "\\".join(list(self._path.readback.split("\\")[0:-2]))
+        filepath = "\\".join(list(self._path.readback.split("\\")[0:-1]))
         if not self._ie_model.is_writable(filepath):
             MsgBox(msg="Insufficient directory permission.")
             return None
@@ -175,7 +175,7 @@ class CommonControlsGroupController(QObject):
         dialog.setFileMode(QFileDialog.ExistingFile)
 
         filepath = os.path.join(
-            "\\".join(list(self._path.readback.split("\\")[0:-2])), "Corrections"
+            "\\".join(list(self._path.readback.split("\\")[0:-1])), "Corrections"
         )
         options = QFileDialog.Options()
 
@@ -222,19 +222,10 @@ class CommonControlsGroupController(QObject):
                         return None
 
                     if (
-                        round(self._us_mirror.readback) != self._us_mirror_out
-                        or round(self._ds_mirror.readback) != self._ds_mirror_out
+                        round(self._us_mirror.readback) < self._us_mirror_out
+                        or round(self._ds_mirror.readback) < self._ds_mirror_out
                     ):
                         MsgBox(msg="First move the mirrors out.")
-                        return None
-
-                    # Check microscope
-                    if self._microscope_stage.moving:
-                        MsgBox(msg="Wait for the microscope to stop moving.")
-                        return None
-
-                    if self._microscope_stage.readback > self._microscope_out:
-                        MsgBox(msg="First move the MICROSCOPE out!")
                         return None
 
                     # Check pinhole
@@ -244,7 +235,7 @@ class CommonControlsGroupController(QObject):
 
                     if self._pinhole_stage.readback > self._pinhole_limit:
                         MsgBox(
-                            msg="First move the PINHOLE to the IN, OUT or OFF position."
+                            msg="First move the PINHOLE to the -20 or OUT position."
                         )
                         return None
 
@@ -254,7 +245,7 @@ class CommonControlsGroupController(QObject):
 
                     if self._omega_stage.readback != self._omega_limit:
                         MsgBox(
-                            msg=f"First, move omega in the X-RAY position ({self._omega_limit})."
+                            msg=f"First, move omega at {self._omega_limit} deg."
                         )
                         return None
 
@@ -293,11 +284,14 @@ class CommonControlsGroupController(QObject):
             if self._station_stop.moving:
                 self._station_stop.moving = False
 
-            if self._mirror_stop.moving:
-                self._mirror_stop.moving = False
+            if self._us_mirror.moving:
+                self._us_mirror.moving = False
+
+            if self._ds_mirror.moving:
+                self._ds_mirror.moving = False
 
             custom_path = os.path.join(
-                "\\".join(list(self._path.readback.split("\\")[0:-2]))
+                "\\".join(list(self._path.readback.split("\\")[0:-1]))
             )
 
             if custom_path != self._latest_path:

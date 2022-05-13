@@ -27,6 +27,7 @@ from vresto.widget import MainWidget
 from vresto.model import MainModel, QtWorkerModel, BMDModel, ImportExportModel
 from vresto.controller.groups import (
     PinholeGroupController,
+    MicroscopeGroupController,
 )
 
 
@@ -56,6 +57,18 @@ class MainController(QObject):
             pinhole_stage=self._bmd.pinhole,
             omega_stage=self._bmd.sample_omega,
             us_mirror=self._bmd.us_mirror,
+        )
+
+        self.microscope_group = MicroscopeGroupController(
+            widget=self._widget.microscope_widget,
+            epics_model=self._model.epics,
+            microscope_stage=self._bmd.microscope,
+            microscope_zoom=self._bmd.microscope_zoom,
+            light_reflected=self._bmd.microscope_light_reflected,
+            light_transmitted=self._bmd.microscope_light_transmitted,
+            light_transmitted_switch=self._bmd.microscope_transmitted_switch,
+            sample_omega_stage=self._bmd.sample_omega,
+            ds_mirror=self._bmd.ds_mirror,
         )
 
         # Event helpers
@@ -101,6 +114,7 @@ class MainController(QObject):
         while not self._widget.terminated:
             self._check_epics_connection()
             self.pinhole_group.update_pinhole_position()
+            self.microscope_group.update_microscope_positions()
             time.sleep(0.05)
 
         # Clear camonitor instances after exiting the loop

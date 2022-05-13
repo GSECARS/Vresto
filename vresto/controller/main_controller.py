@@ -125,6 +125,8 @@ class MainController(QObject):
             sample_horizontal_stage=self._bmd.sample_horizontal,
             sample_focus_stage=self._bmd.sample_focus,
             sample_omega_stage=self._bmd.sample_omega,
+            us_mirror=self._bmd.us_mirror,
+            ds_mirror=self._bmd.ds_mirror,
         )
 
         # Event helpers

@@ -34,7 +34,7 @@ from vresto.model import PathModel
 
 class CommonControlsGroup(QFrame):
 
-    _max_size = QSize(280, 230)
+    _max_size = QSize(280, 350)
 
     def __init__(self, paths: PathModel) -> None:
         super(CommonControlsGroup, self).__init__()
@@ -43,12 +43,14 @@ class CommonControlsGroup(QFrame):
 
         self.btn_stop_all = QPushButton("STOP")
         self.btn_reset = QPushButton("RESET")
+        self.btn_microscope_focus_zero = QPushButton("ZERO")
         self.btn_save = QPushButton("QUICK SAVE")
         self.btn_save_as = QPushButton("SAVE AS")
         self.btn_load_correction = QPushButton("LOAD POSITION")
 
         self.check_mic_focus_correction = QCheckBox("Use focus-correction for microscope.")
 
+        self.lbl_microscope_focus = QLabel("Microscope focus")
         self.lbl_refraction_index = QLabel("Refraction index options")
         self.lbl_path = QLabel("Unknown")
 
@@ -83,11 +85,13 @@ class CommonControlsGroup(QFrame):
         self.setObjectName("group-common-controls")
         self.btn_stop_all.setObjectName("btn-stop")
         self.btn_reset.setObjectName("btn-reset")
+        self.btn_microscope_focus_zero.setObjectName("btn-microscope")
         self.btn_save.setObjectName("btn-save")
         self.btn_save_as.setObjectName("btn-save")
         self.btn_load_correction.setObjectName("btn-save")
         self.cmb_refraction_index.setObjectName("cmb-refraction")
         self.check_mic_focus_correction.setObjectName("checkbox-small")
+        self.lbl_microscope_focus.setObjectName("lbl-refraction")
         self.lbl_refraction_index.setObjectName("lbl-refraction")
         self.lbl_path.setObjectName("lbl-path")
 
@@ -112,6 +116,7 @@ class CommonControlsGroup(QFrame):
     def _set_widget_sizes(self) -> None:
         self.btn_stop_all.setMinimumSize(70, 50)
         self.btn_reset.setMinimumSize(70, 50)
+        self.btn_microscope_focus_zero.setMinimumSize(70, 20)
         self.check_mic_focus_correction.setMinimumWidth(280)
 
         self.setMaximumSize(self._max_size)
@@ -121,21 +126,16 @@ class CommonControlsGroup(QFrame):
         layout.setSpacing(10)
         layout.addWidget(self.btn_stop_all, 0, 0, 2, 1)
         layout.addWidget(self.btn_reset, 0, 1, 2, 1)
-        layout.addWidget(
-            self.check_mic_focus_correction, 2, 0, 1, 2, alignment=Qt.AlignmentFlag.AlignCenter
-        )
-        layout.addWidget(
-            self.lbl_refraction_index,
-            3,
-            0,
-            1,
-            1,
-            alignment=Qt.AlignmentFlag.AlignCenter,
-        )
-        layout.addWidget(self.cmb_refraction_index, 3, 1, 1, 1)
-        layout.addWidget(self.btn_load_correction, 4, 0, 1, 2)
-        layout.addWidget(self.btn_save, 5, 0, 1, 1)
-        layout.addWidget(self.btn_save_as, 5, 1, 1, 1)
-        layout.addWidget(self.lbl_path, 6, 0, 1, 2)
+        layout.addWidget(self.check_mic_focus_correction, 2, 0, 1, 2, alignment=Qt.AlignmentFlag.AlignCenter)
+
+        layout.addWidget(self.lbl_microscope_focus, 3, 0, 1, 1, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(self.btn_microscope_focus_zero, 3, 1, 1, 1)
+
+        layout.addWidget(self.lbl_refraction_index, 4, 0, 1, 1, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(self.cmb_refraction_index, 4, 1, 1, 1)
+        layout.addWidget(self.btn_load_correction, 5, 0, 1, 2)
+        layout.addWidget(self.btn_save, 6, 0, 1, 1)
+        layout.addWidget(self.btn_save_as, 6, 1, 1, 1)
+        layout.addWidget(self.lbl_path, 7, 0, 1, 2)
 
         self.setLayout(layout)

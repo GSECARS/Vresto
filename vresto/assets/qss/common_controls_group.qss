@@ -95,6 +95,28 @@
     color: #344152;
 }
 
+#btn-microscope {
+    background: #59aee3;
+    color: #344152;
+    border: 1px solid #59aee3;
+    font-family: "Times New Roman";
+    font-size: 16px;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+#btn-microscope:hover, #btn-microscope:focus {
+    background: #e6e6e6;
+    border: 1px solid #e6e6e6;
+    color: #344152;
+}
+
+#btn-microscope:pressed {
+    background: #59aee3;
+    border: none;
+    color: #222a35;
+}
+
 #cmb-refraction {
     background-color: #344152;
     color: #e6e6e6;

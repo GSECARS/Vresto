@@ -123,9 +123,9 @@ class MicroscopeGroupController(QObject):
         self._widget.slider_transmitted.setRange(0, self._slider_max)
 
     def _btn_microscope_in_clicked(self) -> None:
-        # if self._sample_omega_stage.moving:
-        #     MsgBox(msg=f"Wait for omega to stop moving.")
-        #     return None
+        if self._sample_omega_stage.moving:
+            MsgBox(msg=f"Wait for omega to stop moving.")
+            return None
 
         if self._ds_mirror.moving:
             MsgBox(msg=f"Wait for downstream mirror to stop moving.")
@@ -231,9 +231,6 @@ class MicroscopeGroupController(QObject):
 
     def update_microscope_positions(self) -> None:
         if self._epics.connected:
-
-            if self._ds_mirror.moving:
-                self._ds_mirror.moving = False
 
             if self.microscope_stage.moving:
                 self._microscope_position_changed.emit(

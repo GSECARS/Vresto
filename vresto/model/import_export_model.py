@@ -61,17 +61,17 @@ class ImportExportModel:
                 f"horizontal={horizontal_position}\n"
                 f"virtual={virtual_position}\n"
                 f"real={real_position}\n"
-                f"focus_correction={(virtual_position - real_position) * -1}"
+                f"objective_focus={(virtual_position - real_position) * -1}"
                 f"\n"
             )
 
     def load_position(
-        self, vertical_pos: float, horizontal_pos: float, real_pos: float, focus_correction: float
+        self, vertical_pos: float, horizontal_pos: float, real_pos: float, objective_focus: float
     ) -> None:
         self.vertical.move(value=vertical_pos)
         self.horizontal.move(value=horizontal_pos)
         self.focus.move(value=real_pos)
-        self.microscope_focus.move(value=focus_correction)
+        self.microscope_focus.move(value=objective_focus)
 
     @staticmethod
     def is_writable(filepath: str) -> bool:

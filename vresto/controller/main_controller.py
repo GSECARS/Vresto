@@ -28,6 +28,10 @@ from vresto.model import MainModel, QtWorkerModel, BMDModel, ImportExportModel
 from vresto.controller.groups import (
     PinholeGroupController,
     MicroscopeGroupController,
+    CorrectionsGroupController,
+    CommonControlsGroupController,
+    DiamondImagesGroupController,
+    SampleGroupController,
 )
 
 
@@ -69,6 +73,58 @@ class MainController(QObject):
             light_transmitted_switch=self._bmd.microscope_transmitted_switch,
             sample_omega_stage=self._bmd.sample_omega,
             ds_mirror=self._bmd.ds_mirror,
+        )
+
+        self.corrections_group = CorrectionsGroupController(
+            widget=self._widget.corrections_widget,
+            corrections_model=self._model.corrections,
+            epics_model=self._model.epics,
+            btn_reset=self._widget.common_controls_widget.btn_reset,
+            check_mic_focus_correction=self._widget.common_controls_widget.check_mic_focus_correction,
+            lne_virtual_position=self._widget.diamond_images_widget.lne_virtual_position,
+            lne_diamond_table=self._widget.diamond_images_widget.lne_diamond_table,
+            lne_real_position=self._widget.diamond_images_widget.lne_real_position,
+            cmb_refraction_index=self._widget.common_controls_widget.cmb_refraction_index,
+            sample_focus_stage=self._bmd.sample_focus,
+            microscope_focus=self._bmd.microscope_focus,
+            microscope_zoom=self._bmd.microscope_zoom,
+            stacked_img_widget=self._widget.diamond_images_widget.stacked_images,
+        )
+
+        self.common_controls_group = CommonControlsGroupController(
+            widget=self._widget.common_controls_widget,
+            corrections_model=self._model.corrections,
+            epics_model=self._model.epics,
+            ie_model=self._import_export,
+            path=self._bmd.path,
+            lne_virtual_position=self._widget.diamond_images_widget.lne_virtual_position,
+            lne_real_position=self._widget.diamond_images_widget.lne_real_position,
+            us_mirror=self._bmd.us_mirror,
+            ds_mirror=self._bmd.ds_mirror,
+            microscope_stage=self._bmd.microscope,
+            pinhole_stage=self._bmd.pinhole,
+            omega_stage=self._bmd.sample_omega,
+            xps_stop=self._bmd.xps_stop,
+            station_stop=self._bmd.station_stop,
+        )
+
+        self.diamond_images_group = DiamondImagesGroupController(
+            widget=self._widget.diamond_images_widget,
+            epics_model=self._model.epics,
+            sample_focus_stage=self._bmd.sample_focus,
+            omega_stage=self._bmd.sample_omega,
+            check_focus_sample=self._widget.corrections_widget.check_focus_sample,
+            check_focus_diamond=self._widget.corrections_widget.check_focus_diamond_table,
+            check_focus_thickness=self._widget.corrections_widget.check_diamond_thickness,
+        )
+
+        self.sample_group = SampleGroupController(
+            widget=self._widget.sample_widget,
+            epics_model=self._model.epics,
+            sample_vertical_stage=self._bmd.sample_vertical,
+            sample_horizontal_stage=self._bmd.sample_horizontal,
+            sample_focus_stage=self._bmd.sample_focus,
+            sample_omega_stage=self._bmd.sample_omega,
         )
 
         # Event helpers
@@ -115,6 +171,9 @@ class MainController(QObject):
             self._check_epics_connection()
             self.pinhole_group.update_pinhole_position()
             self.microscope_group.update_microscope_positions()
+            self.common_controls_group.update_correction_position()
+            self.diamond_images_group.update_diamond_image_widgets()
+            self.sample_group.update_sample_positions()
             time.sleep(0.05)
 
         # Clear camonitor instances after exiting the loop

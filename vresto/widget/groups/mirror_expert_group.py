@@ -19,7 +19,7 @@
 # ----------------------------------------------------------------------
 
 import os
-from qtpy.QtWidgets import QGroupBox, QPushButton, QLabel, QGridLayout
+from qtpy.QtWidgets import QGroupBox, QPushButton, QLabel, QGridLayout, QLineEdit, QSlider, QHBoxLayout, QVBoxLayout
 from qtpy.QtCore import Qt, QSize
 
 from vresto.model import PathModel
@@ -35,22 +35,46 @@ class MirrorExpertGroup(QGroupBox):
 
         self._paths = paths
 
-        self._lbl_ds = QLabel("DOWNSTREAM")
-        self._lbl_us = QLabel("UPSTREAM")
-        self.lbl_ds_position = QLabel("Unknown")
-        self.lbl_us_position = QLabel("Unknown")
+        self.btn_ds_plus = QPushButton("+")
+        self.btn_ds_minus = QPushButton("-")
+        self.btn_us_plus = QPushButton("+")
+        self.btn_us_minus = QPushButton("-")
+        self.btn_step_1 = QPushButton()
+        self.btn_step_2 = QPushButton()
 
-        self.btn_ds_out = QPushButton("OUT")
-        self.btn_ds_in = QPushButton("IN")
-        self.btn_us_out = QPushButton("OUT")
-        self.btn_us_in = QPushButton("IN")
-
-        self._buttons = [
-            self.btn_ds_out,
-            self.btn_ds_in,
-            self.btn_us_out,
-            self.btn_us_in,
+        self._plus_buttons = [
+            self.btn_ds_plus,
+            self.btn_us_plus,
         ]
+
+        self._minus_buttons = [
+            self.btn_ds_minus,
+            self.btn_us_minus,
+        ]
+
+        self._step_buttons = [
+            self.btn_step_1,
+            self.btn_step_2,
+        ]
+
+        self.lbl_step = QLabel("Step (mm)")
+        self.lbl_ds = QLabel("Downstream")
+        self.lbl_us = QLabel("Upstream")
+        self.lbl_ds_small = QLabel("DS")
+        self.lbl_us_small = QLabel("US")
+
+        self._labels = [
+            self.lbl_ds,
+            self.lbl_us,
+            self.lbl_ds_small,
+            self.lbl_us_small,
+        ]
+
+        self.slider_ds = QSlider(Qt.Vertical)
+        self.slider_us = QSlider(Qt.Vertical)
+
+        self.lne_ds = QLineEdit()
+        self.lne_us = QLineEdit()
 
         self.setTitle(self._title)
         self.setStyleSheet(
@@ -59,45 +83,71 @@ class MirrorExpertGroup(QGroupBox):
 
         self._set_object_names()
         self._set_widget_sizes()
-        self._set_tool_status_tips()
         self._layout_group()
 
     def _set_object_names(self) -> None:
         """Sets all the object names for the group and the group widgets."""
         self.setObjectName("group-mirrors")
-        [button.setObjectName("btn-mirrors") for button in self._buttons]
-        self._lbl_ds.setObjectName("lbl-mirror")
-        self._lbl_us.setObjectName("lbl-mirror")
-        self.lbl_ds_position.setObjectName("lbl-mirror-position")
-        self.lbl_us_position.setObjectName("lbl-mirror-position")
-
-    def _set_tool_status_tips(self) -> None:
-        """Sets all the tool and status tips for the group."""
-        self.lbl_ds_position.setStatusTip(
-            "The downstream mirror is currently located at the given value."
-        )
-        self.lbl_us_position.setStatusTip(
-            "The upstream mirror is currently located at the given value."
-        )
+        [plus_button.setObjectName("btn-plus") for plus_button in self._plus_buttons]
+        [minus_button.setObjectName("btn-minus") for minus_button in self._minus_buttons]
+        [step_button.setObjectName("btn-step") for step_button in self._step_buttons]
+        [label.setObjectName("lbl-mirror") for label in self._labels]
+        self.lne_ds.setObjectName("lne-mirror")
+        self.lne_us.setObjectName("lne-mirror")
+        self.slider_ds.setObjectName("slider")
+        self.slider_us.setObjectName("slider")
+        self.lbl_step.setObjectName("lbl-step")
 
     def _set_widget_sizes(self) -> None:
-
-        for button in self._buttons:
-            button.setMinimumSize(100, 30)
-            button.setMaximumHeight(50)
+        [step_button.setFixedSize(40, 20) for step_button in self._step_buttons]
+        self.lne_ds.setFixedSize(60, 20)
+        self.lne_us.setFixedSize(60, 20)
 
         self.setMaximumSize(self._max_size)
 
     def _layout_group(self) -> None:
         layout = QGridLayout()
         layout.setSpacing(10)
-        layout.addWidget(self._lbl_ds, 0, 0, 1, 2, alignment=Qt.AlignmentFlag.AlignCenter)
-        layout.addWidget(self._lbl_us, 0, 2, 1, 2, alignment=Qt.AlignmentFlag.AlignCenter)
-        layout.addWidget(self.btn_ds_out, 1, 0, 1, 2)
-        layout.addWidget(self.btn_ds_in, 2, 0, 1, 2)
-        layout.addWidget(self.btn_us_out, 1, 2, 1, 2)
-        layout.addWidget(self.btn_us_in, 2, 2, 1, 2)
-        layout.addWidget(self.lbl_ds_position, 3, 0, 1, 2, alignment=Qt.AlignmentFlag.AlignCenter)
-        layout.addWidget(self.lbl_us_position, 3, 2, 1, 2, alignment=Qt.AlignmentFlag.AlignCenter)
+
+        layout_step_widgets = QHBoxLayout()
+        layout_step_widgets.setContentsMargins(0, 0, 0, 0)
+        layout_step_widgets.setSpacing(2)
+        layout_step_widgets.addWidget(self.lbl_step, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout_step_widgets.addWidget(self.btn_step_1, alignment=Qt.AlignmentFlag.AlignRight)
+        layout_step_widgets.addWidget(self.btn_step_2, alignment=Qt.AlignmentFlag.AlignLeft)
+
+        layout_ds = QHBoxLayout()
+        layout_ds.setSpacing(2)
+        layout_ds.addWidget(self.lbl_ds)
+        layout_ds.addStretch(1)
+        layout_ds.addWidget(self.btn_ds_minus)
+        layout_ds.addWidget(self.lne_ds)
+        layout_ds.addWidget(self.btn_ds_plus)
+
+        layout_us = QHBoxLayout()
+        layout_us.setSpacing(2)
+        layout_us.addWidget(self.lbl_us)
+        layout_us.addStretch(1)
+        layout_us.addWidget(self.btn_us_minus)
+        layout_us.addWidget(self.lne_us)
+        layout_us.addWidget(self.btn_us_plus)
+
+        layout_slider_ds = QVBoxLayout()
+        layout_slider_ds.setSpacing(10)
+        layout_slider_ds.addWidget(self.slider_ds)
+        layout_slider_ds.addStretch(1)
+        layout_slider_ds.addWidget(self.lbl_ds_small)
+
+        layout_slider_us = QVBoxLayout()
+        layout_slider_us.setSpacing(10)
+        layout_slider_us.addWidget(self.slider_us)
+        layout_slider_us.addStretch(1)
+        layout_slider_us.addWidget(self.lbl_us_small)
+
+        layout.addLayout(layout_ds, 0, 0, 1, 4)
+        layout.addLayout(layout_us, 1, 0, 1, 4)
+        layout.addLayout(layout_slider_ds, 0, 4, 3, 1)
+        layout.addLayout(layout_slider_us, 0, 5, 3, 1)
+        layout.addLayout(layout_step_widgets, 2, 0, 1, 4)
 
         self.setLayout(layout)

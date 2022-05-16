@@ -183,6 +183,11 @@ class MicroscopeGroupController(QObject):
             )
         )
 
+        if self._widget.slider_transmitted.value() == 0.0:
+            self.light_transmitted_switch.move(value=self._light_transmitted_off)
+        else:
+            self.light_transmitted_switch.move(value=self._light_transmitted_on)
+
     def _update_microscope_position_label(self, text: str) -> None:
         self._widget.lbl_microscope_position.setText(text)
 

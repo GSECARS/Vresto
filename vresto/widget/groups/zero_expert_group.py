@@ -34,30 +34,24 @@ class ZeroExpertGroup(QGroupBox):
 
         self._paths = paths
 
-        self.btn_pinhole_z = QPushButton("PINHOLE-Z")
         self.btn_pinhole_vertical = QPushButton("PINHOLE-VERT")
         self.btn_pinhole_horizontal = QPushButton("PINHOLE-HORIZ")
         self.btn_objectives = QPushButton("OBJECTIVES")
         self.btn_stage = QPushButton("STAGE")
         self.btn_stage_x = QPushButton("STAGE-X")
-        self.btn_us_c_mirror = QPushButton("C-MIRROR US")
-        self.btn_ds_c_mirror = QPushButton("C-MIRROR DS")
-        self.btn_us_focus = QPushButton("FOCUS US")
-        self.btn_ds_focus = QPushButton("FOCUS DS")
+        self.btn_c_mirrors = QPushButton("C-MIRRORS")
+        self.btn_mirror_focus = QPushButton("MIRROR FOCUS")
         self.btn_microscope = QPushButton("MICROSCOPE")
         self.btn_microscope_z = QPushButton("MICROSCOPE-Z")
 
         self._buttons = [
-            self.btn_pinhole_z,
             self.btn_pinhole_vertical,
             self.btn_pinhole_horizontal,
             self.btn_objectives,
             self.btn_stage,
             self.btn_stage_x,
-            self.btn_us_c_mirror,
-            self.btn_ds_c_mirror,
-            self.btn_us_focus,
-            self.btn_ds_focus,
+            self.btn_c_mirrors,
+            self.btn_mirror_focus,
             self.btn_microscope,
             self.btn_microscope_z,
         ]
@@ -90,20 +84,16 @@ class ZeroExpertGroup(QGroupBox):
         layout = QGridLayout()
         layout.setSpacing(10)
 
-        layout.addWidget(self.btn_pinhole_z, 0, 0, 1, 1)
-        layout.addWidget(self.btn_pinhole_vertical, 0, 1, 1, 1)
+        layout.addWidget(self.btn_microscope, 0, 0, 1, 1)
+        layout.addWidget(self.btn_microscope_z, 0, 1, 1, 1)
         layout.addWidget(self.btn_pinhole_horizontal, 0, 2, 1, 1)
 
         layout.addWidget(self.btn_stage, 1, 0, 1, 1)
-        layout.addWidget(self.btn_microscope, 1, 1, 1, 1)
-        layout.addWidget(self.btn_microscope_z, 1, 2, 1, 1)
+        layout.addWidget(self.btn_stage_x, 1, 1, 1, 1)
+        layout.addWidget(self.btn_pinhole_vertical, 1, 2, 1, 1)
 
-        layout.addWidget(self.btn_stage_x, 2, 0, 1, 1)
-        layout.addWidget(self.btn_ds_focus, 2, 1, 1, 1)
-        layout.addWidget(self.btn_ds_c_mirror, 2, 2, 1, 1)
-
-        layout.addWidget(self.btn_objectives, 3, 0, 1, 1)
-        layout.addWidget(self.btn_us_focus, 3, 1, 1, 1)
-        layout.addWidget(self.btn_us_c_mirror, 3, 2, 1, 1)
+        layout.addWidget(self.btn_c_mirrors, 2, 0, 1, 1)
+        layout.addWidget(self.btn_mirror_focus, 2, 1, 1, 1)
+        layout.addWidget(self.btn_objectives, 2, 2, 1, 1)
 
         self.setLayout(layout)

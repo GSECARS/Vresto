@@ -56,7 +56,7 @@ class PinholeGroupController(QObject):
 
     def _connect_pinhole_widgets(self) -> None:
         self._widget.btn_in.clicked.connect(self._btn_pinhole_in_clicked)
-        self._widget.btn_15.clicked.connect(self._btn_pinhole_15_clicked)
+        self._widget.btn_10.clicked.connect(self._btn_pinhole_15_clicked)
         self._widget.btn_20.clicked.connect(self._btn_pinhole_20_clicked)
         self._widget.btn_out.clicked.connect(self._btn_pinhole_out_clicked)
         self._widget.lne_custom.returnPressed.connect(self._lne_custom_pressed)
@@ -66,7 +66,7 @@ class PinholeGroupController(QObject):
 
     def _configure_pinhole_widgets(self) -> None:
         self._widget.btn_in.setToolTip(f"Moves the pinhole at {self._pinhole_in}")
-        self._widget.btn_15.setToolTip(f"Moves the pinhole at -15.0")
+        self._widget.btn_10.setToolTip(f"Moves the pinhole at -10.0")
         self._widget.btn_20.setToolTip(f"Moves the pinhole at -20.0")
         self._widget.btn_out.setToolTip(f"Moves the pinhole at {self._pinhole_out}")
 
@@ -87,7 +87,7 @@ class PinholeGroupController(QObject):
         if self._omega_stage.readback != self._omega_limit:
             MsgBox(msg=f"Omega must be at {self._omega_limit} deg")
             return None
-        self._pinhole_stage.move(value=-15.0)
+        self._pinhole_stage.move(value=-10.0)
 
     def _btn_pinhole_20_clicked(self) -> None:
         self._pinhole_stage.move(value=-20.0)
@@ -126,27 +126,27 @@ class PinholeGroupController(QObject):
     def _pinhole_at_position(self, position: float) -> None:
         if position == self._pinhole_in:
             self._widget.btn_in.setEnabled(False)
-            self._widget.btn_15.setEnabled(True)
+            self._widget.btn_10.setEnabled(True)
             self._widget.btn_20.setEnabled(True)
             self._widget.btn_out.setEnabled(True)
-        elif position == -15:
+        elif position == -10:
             self._widget.btn_in.setEnabled(True)
-            self._widget.btn_15.setEnabled(False)
+            self._widget.btn_10.setEnabled(False)
             self._widget.btn_20.setEnabled(True)
             self._widget.btn_out.setEnabled(True)
         elif position == -20:
             self._widget.btn_in.setEnabled(True)
-            self._widget.btn_15.setEnabled(True)
+            self._widget.btn_10.setEnabled(True)
             self._widget.btn_20.setEnabled(False)
             self._widget.btn_out.setEnabled(True)
         elif position == self._pinhole_out:
             self._widget.btn_in.setEnabled(True)
-            self._widget.btn_15.setEnabled(True)
+            self._widget.btn_10.setEnabled(True)
             self._widget.btn_20.setEnabled(True)
             self._widget.btn_out.setEnabled(False)
         else:
             self._widget.btn_in.setEnabled(True)
-            self._widget.btn_15.setEnabled(True)
+            self._widget.btn_10.setEnabled(True)
             self._widget.btn_20.setEnabled(True)
             self._widget.btn_out.setEnabled(True)
 

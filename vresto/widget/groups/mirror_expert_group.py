@@ -41,6 +41,13 @@ class MirrorExpertGroup(QGroupBox):
         self.btn_us_minus = QPushButton("-")
         self.btn_step_1 = QPushButton()
         self.btn_step_2 = QPushButton()
+        self.btn_ds_focus_zero = QPushButton(" DS")
+        self.btn_us_focus_zero = QPushButton(" US")
+
+        self._buttons = [
+            self.btn_ds_focus_zero,
+            self.btn_us_focus_zero,
+        ]
 
         self._plus_buttons = [
             self.btn_ds_plus,
@@ -60,6 +67,7 @@ class MirrorExpertGroup(QGroupBox):
         self.lbl_step = QLabel("Step (mm)")
         self.lbl_ds = QLabel("Downstream")
         self.lbl_us = QLabel("Upstream")
+        self.lbl_zero = QLabel("Zero Focus")
         self.lbl_ds_small = QLabel("DS")
         self.lbl_us_small = QLabel("US")
 
@@ -68,6 +76,7 @@ class MirrorExpertGroup(QGroupBox):
             self.lbl_us,
             self.lbl_ds_small,
             self.lbl_us_small,
+            self.lbl_zero,
         ]
 
         self.slider_ds = QSlider(Qt.Vertical)
@@ -81,9 +90,14 @@ class MirrorExpertGroup(QGroupBox):
             open(os.path.join(self._paths.qss_path, "mirror_expert_group.qss"), "r").read()
         )
 
+        self._configure_buttons()
         self._set_object_names()
         self._set_widget_sizes()
         self._layout_group()
+
+    def _configure_buttons(self) -> None:
+        for step_button in self._step_buttons:
+            step_button.setCheckable(True)
 
     def _set_object_names(self) -> None:
         """Sets all the object names for the group and the group widgets."""
@@ -92,6 +106,7 @@ class MirrorExpertGroup(QGroupBox):
         [minus_button.setObjectName("btn-minus") for minus_button in self._minus_buttons]
         [step_button.setObjectName("btn-step") for step_button in self._step_buttons]
         [label.setObjectName("lbl-mirror") for label in self._labels]
+        [button.setObjectName("btn-mirror") for button in self._buttons]
         self.lne_ds.setObjectName("lne-mirror")
         self.lne_us.setObjectName("lne-mirror")
         self.slider_ds.setObjectName("slider")
@@ -99,6 +114,7 @@ class MirrorExpertGroup(QGroupBox):
         self.lbl_step.setObjectName("lbl-step")
 
     def _set_widget_sizes(self) -> None:
+        [button.setFixedSize(80, 30) for button in self._buttons]
         [step_button.setFixedSize(40, 20) for step_button in self._step_buttons]
         self.lne_ds.setFixedSize(60, 20)
         self.lne_us.setFixedSize(60, 20)
@@ -133,21 +149,24 @@ class MirrorExpertGroup(QGroupBox):
         layout_us.addWidget(self.btn_us_plus)
 
         layout_slider_ds = QVBoxLayout()
-        layout_slider_ds.setSpacing(10)
+        layout_slider_ds.setSpacing(5)
         layout_slider_ds.addWidget(self.slider_ds)
         layout_slider_ds.addStretch(1)
-        layout_slider_ds.addWidget(self.lbl_ds_small)
+        layout_slider_ds.addWidget(self.lbl_ds_small, alignment=Qt.AlignmentFlag.AlignLeft)
 
         layout_slider_us = QVBoxLayout()
-        layout_slider_us.setSpacing(10)
+        layout_slider_us.setSpacing(5)
         layout_slider_us.addWidget(self.slider_us)
         layout_slider_us.addStretch(1)
-        layout_slider_us.addWidget(self.lbl_us_small)
+        layout_slider_us.addWidget(self.lbl_us_small, alignment=Qt.AlignmentFlag.AlignLeft)
 
         layout.addLayout(layout_ds, 0, 0, 1, 4)
         layout.addLayout(layout_us, 1, 0, 1, 4)
         layout.addLayout(layout_slider_ds, 0, 4, 3, 1)
         layout.addLayout(layout_slider_us, 0, 5, 3, 1)
         layout.addLayout(layout_step_widgets, 2, 0, 1, 4)
+        layout.addWidget(self.lbl_zero, 3, 0, 1, 2)
+        layout.addWidget(self.btn_ds_focus_zero, 3, 2, 1, 2, alignment=Qt.AlignmentFlag.AlignLeft)
+        layout.addWidget(self.btn_us_focus_zero, 3, 4, 1, 2)
 
         self.setLayout(layout)

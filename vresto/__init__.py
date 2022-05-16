@@ -22,7 +22,7 @@ from vresto.controller import MainController
 from vresto import _version
 
 __version__ = _version.get_versions()['version']
-__static_version__ = "0.2.6"
+__static_version__ = "0.2.7"
 
 if __version__ == "0+unknown":
     __version__ = __static_version__

@@ -26,11 +26,11 @@ from vresto.widget.custom import MsgBox
 
 
 class MicroscopeGroupController(QObject):
-    _microscope_position_changed: Signal = Signal(str)
+    microscope_position_changed: Signal = Signal(str)
     _microscope_zoom_position_changed: Signal = Signal(str)
-    _microscope_position: Signal = Signal(float)
+    microscope_position: Signal = Signal(float)
     _microscope_zoom_position: Signal = Signal(float)
-    _reflected_changed: Signal = Signal(int)
+    reflected_changed: Signal = Signal(int)
 
     _microscope_in: float = 0.0
     _microscope_out: float = -70.0
@@ -75,15 +75,15 @@ class MicroscopeGroupController(QObject):
             self._slider_reflected_value_changed
         )
 
-        self._microscope_position_changed.connect(
+        self.microscope_position_changed.connect(
             self._update_microscope_position_label
         )
         self._microscope_zoom_position_changed.connect(
             self._update_microscope_zoom_position_label
         )
-        self._microscope_position.connect(self._microscope_at_position)
+        self.microscope_position.connect(self._microscope_at_position)
         self._microscope_zoom_position.connect(self._microscope_zoom_at_position)
-        self._reflected_changed.connect(self._reflected_value_changed)
+        self.reflected_changed.connect(self._reflected_value_changed)
 
     def _configure_microscope_widgets(self) -> None:
         self._widget.btn_microscope_in.setToolTip(
@@ -183,12 +183,12 @@ class MicroscopeGroupController(QObject):
         if self._epics.connected:
 
             if self.microscope_stage.moving:
-                self._microscope_position_changed.emit(
+                self.microscope_position_changed.emit(
                     str("{0:.4f}".format(self.microscope_stage.readback))
                 )
 
                 self.microscope_stage.moving = False
-                self._microscope_position.emit(round(self.microscope_stage.readback, 3))
+                self.microscope_position.emit(round(self.microscope_stage.readback, 3))
 
             if self.microscope_zoom.moving:
                 self._microscope_zoom_position_changed.emit(
@@ -199,7 +199,7 @@ class MicroscopeGroupController(QObject):
                 self._microscope_zoom_position.emit(self.microscope_zoom.readback)
 
             if self.light_reflected.moving:
-                self._reflected_changed.emit(
+                self.reflected_changed.emit(
                     int(self.light_reflected.readback * self._slider_value_multiplier)
                 )
                 self.light_reflected.moving = False
@@ -207,7 +207,7 @@ class MicroscopeGroupController(QObject):
                 self._microscope_zoom_position.emit(self.microscope_zoom.readback)
 
         if self.microscope_stage.readback is None:
-            self._microscope_position_changed.emit("Unknown")
+            self.microscope_position_changed.emit("Unknown")
 
         if self.microscope_zoom.readback is None:
             self._microscope_zoom_position_changed.emit("Unknown")

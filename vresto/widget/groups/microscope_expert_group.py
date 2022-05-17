@@ -21,6 +21,7 @@
 import os
 from qtpy.QtWidgets import QGroupBox, QGridLayout, QVBoxLayout, QHBoxLayout, QPushButton, QLabel, QLineEdit, QSlider
 from qtpy.QtCore import QSize, Qt
+from qtpy.QtGui import QDoubleValidator
 
 from vresto.model import PathModel
 
@@ -103,6 +104,7 @@ class MicroscopeExpertGroup(QGroupBox):
         self.setStyleSheet(open(os.path.join(self._paths.qss_path, "microscope_expert_group.qss"), "r").read())
 
         self._configure_buttons()
+        self._configure_lne_box()
         self._set_object_names()
         self._set_widget_sizes()
         self._set_tool_status_tips()
@@ -111,6 +113,11 @@ class MicroscopeExpertGroup(QGroupBox):
     def _configure_buttons(self) -> None:
         for step_button in self._step_buttons:
             step_button.setCheckable(True)
+
+    def _configure_lne_box(self) -> None:
+        for lne_box in self._lne_boxes:
+            lne_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            lne_box.setValidator(QDoubleValidator(-200000, 200000, 4))
 
     def _set_object_names(self) -> None:
         """Sets all the object names for the microscope expert group and the widgets."""
@@ -138,6 +145,7 @@ class MicroscopeExpertGroup(QGroupBox):
         self.slider_light.setMaximumHeight(120)
         self.slider_gain.setMaximumHeight(120)
 
+        [button.setFixedSize(70, 30) for button in self._buttons]
         [step_button.setFixedSize(40, 20) for step_button in self._step_buttons]
         [lne.setFixedSize(60, 20) for lne in self._lne_boxes]
 
@@ -150,7 +158,7 @@ class MicroscopeExpertGroup(QGroupBox):
         layout_quick_buttons = QVBoxLayout()
         layout_quick_buttons.addWidget(self.btn_microscope_out)
         layout_quick_buttons.addWidget(self.btn_microscope_in)
-        layout_quick_buttons.addWidget(self.lbl_microscope_position)
+        layout_quick_buttons.addWidget(self.lbl_microscope_position, alignment=Qt.AlignmentFlag.AlignCenter)
 
         layout_vertical = QVBoxLayout()
         layout_vertical.setSpacing(2)

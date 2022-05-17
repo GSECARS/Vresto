@@ -29,6 +29,7 @@ from vresto.controller.groups import (
     PinholeGroupController,
     PinholeExpertGroupController,
     MicroscopeGroupController,
+    MicroscopeExpertGroupController,
     CommonControlsGroupController,
     DiamondImagesGroupController,
     CorrectionsGroupController,
@@ -81,6 +82,17 @@ class MainController(QObject):
             microscope_zoom=self._idd.microscope_zoom,
             light_reflected=self._idd.microscope_light,
             sample_omega_stage=self._idd.sample_omega,
+        )
+
+        self.microscope_expert_group = MicroscopeExpertGroupController(
+            widget=self._widget.microscope_expert_widget,
+            controller=self.microscope_group,
+            epics_model=self._model.epics,
+            microscope_stage=self._idd.microscope,
+            microscope_vertical=self._idd.microscope_vertical,
+            microscope_horizontal=self._idd.microscope_horizontal,
+            microscope_light=self._idd.microscope_light,
+            microscope_gain=self._idd.microscope_gain,
         )
 
         self.common_controls_group = CommonControlsGroupController(
@@ -196,6 +208,7 @@ class MainController(QObject):
             self.pinhole_expert_group.update_pinhole_position()
             self.pinhole_group.update_pinhole_position()
             self.microscope_group.update_microscope_positions()
+            self.microscope_expert_group.update_microscope_positions()
             self.common_controls_group.update_correction_position()
             self.diamond_images_group.update_diamond_image_widgets()
             self.corrections_group.update_correction_position()

@@ -19,6 +19,7 @@
 # ----------------------------------------------------------------------
 
 from vresto.controller.groups.pinhole_group_controller import PinholeGroupController
+from vresto.controller.groups.pinhole_expert_group_controller import PinholeExpertGroupController
 from vresto.controller.groups.microscope_group_controller import (
     MicroscopeGroupController,
 )

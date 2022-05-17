@@ -41,6 +41,8 @@ class EpicsConnectionError(Exception):
 class EpicsConfig(Enum):
     """Empty Enum to be populated with PVs"""
     pinhole = "13IDD:m22"
+    pinhole_vertical = "13IDD:m93"
+    pinhole_horizontal = "13IDD:m94"
 
     sample_horizontal = "13IDD:m81"
     sample_focus = "13IDD:m82"

@@ -21,7 +21,7 @@
 import sys
 import time
 from qtpy.QtWidgets import QApplication
-from qtpy.QtCore import QObject, Signal
+from qtpy.QtCore import QObject, Signal, QSettings
 
 from vresto.widget import MainWidget
 from vresto.model import MainModel, QtWorkerModel, IDDModel, ImportExportModel
@@ -60,6 +60,7 @@ class MainController(QObject):
             ds_mirror_focus=self._idd.ds_mirror_focus
         )
         self._widget = MainWidget(self._model.paths)
+        self._settings = QSettings("GSECARS", "Vresto")
 
         # Init controller groups
         self.pinhole_group = PinholeGroupController(

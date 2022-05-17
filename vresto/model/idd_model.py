@@ -42,8 +42,12 @@ class IDDModel:
     microscope_gain: DoubleValuePV = field(init=False, repr=False, compare=False)
     us_mirror: DoubleValuePV = field(init=False, repr=False, compare=False)
     us_mirror_focus: DoubleValuePV = field(init=False, repr=False, compare=False)
+    us_light: DoubleValuePV = field(init=False, repr=False, compare=False)
+    us_light_switch: DoubleValuePV = field(init=False, repr=False, compare=False)
     ds_mirror: DoubleValuePV = field(init=False, repr=False, compare=False)
     ds_mirror_focus: DoubleValuePV = field(init=False, repr=False, compare=False)
+    ds_light: DoubleValuePV = field(init=False, repr=False, compare=False)
+    ds_light_switch: DoubleValuePV = field(init=False, repr=False, compare=False)
     xps_stop: DoubleValuePV = field(init=False, repr=False, compare=False)
     station_stop: DoubleValuePV = field(init=False, repr=False, compare=False)
     mirror_stop: DoubleValuePV = field(init=False, repr=False, compare=False)
@@ -197,6 +201,20 @@ class IDDModel:
             monitor=True,
         )
         self._add_pv(
+            pv_name="us_light",
+            movable=True,
+            limited=False,
+            rbv_extension=False,
+            monitor=True,
+        )
+        self._add_pv(
+            pv_name="us_light_switch",
+            movable=True,
+            limited=False,
+            rbv_extension=False,
+            monitor=False,
+        )
+        self._add_pv(
             pv_name="ds_mirror",
             movable=True,
             limited=True,
@@ -209,6 +227,20 @@ class IDDModel:
             limited=True,
             rbv_extension=True,
             monitor=True,
+        )
+        self._add_pv(
+            pv_name="ds_light",
+            movable=True,
+            limited=False,
+            rbv_extension=False,
+            monitor=True,
+        )
+        self._add_pv(
+            pv_name="ds_light_switch",
+            movable=True,
+            limited=False,
+            rbv_extension=False,
+            monitor=False,
         )
         self._add_pv(
             pv_name="xps_stop",
@@ -238,25 +270,4 @@ class IDDModel:
             rbv_extension=False,
             monitor=True,
             as_string=True,
-        )
-        self._add_pv(
-            pv_name="xps_stop",
-            movable=True,
-            limited=False,
-            rbv_extension=False,
-            monitor=False,
-        )
-        self._add_pv(
-            pv_name="station_stop",
-            movable=True,
-            limited=False,
-            rbv_extension=False,
-            monitor=False,
-        )
-        self._add_pv(
-            pv_name="mirror_stop",
-            movable=True,
-            limited=False,
-            rbv_extension=False,
-            monitor=False,
         )

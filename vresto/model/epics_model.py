@@ -62,8 +62,8 @@ class EpicsConfig(Enum):
     ds_mirror_focus = "13IDD:m66"
     us_light = "13IDD:DAC2_1"
     ds_light = "13IDD:DAC2_2"
-    us_light_switch = "13IDD:Unidig1Bi20"
-    ds_light_switch = "13IDD:Unidig1Bi22"
+    us_light_switch = "13IDD:Unidig1Bo20"
+    ds_light_switch = "13IDD:Unidig1Bo22"
 
     xps_stop = "13IDD_DAC_XPS16:allstop"
     station_stop = "13IDD:allstop"

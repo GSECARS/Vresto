@@ -26,8 +26,8 @@ from vresto.widget.custom import MsgBox
 
 
 class MirrorGroupController(QObject):
-    _us_mirror_position_changed: Signal = Signal(str)
-    _ds_mirror_position_changed: Signal = Signal(str)
+    us_mirror_position_changed: Signal = Signal(str)
+    ds_mirror_position_changed: Signal = Signal(str)
     _us_mirror_position: Signal = Signal(float)
     _ds_mirror_position: Signal = Signal(float)
 
@@ -67,8 +67,8 @@ class MirrorGroupController(QObject):
         self._widget.btn_us_out.clicked.connect(self._btn_us_mirror_out_clicked)
         self._widget.btn_ds_out.clicked.connect(self._btn_ds_mirror_out_clicked)
 
-        self._us_mirror_position_changed.connect(self._update_us_label)
-        self._ds_mirror_position_changed.connect(self._update_ds_label)
+        self.us_mirror_position_changed.connect(self._update_us_label)
+        self.ds_mirror_position_changed.connect(self._update_ds_label)
         self._us_mirror_position.connect(self._us_mirror_at_position)
         self._ds_mirror_position.connect(self._ds_mirror_at_position)
 
@@ -158,7 +158,7 @@ class MirrorGroupController(QObject):
         if self._epics.connected:
 
             if self._us_mirror.moving:
-                self._us_mirror_position_changed.emit(
+                self.us_mirror_position_changed.emit(
                     str("{0:.4f}".format(self._us_mirror.readback))
                 )
 
@@ -166,7 +166,7 @@ class MirrorGroupController(QObject):
                 self._us_mirror_position.emit(self._us_mirror.readback)
 
             if self._ds_mirror.moving:
-                self._ds_mirror_position_changed.emit(
+                self.ds_mirror_position_changed.emit(
                     str("{0:.4f}".format(self._ds_mirror.readback))
                 )
 
@@ -174,7 +174,7 @@ class MirrorGroupController(QObject):
                 self._ds_mirror_position.emit(self._ds_mirror.readback)
 
         if self._us_mirror.readback is None:
-            self._us_mirror_position_changed.emit("Unknown")
+            self.us_mirror_position_changed.emit("Unknown")
 
         if self._ds_mirror.readback is None:
-            self._ds_mirror_position_changed.emit("Unknown")
+            self.ds_mirror_position_changed.emit("Unknown")

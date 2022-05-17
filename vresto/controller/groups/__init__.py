@@ -26,4 +26,5 @@ from vresto.controller.groups.common_controls_group_controller import CommonCont
 from vresto.controller.groups.diamond_images_group_controller import DiamondImagesGroupController
 from vresto.controller.groups.corrections_group_controller import CorrectionsGroupController
 from vresto.controller.groups.mirror_group_controller import MirrorGroupController
+from vresto.controller.groups.mirror_expert_group_controller import MirrorExpertGroupController
 from vresto.controller.groups.sample_group_controller import SampleGroupController

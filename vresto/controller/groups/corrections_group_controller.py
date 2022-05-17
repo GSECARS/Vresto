@@ -246,13 +246,3 @@ class CorrectionsGroupController:
 
             self._us_mirror_focus.move(value=corrected_position)
             self._ds_mirror_focus.move(value=corrected_position)
-
-    def update_correction_position(self) -> None:
-        """Updates the US and DS mirror focus moving status. """
-        if self._epics.connected:
-
-            if self._us_mirror_focus.moving:
-                self._us_mirror_focus.moving = False
-
-            if self._ds_mirror_focus.moving:
-                self._ds_mirror_focus.moving = False

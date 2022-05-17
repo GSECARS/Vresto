@@ -21,6 +21,7 @@
 import os
 from qtpy.QtWidgets import QGroupBox, QPushButton, QLabel, QGridLayout, QLineEdit, QSlider, QHBoxLayout, QVBoxLayout
 from qtpy.QtCore import Qt, QSize
+from qtpy.QtGui import QDoubleValidator
 
 from vresto.model import PathModel
 
@@ -41,8 +42,8 @@ class MirrorExpertGroup(QGroupBox):
         self.btn_us_minus = QPushButton("-")
         self.btn_step_1 = QPushButton()
         self.btn_step_2 = QPushButton()
-        self.btn_ds_focus_zero = QPushButton(" DS")
-        self.btn_us_focus_zero = QPushButton(" US")
+        self.btn_ds_focus_zero = QPushButton("DS")
+        self.btn_us_focus_zero = QPushButton("US")
 
         self._buttons = [
             self.btn_ds_focus_zero,
@@ -85,12 +86,18 @@ class MirrorExpertGroup(QGroupBox):
         self.lne_ds = QLineEdit()
         self.lne_us = QLineEdit()
 
+        self._lne_boxes = [
+            self.lne_ds,
+            self.lne_us
+        ]
+
         self.setTitle(self._title)
         self.setStyleSheet(
             open(os.path.join(self._paths.qss_path, "mirror_expert_group.qss"), "r").read()
         )
 
         self._configure_buttons()
+        self._configure_lne_box()
         self._set_object_names()
         self._set_widget_sizes()
         self._layout_group()
@@ -98,6 +105,11 @@ class MirrorExpertGroup(QGroupBox):
     def _configure_buttons(self) -> None:
         for step_button in self._step_buttons:
             step_button.setCheckable(True)
+
+    def _configure_lne_box(self) -> None:
+        for lne_box in self._lne_boxes:
+            lne_box.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            lne_box.setValidator(QDoubleValidator(-200000, 200000, 4))
 
     def _set_object_names(self) -> None:
         """Sets all the object names for the group and the group widgets."""
@@ -149,22 +161,23 @@ class MirrorExpertGroup(QGroupBox):
         layout_us.addWidget(self.btn_us_plus)
 
         layout_slider_ds = QVBoxLayout()
-        layout_slider_ds.setSpacing(5)
+        layout_slider_ds.setSpacing(0)
         layout_slider_ds.addWidget(self.slider_ds)
         layout_slider_ds.addStretch(1)
-        layout_slider_ds.addWidget(self.lbl_ds_small, alignment=Qt.AlignmentFlag.AlignLeft)
+        layout_slider_ds.addWidget(self.lbl_ds_small, alignment=Qt.AlignmentFlag.AlignCenter)
 
         layout_slider_us = QVBoxLayout()
-        layout_slider_us.setSpacing(5)
+        layout_slider_us.setSpacing(0)
         layout_slider_us.addWidget(self.slider_us)
         layout_slider_us.addStretch(1)
-        layout_slider_us.addWidget(self.lbl_us_small, alignment=Qt.AlignmentFlag.AlignLeft)
+        layout_slider_us.addWidget(self.lbl_us_small, alignment=Qt.AlignmentFlag.AlignCenter)
 
         layout.addLayout(layout_ds, 0, 0, 1, 4)
         layout.addLayout(layout_us, 1, 0, 1, 4)
-        layout.addLayout(layout_slider_ds, 0, 4, 3, 1)
-        layout.addLayout(layout_slider_us, 0, 5, 3, 1)
         layout.addLayout(layout_step_widgets, 2, 0, 1, 4)
+        layout.addLayout(layout_slider_ds, 0, 4, 3, 1, alignment=Qt.AlignmentFlag.AlignRight)
+        layout.addLayout(layout_slider_us, 0, 5, 3, 1, alignment=Qt.AlignmentFlag.AlignLeft)
+
         layout.addWidget(self.lbl_zero, 3, 0, 1, 2)
         layout.addWidget(self.btn_ds_focus_zero, 3, 2, 1, 2, alignment=Qt.AlignmentFlag.AlignLeft)
         layout.addWidget(self.btn_us_focus_zero, 3, 4, 1, 2)

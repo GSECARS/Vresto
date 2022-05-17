@@ -34,6 +34,7 @@ from vresto.controller.groups import (
     DiamondImagesGroupController,
     CorrectionsGroupController,
     MirrorGroupController,
+    MirrorExpertGroupController,
     SampleGroupController,
 )
 
@@ -67,15 +68,6 @@ class MainController(QObject):
             us_mirror=self._idd.us_mirror,
         )
 
-        self.microscope_group = MicroscopeGroupController(
-            widget=self._widget.microscope_widget,
-            epics_model=self._model.epics,
-            microscope_stage=self._idd.microscope,
-            microscope_zoom=self._idd.microscope_zoom,
-            light_reflected=self._idd.microscope_light,
-            sample_omega_stage=self._idd.sample_omega,
-        )
-
         self.pinhole_expert_group = PinholeExpertGroupController(
             widget=self._widget.pinhole_expert_widget,
             controller=self.pinhole_group,
@@ -83,6 +75,15 @@ class MainController(QObject):
             pinhole=self._idd.pinhole,
             pinhole_vertical=self._idd.pinhole_vertical,
             pinhole_horizontal=self._idd.pinhole_horizontal,
+        )
+
+        self.microscope_group = MicroscopeGroupController(
+            widget=self._widget.microscope_widget,
+            epics_model=self._model.epics,
+            microscope_stage=self._idd.microscope,
+            microscope_zoom=self._idd.microscope_zoom,
+            light_reflected=self._idd.microscope_light,
+            sample_omega_stage=self._idd.sample_omega,
         )
 
         self.microscope_expert_group = MicroscopeExpertGroupController(
@@ -150,6 +151,20 @@ class MainController(QObject):
             pinhole_stage=self._idd.pinhole,
         )
 
+        self.mirror_expert_group = MirrorExpertGroupController(
+            widget=self._widget.mirror_expert_widget,
+            controller=self.mirror_group,
+            epics_model=self._model.epics,
+            us_mirror=self._idd.us_mirror,
+            ds_mirror=self._idd.ds_mirror,
+            us_focus=self._idd.us_mirror_focus,
+            ds_focus=self._idd.ds_mirror_focus,
+            ds_light=self._idd.ds_light,
+            us_light=self._idd.us_light,
+            us_light_switch=self._idd.us_light_switch,
+            ds_light_switch=self._idd.ds_light_switch,
+        )
+
         self.sample_group = SampleGroupController(
             widget=self._widget.sample_widget,
             epics_model=self._model.epics,
@@ -212,8 +227,8 @@ class MainController(QObject):
             self.microscope_expert_group.update_microscope_positions()
             self.common_controls_group.update_correction_position()
             self.diamond_images_group.update_diamond_image_widgets()
-            self.corrections_group.update_correction_position()
             self.mirror_group.update_mirror_positions()
+            self.mirror_expert_group.update_mirror_positions()
             self.sample_group.update_sample_positions()
             time.sleep(0.05)
 

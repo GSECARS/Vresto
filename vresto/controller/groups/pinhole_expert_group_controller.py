@@ -22,12 +22,12 @@ from typing import Optional
 from qtpy.QtCore import QObject, Signal
 from qtpy.QtWidgets import QLineEdit
 
+from vresto.controller.groups import PinholeGroupController
 from vresto.model import EpicsModel, DoubleValuePV, EventFilterModel
 from vresto.widget.groups import PinholeExpertGroup
 
 
 class PinholeExpertGroupController(QObject):
-    _pinhole_changed: Signal = Signal(str)
     _pinhole_vertical_changed: Signal = Signal(str)
     _pinhole_horizontal_changed: Signal = Signal(str)
 
@@ -39,6 +39,7 @@ class PinholeExpertGroupController(QObject):
     def __init__(
         self,
         widget: PinholeExpertGroup,
+        controller: PinholeGroupController,
         epics_model: EpicsModel,
         pinhole: DoubleValuePV,
         pinhole_vertical: DoubleValuePV,
@@ -47,6 +48,7 @@ class PinholeExpertGroupController(QObject):
         super(PinholeExpertGroupController, self).__init__()
 
         self._widget = widget
+        self._controller = controller
         self._epics = epics_model
 
         self._pinhole = pinhole
@@ -116,7 +118,7 @@ class PinholeExpertGroupController(QObject):
             )
         )
 
-        self._pinhole_changed.connect(self._update_pinhole)
+        self._controller.pinhole_position_changed.connect(self._update_pinhole)
         self._pinhole_vertical_changed.connect(self._update_pinhole_vertical)
         self._pinhole_horizontal_changed.connect(self._update_pinhole_horizontal)
 
@@ -194,8 +196,6 @@ class PinholeExpertGroupController(QObject):
     def update_pinhole_position(self) -> None:
         """Updates the pinhole position label and disables/enables pinhole buttons."""
         if self._epics.connected:
-            if self._pinhole.moving:
-                self._pinhole_changed.emit(str("{0:.4f}".format(self._pinhole.readback)))
 
             if self._pinhole_vertical.moving:
                 self._pinhole_vertical_changed.emit(str("{0:.4f}".format(self._pinhole_vertical.readback)))

@@ -26,7 +26,7 @@ from vresto.widget.custom import MsgBox
 
 
 class PinholeGroupController(QObject):
-    _pinhole_position_changed: Signal = Signal(str)
+    pinhole_position_changed: Signal = Signal(str)
     _position: Signal = Signal(float)
 
     _pinhole_in: float = 0.0
@@ -62,7 +62,7 @@ class PinholeGroupController(QObject):
         self._widget.btn_off.clicked.connect(self._btn_pinhole_off_clicked)
         self._widget.lne_custom.returnPressed.connect(self._lne_custom_pressed)
 
-        self._pinhole_position_changed.connect(self._update_pinhole_label)
+        self.pinhole_position_changed.connect(self._update_pinhole_label)
         self._position.connect(self._pinhole_at_position)
 
     def _configure_pinhole_widgets(self) -> None:
@@ -165,7 +165,7 @@ class PinholeGroupController(QObject):
         """Updates the pinhole position label and disables/enables pinhole buttons."""
         if self._epics.connected:
             if self._pinhole_stage.moving:
-                self._pinhole_position_changed.emit(
+                self.pinhole_position_changed.emit(
                     str("{0:.4f}".format(self._pinhole_stage.readback))
                 )
 
@@ -173,4 +173,4 @@ class PinholeGroupController(QObject):
                 self._position.emit(self._pinhole_stage.readback)
 
         if self._pinhole_stage.readback is None:
-            self._pinhole_position_changed.emit("Unknown")
+            self.pinhole_position_changed.emit("Unknown")

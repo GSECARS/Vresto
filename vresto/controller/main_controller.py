@@ -67,14 +67,6 @@ class MainController(QObject):
             us_mirror=self._idd.us_mirror,
         )
 
-        self.pinhole_expert_group = PinholeExpertGroupController(
-            widget=self._widget.pinhole_expert_widget,
-            epics_model=self._model.epics,
-            pinhole=self._idd.pinhole,
-            pinhole_vertical=self._idd.pinhole_vertical,
-            pinhole_horizontal=self._idd.pinhole_horizontal,
-        )
-
         self.microscope_group = MicroscopeGroupController(
             widget=self._widget.microscope_widget,
             epics_model=self._model.epics,
@@ -82,6 +74,15 @@ class MainController(QObject):
             microscope_zoom=self._idd.microscope_zoom,
             light_reflected=self._idd.microscope_light,
             sample_omega_stage=self._idd.sample_omega,
+        )
+
+        self.pinhole_expert_group = PinholeExpertGroupController(
+            widget=self._widget.pinhole_expert_widget,
+            controller=self.pinhole_group,
+            epics_model=self._model.epics,
+            pinhole=self._idd.pinhole,
+            pinhole_vertical=self._idd.pinhole_vertical,
+            pinhole_horizontal=self._idd.pinhole_horizontal,
         )
 
         self.microscope_expert_group = MicroscopeExpertGroupController(

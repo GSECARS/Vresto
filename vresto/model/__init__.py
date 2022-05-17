@@ -26,4 +26,5 @@ from vresto.model.event_filter_model import EventFilterModel
 from vresto.model.qt_worker_model import QtWorkerModel
 from vresto.model.idd_model import IDDModel
 from vresto.model.import_export_model import ImportExportModel
+from vresto.model.saved_positions_model import SavedPositionsModel
 from vresto.model.main_model import MainModel

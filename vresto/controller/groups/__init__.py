@@ -29,3 +29,4 @@ from vresto.controller.groups.corrections_group_controller import CorrectionsGro
 from vresto.controller.groups.mirror_group_controller import MirrorGroupController
 from vresto.controller.groups.mirror_expert_group_controller import MirrorExpertGroupController
 from vresto.controller.groups.sample_group_controller import SampleGroupController
+from vresto.controller.groups.sample_expert_group_controller import SampleExpertGroupController

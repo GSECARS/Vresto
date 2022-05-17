@@ -37,6 +37,7 @@ from vresto.controller.groups import (
     MirrorGroupController,
     MirrorExpertGroupController,
     SampleGroupController,
+    SampleExpertGroupController,
 )
 
 
@@ -187,6 +188,16 @@ class MainController(QObject):
             microscope=self._idd.microscope,
             reflected_light=self._idd.microscope_light,
             pinhole=self._idd.pinhole,
+        )
+
+        self.sample_expert_group = SampleExpertGroupController(
+            widget=self._widget.sample_expert_widget,
+            controller=self.sample_group,
+            epics_model=self._model.epics,
+            sample_vertical_stage=self._idd.sample_vertical,
+            sample_horizontal_stage=self._idd.sample_horizontal,
+            sample_focus_stage=self._idd.sample_focus,
+            sample_omega_stage=self._idd.sample_omega,
         )
 
         # Event helpers

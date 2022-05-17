@@ -50,6 +50,8 @@ class EpicsConfig(Enum):
     sample_omega = "13IDD:m84"
 
     microscope = "13IDD:m67"
+    microscope_vertical = "13IDD:m68"
+    microscope_horizontal = "13IDD:m69"
     microscope_zoom = "13IDD:m14"
     microscope_light = "13IDD:DAC2_7"
     microscope_gain = "13IDD_PG3:cam1:Gain"

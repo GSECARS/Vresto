@@ -35,6 +35,8 @@ class IDDModel:
     sample_vertical: DoubleValuePV = field(init=False, repr=False, compare=False)
     sample_omega: DoubleValuePV = field(init=False, repr=False, compare=False)
     microscope: DoubleValuePV = field(init=False, repr=False, compare=False)
+    microscope_vertical: DoubleValuePV = field(init=False, repr=False, compare=False)
+    microscope_horizontal: DoubleValuePV = field(init=False, repr=False, compare=False)
     microscope_zoom: DoubleValuePV = field(init=False, repr=False, compare=False)
     microscope_light: DoubleValuePV = field(init=False, repr=False, compare=False)
     microscope_gain: DoubleValuePV = field(init=False, repr=False, compare=False)
@@ -140,6 +142,20 @@ class IDDModel:
         )
         self._add_pv(
             pv_name="microscope",
+            movable=True,
+            limited=True,
+            rbv_extension=True,
+            monitor=True,
+        )
+        self._add_pv(
+            pv_name="microscope_vertical",
+            movable=True,
+            limited=True,
+            rbv_extension=True,
+            monitor=True,
+        )
+        self._add_pv(
+            pv_name="microscope_horizontal",
             movable=True,
             limited=True,
             rbv_extension=True,

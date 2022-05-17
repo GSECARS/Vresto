@@ -28,6 +28,8 @@ from vresto.model import PVModel, DoubleValuePV, StringValuePV, EpicsConfig
 class IDDModel:
 
     pinhole: DoubleValuePV = field(init=False, repr=False, compare=False)
+    pinhole_vertical: DoubleValuePV = field(init=False, repr=False, compare=False)
+    pinhole_horizontal: DoubleValuePV = field(init=False, repr=False, compare=False)
     sample_horizontal: DoubleValuePV = field(init=False, repr=False, compare=False)
     sample_focus: DoubleValuePV = field(init=False, repr=False, compare=False)
     sample_vertical: DoubleValuePV = field(init=False, repr=False, compare=False)
@@ -88,6 +90,20 @@ class IDDModel:
     def _set_stages(self) -> None:
         self._add_pv(
             pv_name="pinhole",
+            movable=True,
+            limited=True,
+            rbv_extension=True,
+            monitor=True,
+        )
+        self._add_pv(
+            pv_name="pinhole_vertical",
+            movable=True,
+            limited=True,
+            rbv_extension=True,
+            monitor=True,
+        )
+        self._add_pv(
+            pv_name="pinhole_horizontal",
             movable=True,
             limited=True,
             rbv_extension=True,

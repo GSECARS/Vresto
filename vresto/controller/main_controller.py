@@ -27,6 +27,7 @@ from vresto.widget import MainWidget
 from vresto.model import MainModel, QtWorkerModel, IDDModel, ImportExportModel
 from vresto.controller.groups import (
     PinholeGroupController,
+    PinholeExpertGroupController,
     MicroscopeGroupController,
     CommonControlsGroupController,
     DiamondImagesGroupController,
@@ -63,6 +64,14 @@ class MainController(QObject):
             pinhole_stage=self._idd.pinhole,
             omega_stage=self._idd.sample_omega,
             us_mirror=self._idd.us_mirror,
+        )
+
+        self.pinhole_expert_group = PinholeExpertGroupController(
+            widget=self._widget.pinhole_expert_widget,
+            epics_model=self._model.epics,
+            pinhole=self._idd.pinhole,
+            pinhole_vertical=self._idd.pinhole_vertical,
+            pinhole_horizontal=self._idd.pinhole_horizontal,
         )
 
         self.microscope_group = MicroscopeGroupController(
@@ -184,6 +193,7 @@ class MainController(QObject):
 
         while not self._widget.terminated:
             self._check_epics_connection()
+            self.pinhole_expert_group.update_pinhole_position()
             self.pinhole_group.update_pinhole_position()
             self.microscope_group.update_microscope_positions()
             self.common_controls_group.update_correction_position()

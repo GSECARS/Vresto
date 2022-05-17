@@ -52,6 +52,7 @@ class EpicsConfig(Enum):
     microscope = "13IDD:m67"
     microscope_zoom = "13IDD:m14"
     microscope_light = "13IDD:DAC2_7"
+    microscope_gain = "13IDD_PG3:cam1:Gain"
 
     us_mirror = "13IDD:m23"
     us_mirror_focus = "13IDD:m65"

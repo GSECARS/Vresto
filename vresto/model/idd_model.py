@@ -37,6 +37,7 @@ class IDDModel:
     microscope: DoubleValuePV = field(init=False, repr=False, compare=False)
     microscope_zoom: DoubleValuePV = field(init=False, repr=False, compare=False)
     microscope_light: DoubleValuePV = field(init=False, repr=False, compare=False)
+    microscope_gain: DoubleValuePV = field(init=False, repr=False, compare=False)
     us_mirror: DoubleValuePV = field(init=False, repr=False, compare=False)
     us_mirror_focus: DoubleValuePV = field(init=False, repr=False, compare=False)
     ds_mirror: DoubleValuePV = field(init=False, repr=False, compare=False)
@@ -153,6 +154,13 @@ class IDDModel:
         )
         self._add_pv(
             pv_name="microscope_light",
+            movable=True,
+            limited=False,
+            rbv_extension=False,
+            monitor=True,
+        )
+        self._add_pv(
+            pv_name="microscope_gain",
             movable=True,
             limited=False,
             rbv_extension=False,

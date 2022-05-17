@@ -38,6 +38,7 @@ from vresto.controller.groups import (
     MirrorExpertGroupController,
     SampleGroupController,
     SampleExpertGroupController,
+    SavedPositionsExpertGroupController,
 )
 
 
@@ -199,6 +200,12 @@ class MainController(QObject):
             sample_horizontal_stage=self._idd.sample_horizontal,
             sample_focus_stage=self._idd.sample_focus,
             sample_omega_stage=self._idd.sample_omega,
+        )
+
+        self.saved_positions_expert_group = SavedPositionsExpertGroupController(
+            widget=self._widget.saved_positions_expert_widget,
+            settings=self._settings,
+            epics_model=self._model.epics,
         )
 
         # Event helpers

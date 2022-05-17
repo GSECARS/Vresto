@@ -30,3 +30,4 @@ from vresto.controller.groups.mirror_group_controller import MirrorGroupControll
 from vresto.controller.groups.mirror_expert_group_controller import MirrorExpertGroupController
 from vresto.controller.groups.sample_group_controller import SampleGroupController
 from vresto.controller.groups.sample_expert_group_controller import SampleExpertGroupController
+from vresto.controller.groups.saved_positions_expert_group_controller import SavedPositionsExpertGroupController

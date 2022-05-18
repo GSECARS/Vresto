@@ -122,6 +122,29 @@ class DoubleValuePV(PVModel):
         self.set_high_limit(limit=high)
         self.set_low_limit(limit=low)
 
+    def set_as_offset(self) -> None:
+
+        if self.moving:
+            MsgBox(msg="Please wait for the stage to stop moving.")
+            return None
+
+        foff_string = self.pv + ".FOFF"
+        set_string = self.pv + ".SET"
+
+        # Set the .FOFF to variable
+        caput(foff_string, 0)
+
+        # Set the .SET to SET
+        caput(set_string, 1)
+
+        caput(self.pv, 0)
+
+        # Set the .SET to USE
+        caput(set_string, 0)
+
+        # Set the .FOFF to frozen
+        caput(foff_string, 1)
+
 
 @dataclass(slots=True)
 class StringValuePV(PVModel):

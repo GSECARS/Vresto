@@ -31,3 +31,4 @@ from vresto.controller.groups.mirror_expert_group_controller import MirrorExpert
 from vresto.controller.groups.sample_group_controller import SampleGroupController
 from vresto.controller.groups.sample_expert_group_controller import SampleExpertGroupController
 from vresto.controller.groups.saved_positions_expert_group_controller import SavedPositionsExpertGroupController
+from vresto.controller.groups.zero_expert_group_controller import ZeroExpertGroupController

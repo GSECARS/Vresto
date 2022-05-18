@@ -39,6 +39,7 @@ from vresto.controller.groups import (
     SampleGroupController,
     SampleExpertGroupController,
     SavedPositionsExpertGroupController,
+    ZeroExpertGroupController,
 )
 
 
@@ -212,6 +213,28 @@ class MainController(QObject):
             sample_focus=self._idd.sample_focus,
         )
 
+        self.zero_expert_group = ZeroExpertGroupController(
+            widget=self._widget.zero_expert_widget,
+            epics_model=self._model.epics,
+            microscope=self._idd.microscope,
+            microscope_horizontal=self._idd.microscope_horizontal,
+            microscope_vertical=self._idd.microscope_vertical,
+            sample_vertical=self._idd.sample_vertical,
+            sample_horizontal=self._idd.sample_horizontal,
+            sample_focus=self._idd.sample_focus,
+            ds_carbon_horizontal=self._idd.ds_carbon_horizontal,
+            ds_carbon_vertical=self._idd.ds_carbon_vertical,
+            us_carbon_horizontal=self._idd.us_carbon_horizontal,
+            us_carbon_vertical=self._idd.us_carbon_vertical,
+            stage_x=self._idd.stage_x,
+            us_mirror_focus=self._idd.us_mirror_focus,
+            ds_mirror_focus=self._idd.ds_mirror_focus,
+            pinhole_horizontal=self._idd.pinhole_horizontal,
+            pinhole_vertical=self._idd.pinhole_vertical,
+            us_mirror=self._idd.us_mirror,
+            ds_mirror=self._idd.ds_mirror,
+        )
+
         # Event helpers
         self._time_started = None
 
@@ -263,6 +286,7 @@ class MainController(QObject):
             self.mirror_group.update_mirror_positions()
             self.mirror_expert_group.update_mirror_positions()
             self.sample_group.update_sample_positions()
+            self.zero_expert_group.update_moving_status()
             time.sleep(0.05)
 
         # Clear camonitor instances after exiting the loop

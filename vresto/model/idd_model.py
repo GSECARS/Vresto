@@ -52,6 +52,7 @@ class IDDModel:
     ds_carbon_horizontal: DoubleValuePV = field(init=False, repr=False, compare=False)
     ds_carbon_vertical: DoubleValuePV = field(init=False, repr=False, compare=False)
     us_carbon_horizontal: DoubleValuePV = field(init=False, repr=False, compare=False)
+    us_carbon_vertical: DoubleValuePV = field(init=False, repr=False, compare=False)
     xps_stop: DoubleValuePV = field(init=False, repr=False, compare=False)
     station_stop: DoubleValuePV = field(init=False, repr=False, compare=False)
     mirror_stop: DoubleValuePV = field(init=False, repr=False, compare=False)

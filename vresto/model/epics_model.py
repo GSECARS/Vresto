@@ -65,6 +65,13 @@ class EpicsConfig(Enum):
     us_light_switch = "13IDD:Unidig1Bo20"
     ds_light_switch = "13IDD:Unidig1Bo22"
 
+    stage_x = "13IDD:m1"
+
+    ds_carbon_horizontal = "13Mirror:m1"
+    ds_carbon_vertical = "13Mirror:m2"
+    us_carbon_horizontal = "13Mirror:m3"
+    us_carbon_vertical = "13Mirror:m4"
+
     xps_stop = "13IDD_DAC_XPS16:allstop"
     station_stop = "13IDD:allstop"
     mirror_stop = "13Mirror:allstop"

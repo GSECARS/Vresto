@@ -48,6 +48,10 @@ class IDDModel:
     ds_mirror_focus: DoubleValuePV = field(init=False, repr=False, compare=False)
     ds_light: DoubleValuePV = field(init=False, repr=False, compare=False)
     ds_light_switch: DoubleValuePV = field(init=False, repr=False, compare=False)
+    stage_x: DoubleValuePV = field(init=False, repr=False, compare=False)
+    ds_carbon_horizontal: DoubleValuePV = field(init=False, repr=False, compare=False)
+    ds_carbon_vertical: DoubleValuePV = field(init=False, repr=False, compare=False)
+    us_carbon_horizontal: DoubleValuePV = field(init=False, repr=False, compare=False)
     xps_stop: DoubleValuePV = field(init=False, repr=False, compare=False)
     station_stop: DoubleValuePV = field(init=False, repr=False, compare=False)
     mirror_stop: DoubleValuePV = field(init=False, repr=False, compare=False)
@@ -240,6 +244,41 @@ class IDDModel:
             movable=True,
             limited=False,
             rbv_extension=False,
+            monitor=False,
+        )
+        self._add_pv(
+            pv_name="stage_x",
+            movable=True,
+            limited=True,
+            rbv_extension=True,
+            monitor=False,
+        )
+        self._add_pv(
+            pv_name="ds_carbon_horizontal",
+            movable=True,
+            limited=True,
+            rbv_extension=True,
+            monitor=False,
+        )
+        self._add_pv(
+            pv_name="ds_carbon_vertical",
+            movable=True,
+            limited=True,
+            rbv_extension=True,
+            monitor=False,
+        )
+        self._add_pv(
+            pv_name="us_carbon_horizontal",
+            movable=True,
+            limited=True,
+            rbv_extension=True,
+            monitor=False,
+        )
+        self._add_pv(
+            pv_name="us_carbon_vertical",
+            movable=True,
+            limited=True,
+            rbv_extension=True,
             monitor=False,
         )
         self._add_pv(

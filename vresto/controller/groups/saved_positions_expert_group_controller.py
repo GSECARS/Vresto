@@ -135,6 +135,3 @@ class SavedPositionsExpertGroupController(QObject):
         if _msg_question == QMessageBox.Yes:
             return True
         return False
-
-    def _test_method(self) -> None:
-        print(self._model.pt_foil)

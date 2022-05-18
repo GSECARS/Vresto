@@ -73,7 +73,7 @@ class SampleExpertGroup(QGroupBox):
         ]
 
         self.btn_prepare_crosshair = QPushButton("PREPARE FOR CROSSHAIR")
-        self.btn_prepare_user = QPushButton("PREPARE FOR USER")
+        self.btn_prepare_user = QPushButton("PREPARE FOR USERS")
         self.btn_step_1 = QPushButton()
         self.btn_step_2 = QPushButton()
         self.btn_step_3 = QPushButton()

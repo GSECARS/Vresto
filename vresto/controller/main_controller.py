@@ -200,6 +200,7 @@ class MainController(QObject):
             sample_horizontal_stage=self._idd.sample_horizontal,
             sample_focus_stage=self._idd.sample_focus,
             sample_omega_stage=self._idd.sample_omega,
+            pinhole_stage=self._idd.pinhole,
         )
 
         self.saved_positions_expert_group = SavedPositionsExpertGroupController(

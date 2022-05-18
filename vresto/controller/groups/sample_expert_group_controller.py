@@ -23,8 +23,7 @@ from qtpy.QtCore import QObject, Signal
 
 from vresto.controller.groups import SampleGroupController
 from vresto.model import DoubleValuePV, EpicsModel, EventFilterModel
-from vresto.widget.groups import SampleGroup
-from vresto.widget.custom import MsgBox
+from vresto.widget.groups import SampleExpertGroup
 
 from qtpy.QtWidgets import QLineEdit
 
@@ -45,15 +44,22 @@ class SampleExpertGroupController(QObject):
     _step_omega_2: float = 1.0
     _step_omega_3: float = 0.1
 
+    _crosshair_high_limit: float = 5.0
+    _crosshair_low_limit: float = -185.0
+    _users_high_limit: float = -45.0
+    _users_low_limit: float = -135.0
+    _pinhole_out_value: float = -20.0
+
     def __init__(
         self,
-        widget: SampleGroup,
+        widget: SampleExpertGroup,
         controller: SampleGroupController,
         epics_model: EpicsModel,
         sample_vertical_stage: DoubleValuePV,
         sample_horizontal_stage: DoubleValuePV,
         sample_focus_stage: DoubleValuePV,
         sample_omega_stage: DoubleValuePV,
+        pinhole_stage: DoubleValuePV,
     ):
         super(SampleExpertGroupController, self).__init__()
 
@@ -65,6 +71,7 @@ class SampleExpertGroupController(QObject):
         self._sample_horizontal_stage = sample_horizontal_stage
         self._sample_focus_stage = sample_focus_stage
         self._sample_omega_stage = sample_omega_stage
+        self._pihole_stage = pinhole_stage
 
         self._deg_sign = "\N{DEGREE SIGN}"
 
@@ -77,6 +84,8 @@ class SampleExpertGroupController(QObject):
         self._configure_sample_widgets()
 
     def _connect_sample_widgets(self) -> None:
+        self._widget.btn_prepare_crosshair.clicked.connect(self._btn_prepare_for_crosshair_clicked)
+        self._widget.btn_prepare_user.clicked.connect(self._btn_prepare_for_users_clicked)
         # Step buttons
         self._widget.btn_step_1.clicked.connect(lambda: self._btn_step_clicked(value=self._step_1))
         self._widget.btn_step_2.clicked.connect(lambda: self._btn_step_clicked(value=self._step_2))
@@ -202,6 +211,24 @@ class SampleExpertGroupController(QObject):
         self._widget.lne_horizontal.installEventFilter(self.horizontal_filter)
         self._widget.lne_focus.installEventFilter(self.focus_filter)
         self._widget.lne_omega.installEventFilter(self.omega_filter)
+
+    def _btn_prepare_for_crosshair_clicked(self) -> None:
+        self._sample_omega_stage.set_limits(
+            high=self._crosshair_high_limit, low=self._crosshair_low_limit
+        )
+        self._move_sample_stages_to_zero()
+
+    def _btn_prepare_for_users_clicked(self) -> None:
+        self._sample_omega_stage.set_limits(
+            high=self._users_high_limit, low=self._users_low_limit
+        )
+        self._pihole_stage.move(value=self._pinhole_out_value)
+        self._move_sample_stages_to_zero()
+
+    def _move_sample_stages_to_zero(self) -> None:
+        self._sample_horizontal_stage.move(value=0.0)
+        self._sample_vertical_stage.move(value=0.0)
+        self._sample_focus_stage.move(value=0.0)
 
     def _btn_step_clicked(
         self, value: float, omega_steps: Optional[bool] = False

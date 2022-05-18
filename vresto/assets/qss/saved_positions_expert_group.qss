@@ -51,6 +51,7 @@
 #btn-update:hover, #btn-update:focus {
     background: #e6e6e6;
     color: #344152;
+    border-color: #e6e6e6;
 }
 
 #btn-update:disabled, #btn-update:pressed {

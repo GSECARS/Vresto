@@ -93,7 +93,7 @@ class SavedPositionsModel:
 
     @pt_foil.setter
     def pt_foil(self, value) -> None:
-        if isinstance(value, float):
+        if isinstance(value, str):
             object.__setattr__(self, "_pt_foil", value)
             self.settings.setValue("pt_foil", self._pt_foil)
 

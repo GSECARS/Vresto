@@ -207,6 +207,9 @@ class MainController(QObject):
             widget=self._widget.saved_positions_expert_widget,
             settings=self._settings,
             epics_model=self._model.epics,
+            sample_vertical=self._idd.sample_vertical,
+            sample_horizontal=self._idd.sample_horizontal,
+            sample_focus=self._idd.sample_focus,
         )
 
         # Event helpers

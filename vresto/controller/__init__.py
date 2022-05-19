@@ -18,4 +18,6 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 
+from vresto.controller.password_form_controller import PasswordFormController
+from vresto.controller.password_request_controller import PasswordRequestController
 from vresto.controller.main_controller import MainController

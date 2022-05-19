@@ -35,6 +35,7 @@ class CommonControlsExpertGroup(QFrame):
         self._paths = paths
 
         self.btn_stop_all = QPushButton("STOP ALL")
+        self.btn_change_password = QPushButton("CHANGE PASSWORD")
         self.lbl_warning = QLabel("WARNING: This tab is NOT for USERS!")
 
         self.setStyleSheet(
@@ -61,6 +62,7 @@ class CommonControlsExpertGroup(QFrame):
 
     def _set_widget_sizes(self) -> None:
         self.btn_stop_all.setMinimumSize(70, 50)
+        self.btn_change_password.setMinimumSize(70, 25)
 
         self.setMaximumSize(self._max_size)
 
@@ -71,5 +73,6 @@ class CommonControlsExpertGroup(QFrame):
 
         layout.addWidget(self.btn_stop_all, 0, 0, 1, 4)
         layout.addWidget(self.lbl_warning, 0, 4, 1, 10, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(self.btn_change_password, 1, 0, 1, 4)
 
         self.setLayout(layout)

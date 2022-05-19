@@ -18,14 +18,33 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 
-from vresto.model.corrections_model import CorrectionsModel
-from vresto.model.epics_model import EpicsModel, EpicsConfig
-from vresto.model.path_model import PathModel
-from vresto.model.pv_model import PVModel, DoubleValuePV, StringValuePV
-from vresto.model.event_filter_model import EventFilterModel
-from vresto.model.qt_worker_model import QtWorkerModel
-from vresto.model.idd_model import IDDModel
-from vresto.model.import_export_model import ImportExportModel
-from vresto.model.saved_positions_model import SavedPositionsModel
-from vresto.model.password_model import PasswordModel
-from vresto.model.main_model import MainModel
+from dataclasses import dataclass, field
+from qtpy.QtCore import QSettings
+
+
+@dataclass(frozen=False, slots=True)
+class PasswordModel:
+
+    settings: QSettings = field(init=True, repr=False, compare=False)
+
+    _password: str = field(init=False, repr=False, compare=False, default="password")
+
+    def __post_init__(self):
+        object.__setattr__(self, "_password", self._read_password_value(target="password"))
+
+    def _read_password_value(self, target: str) -> None:
+        saved_value = self.settings.value(target, type=str)
+        if saved_value == "":
+            saved_value = "password"
+        return saved_value
+
+    @property
+    def password(self) -> str:
+        return self._password
+
+    @password.setter
+    def password(self, value):
+        if isinstance(value, str):
+            print("HERE")
+            object.__setattr__(self, "_password", value)
+            self.settings.setValue("password", self._password)

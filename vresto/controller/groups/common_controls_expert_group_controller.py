@@ -26,6 +26,7 @@ from vresto.model import (
     EpicsModel,
 )
 from vresto.widget.groups import CommonControlsExpertGroup
+from vresto.widget import PasswordFormWidget
 
 
 class CommonControlsExpertGroupController(QObject):
@@ -33,6 +34,7 @@ class CommonControlsExpertGroupController(QObject):
     def __init__(
         self,
         widget: CommonControlsExpertGroup,
+        password_widget: PasswordFormWidget,
         corrections_model: CorrectionsModel,
         epics_model: EpicsModel,
         xps_stop: DoubleValuePV,
@@ -42,6 +44,7 @@ class CommonControlsExpertGroupController(QObject):
         super(CommonControlsExpertGroupController, self).__init__()
 
         self._widget = widget
+        self._password_widget = password_widget
         self._corrections = corrections_model
         self._epics = epics_model
 
@@ -53,6 +56,7 @@ class CommonControlsExpertGroupController(QObject):
 
     def _connect_common_control_widgets(self) -> None:
         self._widget.btn_stop_all.clicked.connect(self._btn_stop_all_clicked)
+        self._widget.btn_change_password.clicked.connect(self._btn_changed_password_clicked)
 
     def _btn_stop_all_clicked(self) -> None:
         self._widget.btn_stop_all.clearFocus()
@@ -62,3 +66,7 @@ class CommonControlsExpertGroupController(QObject):
         self._xps_stop.move(value=1)
         self._station_stop.move(value=1)
         self._mirror_stop.move(value=1)
+
+    def _btn_changed_password_clicked(self) -> None:
+        self._password_widget.hide()
+        self._password_widget.showNormal()

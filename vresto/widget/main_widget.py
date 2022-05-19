@@ -33,7 +33,7 @@ from qtpy.QtCore import QSize
 from qtpy.QtGui import QIcon, QCloseEvent
 
 from vresto.model import PathModel
-from vresto.widget import AlignmentWidget, ExpertWidget
+from vresto.widget import AlignmentWidget, ExpertWidget, PasswordFormWidget, PasswordRequestWidget
 from vresto.widget.groups import (
     PinholeGroup,
     PinholeExpertGroup,
@@ -101,8 +101,11 @@ class MainWidget(QMainWindow):
             saved_positions_expert_group=self.saved_positions_expert_widget
         )
 
+        self.password_form_widget = PasswordFormWidget(paths=self._paths)
+        self.password_request_widget = PasswordRequestWidget(paths=self._paths)
+
         self._main_frame = QFrame()
-        self._tab_widget = QTabWidget()
+        self.tab_widget = QTabWidget()
         self.lbl_epics_status = QLabel()
         self._lbl_hutch = QLabel(self._hutch)
 
@@ -140,8 +143,8 @@ class MainWidget(QMainWindow):
     def _configure_tab_widget(self) -> None:
         """Configures the main tab widget."""
         # Add tabs
-        self._tab_widget.addTab(self.alignment_widget, "ALIGNMENT")
-        self._tab_widget.addTab(self.expert_widget, "EXPERT")
+        self.tab_widget.addTab(self.alignment_widget, "ALIGNMENT")
+        self.tab_widget.addTab(self.expert_widget, "EXPERT")
 
     def _configure_epics_status_widgets(self) -> None:
         """Configures the epics status widgets."""
@@ -165,7 +168,7 @@ class MainWidget(QMainWindow):
         vert_layout.addStretch(1)
 
         layout = QGridLayout()
-        layout.addWidget(self._tab_widget, 0, 0, 1, 1)
+        layout.addWidget(self.tab_widget, 0, 0, 1, 1)
         layout.addLayout(vert_layout, 0, 0, 1, 1)
 
         self._main_frame.setLayout(layout)
@@ -189,7 +192,7 @@ class MainWidget(QMainWindow):
 
             while not self._worker_finished:
                 continue
-
+            self.password_form_widget.close()
             event.accept()
         else:
             event.ignore()

@@ -24,7 +24,8 @@ from qtpy.QtWidgets import QApplication
 from qtpy.QtCore import QObject, Signal, QSettings
 
 from vresto.widget import MainWidget
-from vresto.model import MainModel, QtWorkerModel, IDDModel, ImportExportModel
+from vresto.model import MainModel, QtWorkerModel, IDDModel, ImportExportModel, PasswordModel
+from vresto.controller import PasswordFormController, PasswordRequestController
 from vresto.controller.groups import (
     PinholeGroupController,
     PinholeExpertGroupController,
@@ -63,6 +64,7 @@ class MainController(QObject):
         )
         self._widget = MainWidget(self._model.paths)
         self._settings = QSettings("GSECARS", "Vresto")
+        self._password_model = PasswordModel(settings=self._settings)
 
         # Init controller groups
         self.pinhole_group = PinholeGroupController(
@@ -122,6 +124,7 @@ class MainController(QObject):
 
         self.common_controls_expert_group = CommonControlsExpertGroupController(
             widget=self._widget.common_controls_expert_widget,
+            password_widget=self._widget.password_form_widget,
             corrections_model=self._model.corrections,
             epics_model=self._model.epics,
             xps_stop=self._idd.xps_stop,
@@ -233,6 +236,17 @@ class MainController(QObject):
             pinhole_vertical=self._idd.pinhole_vertical,
             us_mirror=self._idd.us_mirror,
             ds_mirror=self._idd.ds_mirror,
+        )
+
+        self.password_form_controller = PasswordFormController(
+            widget=self._widget.password_form_widget,
+            model=self._password_model,
+        )
+
+        self.password_request_controller = PasswordRequestController(
+            widget=self._widget.password_request_widget,
+            model=self._password_model,
+            tab_widget=self._widget.tab_widget,
         )
 
         # Event helpers

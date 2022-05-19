@@ -20,4 +20,6 @@
 
 from vresto.widget.alignment_widget import AlignmentWidget
 from vresto.widget.expert_widget import ExpertWidget
+from vresto.widget.password_form_widget import PasswordFormWidget
+from vresto.widget.password_request_widget import PasswordRequestWidget
 from vresto.widget.main_widget import MainWidget

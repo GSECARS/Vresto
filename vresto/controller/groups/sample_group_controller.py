@@ -44,13 +44,13 @@ class SampleGroupController(QObject):
     _step_omega_2: float = 1.0
     _step_omega_3: float = 0.1
 
-    _xray_position: float = -90.0
-    _microscope_position: float = 0.0
+    _xray_position: float = 0.0
+    _microscope_position: float = 90.0
     _light_value: float = 0.0
-    _omega_xray_low_limit: float = -135
-    _omega_xray_high_limit: float = -45
-    _omega_microscope_low_limit: float = -5
-    _omega_microscope_high_limit: float = 5
+    _omega_xray_low_limit: float = -45
+    _omega_xray_high_limit: float = 45
+    _omega_microscope_low_limit: float = 85
+    _omega_microscope_high_limit: float = 95
 
     _us_limit: float = -115.0
     _ds_limit: float = -115.0
@@ -384,15 +384,26 @@ class SampleGroupController(QObject):
                 self._widget.lne_omega.setText(text)
 
     def _update_xray_microscope_at_position(self, position: float) -> None:
-        if position == self._xray_position:
+
+        if abs(position - self._xray_position) < 0.002:
             self._widget.btn_x_ray_pos.setEnabled(False)
             self._widget.btn_microscope_pos.setEnabled(True)
-        elif position == self._microscope_position:
+        elif abs(position - self._microscope_position) < 0.002:
             self._widget.btn_x_ray_pos.setEnabled(True)
             self._widget.btn_microscope_pos.setEnabled(False)
         else:
             self._widget.btn_x_ray_pos.setEnabled(True)
             self._widget.btn_microscope_pos.setEnabled(True)
+
+        # if position == self._xray_position:
+        #     self._widget.btn_x_ray_pos.setEnabled(False)
+        #     self._widget.btn_microscope_pos.setEnabled(True)
+        # elif position == self._microscope_position:
+        #     self._widget.btn_x_ray_pos.setEnabled(True)
+        #     self._widget.btn_microscope_pos.setEnabled(False)
+        # else:
+        #     self._widget.btn_x_ray_pos.setEnabled(True)
+        #     self._widget.btn_microscope_pos.setEnabled(True)
 
     def update_sample_positions(self) -> None:
         """Updates the sample position lne boxes."""
@@ -423,6 +434,7 @@ class SampleGroupController(QObject):
             # Sample omega
             if self._sample_omega_stage.moving:
                 omega_rbv_str = str("{0:.4f}".format(self._sample_omega_stage.readback))
+
                 self.omega_rbv_changed.emit(omega_rbv_str)
                 self._sample_omega_stage.moving = False
 

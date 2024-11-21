@@ -44,10 +44,10 @@ class SampleExpertGroupController(QObject):
     _step_omega_2: float = 1.0
     _step_omega_3: float = 0.1
 
-    _crosshair_high_limit: float = 5.0
-    _crosshair_low_limit: float = -185.0
-    _users_high_limit: float = -45.0
-    _users_low_limit: float = -135.0
+    _crosshair_high_limit: float = 360.0
+    _crosshair_low_limit: float = -360.0
+    _users_high_limit: float = 45.0
+    _users_low_limit: float = -45.0
     _pinhole_out_value: float = -20.0
 
     def __init__(

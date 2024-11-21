@@ -41,7 +41,7 @@ class CommonControlsGroupController(QObject):
     _ds_mirror_out: float = -115.0
     _microscope_out: float = -70.0
     _pinhole_limit: float = 0.0
-    _omega_limit: float = -90.0
+    _omega_limit: float = 0.0
 
     _path_changed: Signal = Signal(str)
 

@@ -32,7 +32,7 @@ class PinholeGroupController(QObject):
     _pinhole_in: float = 0.0
     _pinhole_out: float = -20.0
     _pinhole_off: float = -30.0
-    _omega_limit: float = -90
+    _omega_limit: float = 0.0
     _us_limit: float = -114.0
 
     def __init__(

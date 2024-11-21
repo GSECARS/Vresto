@@ -45,6 +45,5 @@ class PasswordModel:
     @password.setter
     def password(self, value):
         if isinstance(value, str):
-            print("HERE")
             object.__setattr__(self, "_password", value)
             self.settings.setValue("password", self._password)

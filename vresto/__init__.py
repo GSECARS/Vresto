@@ -35,7 +35,21 @@ def main():
 
     parser = argparse.ArgumentParser(add_help=False)
     parser.add_argument("--no-epics", action="store_true")
+    parser.add_argument("--make-icon", "-m", action="store_true")
     args, remaining = parser.parse_known_args()
+
+    if args.make_icon:
+        from pathlib import Path
+        from pyshortcuts import make_shortcut
+        icons_dir = Path(__file__).parent / "assets" / "icons"
+        if sys.platform == "darwin":
+            icon = str(icons_dir / "diamond.icns")
+        elif sys.platform == "win32":
+            icon = str(icons_dir / "diamond.ico")
+        else:
+            icon = str(icons_dir / "diamond.png")
+        make_shortcut(sys.argv[0], name="Vresto", icon=icon, terminal=False)
+        return
 
     if args.no_epics:
         os.environ["VRESTO_NO_EPICS"] = "1"

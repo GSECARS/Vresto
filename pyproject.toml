@@ -23,6 +23,7 @@ dependencies = [
     "numpy>=2.5.2",
     "pyepics>=3.5.10",
     "pyqt5>=5.15.11",
+    "pyshortcuts>=1.9.10",
     "qtpy>=2.4.3",
 ]
 

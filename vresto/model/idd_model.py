@@ -72,8 +72,9 @@ class IDDModel:
         movable: bool,
         limited: bool,
         rbv_extension: bool,
-        monitor: bool,
+        monitor: Optional[bool] = False,
         as_string: Optional[bool] = False,
+        moving_range: Optional[float | None] = None,
     ) -> None:
 
         name = pv_name
@@ -95,6 +96,7 @@ class IDDModel:
                 limited=limited,
                 rbv_extension=rbv_extension,
                 monitor=monitor,
+                moving_range=moving_range
             ),
         )
         self.collection.append(getattr(self, pv_name))
@@ -148,6 +150,7 @@ class IDDModel:
             limited=True,
             rbv_extension=True,
             monitor=True,
+            moving_range=0.00009,
         )
         self._add_pv(
             pv_name="microscope",

@@ -52,9 +52,9 @@ class SampleGroupController(QObject):
     _omega_microscope_low_limit: float = 85
     _omega_microscope_high_limit: float = 95
 
-    _us_limit: float = -115.0
-    _ds_limit: float = -115.0
-    _microscope_limit: float = -69.0
+    _us_limit: float = -180.0
+    _ds_limit: float = -180.0
+    _microscope_limit: float = -139
     _pinhole_limit: float = -19.9
 
     def __init__(

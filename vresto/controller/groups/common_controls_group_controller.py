@@ -21,25 +21,25 @@
 import os
 import time
 from datetime import datetime
+
 from qtpy.QtCore import QObject, Signal
 from qtpy.QtWidgets import QFileDialog, QLineEdit, QMessageBox
 
 from vresto.model import (
     CorrectionsModel,
-    StringValuePV,
     DoubleValuePV,
-    ImportExportModel,
     EpicsModel,
+    ImportExportModel,
+    StringValuePV,
 )
-from vresto.widget.groups import CommonControlsGroup
 from vresto.widget.custom import MsgBox
+from vresto.widget.groups import CommonControlsGroup
 
 
 class CommonControlsGroupController(QObject):
-
-    _us_mirror_out: float = -115.0
-    _ds_mirror_out: float = -115.0
-    _microscope_out: float = -70.0
+    _us_mirror_out: float = -180.0
+    _ds_mirror_out: float = -180.0
+    _microscope_out: float = -140.0
     _pinhole_limit: float = 0.0
     _omega_limit: float = 0.0
 
@@ -170,7 +170,6 @@ class CommonControlsGroupController(QObject):
             return None
 
     def _btn_load_clicked(self) -> None:
-
         dialog = QFileDialog()
         dialog.setFileMode(QFileDialog.ExistingFile)
 
@@ -188,9 +187,7 @@ class CommonControlsGroupController(QObject):
         )
 
         if filename:
-
             with open(filename, "r") as correction_file:
-
                 vertical_position: float
                 horizontal_position: float
                 virtual_position: float
@@ -198,7 +195,6 @@ class CommonControlsGroupController(QObject):
                 objective_focus: float
 
                 for line in correction_file.readlines():
-
                     if not line.startswith("#"):
                         if line.startswith("vertical"):
                             vertical_position = float(line.split("=")[1].strip())
@@ -215,7 +211,6 @@ class CommonControlsGroupController(QObject):
                     and real_position is not None
                     and objective_focus is not None
                 ):
-
                     # Check mirrors
                     if self._us_mirror.moving or self._ds_mirror.moving:
                         MsgBox(msg="Wait until the mirrors stop moving.")
@@ -259,12 +254,13 @@ class CommonControlsGroupController(QObject):
                         return None
 
                     user_response = QMessageBox.question(
-                        self._widget, "Move confirmation",
+                        self._widget,
+                        "Move confirmation",
                         f"Are you sure you want to move to the following positions?\n"
                         f"Vertical: {vertical_position}\n"
                         f"Horizontal: {horizontal_position}\n"
                         f"Focus: {real_position}\n"
-                        f"Objective focus: {objective_focus}"
+                        f"Objective focus: {objective_focus}",
                     )
 
                     if user_response == QMessageBox.Yes:
@@ -286,7 +282,6 @@ class CommonControlsGroupController(QObject):
     def update_correction_position(self) -> None:
         """Updates the US and DS mirror focus moving status."""
         if self._epics.connected:
-
             if self._xps_stop.moving:
                 self._xps_stop.moving = False
 

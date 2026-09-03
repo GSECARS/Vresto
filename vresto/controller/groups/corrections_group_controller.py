@@ -242,7 +242,7 @@ class CorrectionsGroupController:
         except ValueError:
             return None
         else:
-            corrected_position = (virtual_position - real_position) * -1
+            corrected_position = (virtual_position - real_position)
 
             self._us_mirror_focus.move(value=corrected_position)
             self._ds_mirror_focus.move(value=corrected_position)

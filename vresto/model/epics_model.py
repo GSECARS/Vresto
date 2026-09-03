@@ -41,12 +41,12 @@ class EpicsConnectionError(Exception):
 class EpicsConfig(Enum):
     """Empty Enum to be populated with PVs"""
     pinhole = "13IDD:m22"
-    pinhole_vertical = "13IDD:m103"
-    pinhole_horizontal = "13IDD:m104"
+    pinhole_vertical = "13IDD:m100"
+    pinhole_horizontal = "13IDD:m101"
 
-    sample_horizontal = "13IDD:m102"
-    sample_focus = "13IDD:m100"
-    sample_vertical = "13IDD:m101"
+    sample_horizontal = "13IDD:m98"
+    sample_focus = "13IDD:m99"
+    sample_vertical = "13IDD:m97"
     sample_omega = "13IDD:Auto1:m1"
 
     microscope = "13IDD:m67"
@@ -56,8 +56,8 @@ class EpicsConfig(Enum):
     microscope_light = "13IDD:FiberIllumPower"
     microscope_gain = "13IDD_PG3:cam1:Gain"
 
-    us_mirror = "13IDD:m23"
-    ds_mirror = "13IDD:m24"
+    us_mirror = "13IDD:m102"
+    ds_mirror = "13IDD:m103"
     us_mirror_focus = "13IDD:m65"
     ds_mirror_focus = "13IDD:m66"
     us_light = "13IDD:US_IllumPower"
@@ -65,7 +65,7 @@ class EpicsConfig(Enum):
     us_light_switch = "13IDD:US_IllumSplitter"
     ds_light_switch = "13IDD:DS_IllumSplitter"
 
-    stage_x = "13IDD:m99"
+    stage_x = "13IDD:m73"
 
     ds_carbon_horizontal = "13Mirror:m1"
     ds_carbon_vertical = "13Mirror:m2"
@@ -73,7 +73,7 @@ class EpicsConfig(Enum):
     us_carbon_vertical = "13Mirror:m4"
 
     xps_stop = "13IDD_DAC_XPS16:allstop"
-    station_stop = "13IDD_Linux:allstop"  # 0: Release, 1: Stop
+    station_stop = "13IDD:allstop"  # 0: Release, 1: Stop
     mirror_stop = "13Mirror:allstop"
 
     path = "13IDDLF1:cam1:FilePath"

@@ -38,6 +38,7 @@ class PVModel(ABC):
         init=True, default=False, repr=True, compare=False
     )
     monitor: Optional[bool] = field(init=True, default=False, repr=True, compare=False)
+    moving_range: float | None = field(init=True, repr=False, compare=False, default=None)
 
     _rbv_string: str = field(init=False, repr=True, compare=False)
     _moving: bool = field(init=False, repr=False, compare=False, default=True)
@@ -84,8 +85,15 @@ class DoubleValuePV(PVModel):
             camonitor(self._rbv_string, callback=self._monitor_pv)
 
     def _monitor_pv(self, **kwargs) -> None:
+
+        old_value = self.readback
         object.__setattr__(self, "readback", round(kwargs["value"], 4))
-        object.__setattr__(self, "_moving", True)
+        
+        if self.moving_range is not None:
+            if abs(old_value - self.readback) >= self.moving_range:
+                object.__setattr__(self, "_moving", True)
+        else:
+            object.__setattr__(self, "_moving", True)
 
     def move(self, value: float, with_limits: Optional[bool] = True) -> None:
         """Moves the motor."""

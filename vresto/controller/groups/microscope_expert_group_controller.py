@@ -33,7 +33,7 @@ class MicroscopeExpertGroupController(QObject):
     _microscope_horizontal_changed: Signal = Signal(str)
 
     _microscope_in: float = 0.0
-    _microscope_out: float = -70.0
+    _microscope_out: float = -140.0
 
     _slider_max: int = 100
     _slider_light_multiplier: int = 20

@@ -32,9 +32,9 @@ class MirrorGroupController(QObject):
     _ds_mirror_position: Signal = Signal(float)
 
     _us_mirror_in: float = 0.0
-    _us_mirror_out: float = -115.0
+    _us_mirror_out: float = -180.0
     _ds_mirror_in: float = 0.0
-    _ds_mirror_out: float = -115.0
+    _ds_mirror_out: float = -180.0
 
     _omega_limit: float = 0.0
     _pinhole_limit: float = 0.0

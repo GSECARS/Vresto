@@ -27,7 +27,6 @@ from vresto.widget.groups import (
     CorrectionsGroup,
     CommonControlsGroup,
     DiamondImagesGroup,
-    MirrorGroup,
     SampleGroup,
 )
 from vresto.model import PathModel
@@ -44,7 +43,6 @@ class AlignmentWidget(QWidget):
         corrections_group: CorrectionsGroup,
         common_controls_group: CommonControlsGroup,
         diamond_images_group: DiamondImagesGroup,
-        mirror_group: MirrorGroup,
         sample_group: SampleGroup,
     ) -> None:
         super(AlignmentWidget, self).__init__()
@@ -55,7 +53,6 @@ class AlignmentWidget(QWidget):
         self.corrections_widget = corrections_group
         self.common_controls_widget = common_controls_group
         self.diamond_images_widget = diamond_images_group
-        self.mirror_widget = mirror_group
         self.sample_widget = sample_group
 
         self._configure_alignment_widget()
@@ -76,8 +73,7 @@ class AlignmentWidget(QWidget):
         layout.addWidget(self.corrections_widget, 1, 0, 2, 1)
         layout.addWidget(self.common_controls_widget, 3, 0, 2, 1)
         layout.addWidget(self.diamond_images_widget, 1, 1, 4, 2)
-        layout.addWidget(self.mirror_widget, 5, 0, 1, 1)
-        layout.addWidget(self.sample_widget, 5, 1, 1, 2)
+        layout.addWidget(self.sample_widget, 5, 0, 1, 3)
 
         # Set the layout
         self.setLayout(layout)

@@ -74,6 +74,7 @@ class SampleGroup(QGroupBox):
 
         self.btn_x_ray_pos = QPushButton("X-RAY POSITION")
         self.btn_microscope_pos = QPushButton("MICROSCOPE POSITION")
+        self.btn_mounting_pos = QPushButton("MOUNTING POSITION")
         self.btn_step_1 = QPushButton()
         self.btn_step_2 = QPushButton()
         self.btn_step_3 = QPushButton()
@@ -145,6 +146,7 @@ class SampleGroup(QGroupBox):
         [button.setObjectName("btn-minus") for button in self._minus_buttons]
         self.btn_x_ray_pos.setObjectName("btn-main")
         self.btn_microscope_pos.setObjectName("btn-main")
+        self.btn_mounting_pos.setObjectName("btn-main")
 
     def _set_tool_status_tips(self) -> None:
         """Sets all the tool and status tips for the group."""
@@ -235,8 +237,9 @@ class SampleGroup(QGroupBox):
 
         layout = QGridLayout()
         layout.setSpacing(10)
-        layout.addWidget(self.btn_x_ray_pos, 0, 0, 1, 5)
-        layout.addWidget(self.btn_microscope_pos, 0, 5, 1, 7)
+        layout.addWidget(self.btn_mounting_pos, 0, 0, 1, 3)
+        layout.addWidget(self.btn_x_ray_pos, 0, 3, 1, 4)
+        layout.addWidget(self.btn_microscope_pos, 0, 7, 1, 5)
         layout.addLayout(
             layout_left_step_widgets, 1, 0, 4, 1, alignment=Qt.AlignmentFlag.AlignCenter
         )

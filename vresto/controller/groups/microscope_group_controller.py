@@ -32,15 +32,15 @@ class MicroscopeGroupController(QObject):
     _microscope_zoom_position: Signal = Signal(float)
     reflected_changed: Signal = Signal(int)
 
-    _microscope_in: float = 0.0
-    _microscope_out: float = -140.0
-    _microscope_zoom_in: float = 0.0
-    _microscope_zoom_out: float = -9.0
+    _microscope_in: float = 0.01
+    _microscope_out: float = 0.02
+    _microscope_zoom_in: float = 0.01
+    _microscope_zoom_out: float = 0.02
 
     _slider_max: int = 100
     _slider_value_multiplier: int = 20
 
-    _omega_limit: float = 90.0
+    _omega_limit: float = 120.0
 
     def __init__(
         self,

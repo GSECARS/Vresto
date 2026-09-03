@@ -29,8 +29,6 @@ from vresto.widget.groups import MicroscopeExpertGroup
 
 class MicroscopeExpertGroupController(QObject):
     _gain_changed: Signal = Signal(int)
-    _microscope_vertical_changed: Signal = Signal(str)
-    _microscope_horizontal_changed: Signal = Signal(str)
 
     _microscope_in: float = 0.0
     _microscope_out: float = -140.0
@@ -50,8 +48,6 @@ class MicroscopeExpertGroupController(QObject):
         controller: MicroscopeGroupController,
         epics_model: EpicsModel,
         microscope_stage: DoubleValuePV,
-        microscope_vertical: DoubleValuePV,
-        microscope_horizontal: DoubleValuePV,
         microscope_light: DoubleValuePV,
         microscope_gain: DoubleValuePV,
     ) -> None:
@@ -62,13 +58,9 @@ class MicroscopeExpertGroupController(QObject):
         self._epics = epics_model
 
         self.microscope_stage = microscope_stage
-        self.microscope_vertical = microscope_vertical
-        self.microscope_horizontal = microscope_horizontal
         self.microscope_light = microscope_light
         self.microscope_gain = microscope_gain
 
-        self.vertical_filter = EventFilterModel(self.microscope_vertical)
-        self.horizontal_filter = EventFilterModel(self.microscope_horizontal)
         self.focus_filter = EventFilterModel(self.microscope_stage)
 
         self._connect_microscope_widgets()
@@ -86,18 +78,7 @@ class MicroscopeExpertGroupController(QObject):
         self._widget.btn_step_2.clicked.connect(lambda: self._btn_step_clicked(value=self._step_2))
         self._widget.btn_step_3.clicked.connect(lambda: self._btn_step_clicked(value=self._step_3))
 
-        self._widget.lne_microscope_vertical.returnPressed.connect(
-            lambda: self._lne_microscope_pressed(
-                stage=self.microscope_vertical,
-                lne_box=self._widget.lne_microscope_vertical,
-            )
-        )
-        self._widget.lne_microscope_horizontal.returnPressed.connect(
-            lambda: self._lne_microscope_pressed(
-                stage=self.microscope_horizontal,
-                lne_box=self._widget.lne_microscope_horizontal,
-            )
-        )
+
         self._widget.lne_microscope_focus.returnPressed.connect(
             lambda: self._lne_microscope_pressed(
                 stage=self.microscope_stage,
@@ -105,22 +86,6 @@ class MicroscopeExpertGroupController(QObject):
             )
         )
 
-        self._widget.btn_microscope_vertical_plus.clicked.connect(
-            lambda: self._btn_plus_minus_clicked(stage=self.microscope_vertical)
-        )
-        self._widget.btn_microscope_vertical_minus.clicked.connect(
-            lambda: self._btn_plus_minus_clicked(
-                stage=self.microscope_vertical, minus=True
-            )
-        )
-        self._widget.btn_microscope_horizontal_plus.clicked.connect(
-            lambda: self._btn_plus_minus_clicked(stage=self.microscope_horizontal)
-        )
-        self._widget.btn_microscope_horizontal_minus.clicked.connect(
-            lambda: self._btn_plus_minus_clicked(
-                stage=self.microscope_horizontal, minus=True
-            )
-        )
         self._widget.btn_microscope_focus_plus.clicked.connect(
             lambda: self._btn_plus_minus_clicked(stage=self.microscope_stage)
         )
@@ -134,8 +99,6 @@ class MicroscopeExpertGroupController(QObject):
         self._controller.reflected_changed.connect(self._light_value_changed)
         self._gain_changed.connect(self._gain_value_changed)
 
-        self._microscope_vertical_changed.connect(self._update_microscope_vertical)
-        self._microscope_horizontal_changed.connect(self._update_microscope_horizontal)
         self._controller.microscope_position_changed.connect(self._update_microscope_focus)
 
     def _configure_microscope_widgets(self) -> None:
@@ -155,8 +118,6 @@ class MicroscopeExpertGroupController(QObject):
         self._widget.btn_microscope_out.setToolTip(f"Moves the microscope at {self._microscope_out}")
 
         # Set event filters
-        self._widget.lne_microscope_vertical.installEventFilter(self.vertical_filter)
-        self._widget.lne_microscope_horizontal.installEventFilter(self.horizontal_filter)
         self._widget.lne_microscope_focus.installEventFilter(self.focus_filter)
 
         # Config sliders
@@ -252,16 +213,6 @@ class MicroscopeExpertGroupController(QObject):
             stage.move(value=value)
         lne_box.clearFocus()
 
-    def _update_microscope_vertical(self, text: str) -> None:
-        if not self._widget.lne_microscope_vertical.hasFocus():
-            if self._widget.lne_microscope_vertical.text() != text:
-                self._widget.lne_microscope_vertical.setText(text)
-
-    def _update_microscope_horizontal(self, text: str) -> None:
-        if not self._widget.lne_microscope_horizontal.hasFocus():
-            if self._widget.lne_microscope_horizontal.text() != text:
-                self._widget.lne_microscope_horizontal.setText(text)
-
     def _update_microscope_focus(self, text: str) -> None:
         if not self._widget.lne_microscope_focus.hasFocus():
             if self._widget.lne_microscope_focus.text() != text:
@@ -276,16 +227,3 @@ class MicroscopeExpertGroupController(QObject):
                 )
                 self.microscope_gain.moving = False
 
-            if self.microscope_vertical.moving:
-                self._microscope_vertical_changed.emit(
-                    str("{0:.4f}".format(self.microscope_vertical.readback))
-                )
-
-                self.microscope_vertical.moving = False
-
-            if self.microscope_horizontal.moving:
-                self._microscope_horizontal_changed.emit(
-                    str("{0:.4f}".format(self.microscope_horizontal.readback))
-                )
-
-                self.microscope_horizontal.moving = False

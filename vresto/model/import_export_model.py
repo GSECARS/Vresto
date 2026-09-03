@@ -31,8 +31,6 @@ class ImportExportModel:
     vertical: DoubleValuePV = field(init=True, compare=False, repr=False)
     horizontal: DoubleValuePV = field(init=True, compare=False, repr=False)
     focus: DoubleValuePV = field(init=True, compare=False, repr=False)
-    us_mirror_focus: DoubleValuePV = field(init=True, compare=False, repr=False)
-    ds_mirror_focus: DoubleValuePV = field(init=True, compare=False, repr=False)
 
     def save_correction(
         self,
@@ -72,8 +70,6 @@ class ImportExportModel:
         self.vertical.move(value=vertical_pos)
         self.horizontal.move(value=horizontal_pos)
         self.focus.move(value=real_pos)
-        self.us_mirror_focus.move(value=objective_focus)
-        self.ds_mirror_focus.move(value=objective_focus)
 
     @staticmethod
     def is_writable(filepath: str) -> bool:

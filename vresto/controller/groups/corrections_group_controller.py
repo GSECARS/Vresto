@@ -35,32 +35,30 @@ class CorrectionsGroupController:
         widget: CorrectionsGroup,
         corrections_model: CorrectionsModel,
         epics_model: EpicsModel,
-        check_c_mirrors: QCheckBox,
         btn_reset: QPushButton,
+        check_c_mirrors: QCheckBox,
         cmb_refraction_index: QComboBox,
         lne_virtual_position: QLineEdit,
         lne_diamond_table: QLineEdit,
         lne_real_position: QLineEdit,
         sample_focus_stage: DoubleValuePV,
-        us_mirror_focus: DoubleValuePV,
-        ds_mirror_focus: DoubleValuePV,
         microscope_zoom: DoubleValuePV,
+        microscope_focus: DoubleValuePV,
         stacked_img_widget: QStackedWidget,
     ) -> None:
         self._widget = widget
         self._corrections = corrections_model
         self._epics = epics_model
+        self._check_microscope_focus_cor = check_c_mirrors
         self._cmb_refraction_index = cmb_refraction_index
         self._btn_reset = btn_reset
-        self._check_c_mirrors = check_c_mirrors
 
         self._lne_virtual_position = lne_virtual_position
         self._lne_diamond_table = lne_diamond_table
         self._lne_real_position = lne_real_position
         self._sample_focus_stage = sample_focus_stage
-        self._us_mirror_focus = us_mirror_focus
-        self._ds_mirror_focus = ds_mirror_focus
         self._microscope_zoom = microscope_zoom
+        self._microscope_focus = microscope_focus
 
         self._stacked_images = stacked_img_widget
 
@@ -91,14 +89,14 @@ class CorrectionsGroupController:
         )
 
     def _check_focus_sample_changed(self, state: int) -> None:
-        if state:
-            if self._microscope_zoom.readback != 0.0:
-                self._widget.check_focus_sample.setCheckState(Qt.CheckState.Unchecked)
-                MsgBox(
-                    msg=f"Diamond correction must be performed with Microscope 'Zoom IN'!\n"
-                    f"Make sure that this is the case and if need repeat the correction."
-                )
-                return None
+        #if state:
+        #    if self._microscope_zoom.readback != 0.0:
+        #        self._widget.check_focus_sample.setCheckState(Qt.CheckState.Unchecked)
+        #        MsgBox(
+        #            msg=f"Diamond correction must be performed with Microscope 'Zoom IN'!\n"
+        #            f"Make sure that this is the case and if need repeat the correction."
+        #        )
+        #        return None
 
         self._widget.cmb_diamond_thickness.lineEdit().setReadOnly(not state)
 
@@ -186,10 +184,8 @@ class CorrectionsGroupController:
             self._sample_focus_stage.move(real_position)
             self._lne_real_position.setText("{0:.4f}".format(real_position))
 
-            if self._check_c_mirrors.isChecked():
-                self._correct_mirrors_position(
-                    self._lne_virtual_position, self._lne_real_position
-                )
+            if self._check_microscope_focus_cor.isChecked():
+                 self._correct_mirrors_position(self._lne_virtual_position, self._lne_real_position)
 
             self._stacked_images.setCurrentIndex(3)
 
@@ -201,7 +197,7 @@ class CorrectionsGroupController:
         self._widget.check_diamond_thickness.setDisabled(True)
         self._widget.check_diamond_thickness.setChecked(False)
         self._widget.check_focus_sample.setChecked(False)
-        self._check_c_mirrors.setChecked(True)
+        self._check_microscope_focus_cor.setChecked(False)
 
         self._stacked_images.setCurrentIndex(1)
 
@@ -244,5 +240,3 @@ class CorrectionsGroupController:
         else:
             corrected_position = (virtual_position - real_position)
 
-            self._us_mirror_focus.move(value=corrected_position)
-            self._ds_mirror_focus.move(value=corrected_position)

@@ -37,8 +37,6 @@ from vresto.widget.groups import CommonControlsGroup
 
 
 class CommonControlsGroupController(QObject):
-    _us_mirror_out: float = -180.0
-    _ds_mirror_out: float = -180.0
     _microscope_out: float = -140.0
     _pinhole_limit: float = 0.0
     _omega_limit: float = 0.0
@@ -54,14 +52,11 @@ class CommonControlsGroupController(QObject):
         path: StringValuePV,
         lne_virtual_position: QLineEdit,
         lne_real_position: QLineEdit,
-        us_mirror: DoubleValuePV,
-        ds_mirror: DoubleValuePV,
         microscope_stage: DoubleValuePV,
         pinhole_stage: DoubleValuePV,
         omega_stage: DoubleValuePV,
-        xps_stop: DoubleValuePV,
         station_stop: DoubleValuePV,
-        mirror_stop: DoubleValuePV,
+        xps_stop: DoubleValuePV,
     ) -> None:
         super(CommonControlsGroupController, self).__init__()
 
@@ -73,14 +68,11 @@ class CommonControlsGroupController(QObject):
         self._path = path
         self._lne_virtual_position = lne_virtual_position
         self._lne_real_position = lne_real_position
-        self._us_mirror = us_mirror
-        self._ds_mirror = ds_mirror
         self._microscope_stage = microscope_stage
         self._pinhole_stage = pinhole_stage
         self._omega_stage = omega_stage
-        self._xps_stop = xps_stop
         self._station_stop = station_stop
-        self._mirror_stop = mirror_stop
+        self._xps_stop = xps_stop
 
         self.correction_aborted = False
         self._latest_path: str = "Unknown"
@@ -92,6 +84,7 @@ class CommonControlsGroupController(QObject):
         self._widget.btn_save.clicked.connect(self._btn_save_clicked)
         self._widget.btn_save_as.clicked.connect(self._btn_save_as_clicked)
         self._widget.btn_load_correction.clicked.connect(self._btn_load_clicked)
+        self._widget.btn_zero_microscope.clicked.connect(self._btn_zero_clicked)
 
         self._path_changed.connect(self.current_path_changed)
 
@@ -100,9 +93,8 @@ class CommonControlsGroupController(QObject):
 
         self._corrections.abort_status = True
 
-        self._xps_stop.move(value=1)
         self._station_stop.move(value=1)
-        self._mirror_stop.move(value=1)
+        self._xps_stop.move(value=1)
 
     def _btn_save_clicked(self) -> None:
         try:
@@ -169,6 +161,9 @@ class CommonControlsGroupController(QObject):
         else:
             return None
 
+    def _btn_zero_clicked(self) -> None:
+        self._microscope_stage.move(value=0.0)
+
     def _btn_load_clicked(self) -> None:
         dialog = QFileDialog()
         dialog.setFileMode(QFileDialog.ExistingFile)
@@ -211,17 +206,6 @@ class CommonControlsGroupController(QObject):
                     and real_position is not None
                     and objective_focus is not None
                 ):
-                    # Check mirrors
-                    if self._us_mirror.moving or self._ds_mirror.moving:
-                        MsgBox(msg="Wait until the mirrors stop moving.")
-                        return None
-
-                    if (
-                        round(self._us_mirror.readback) != self._us_mirror_out
-                        or round(self._ds_mirror.readback) != self._ds_mirror_out
-                    ):
-                        MsgBox(msg="First move the mirrors out.")
-                        return None
 
                     # Check microscope
                     if self._microscope_stage.moving:
@@ -282,14 +266,11 @@ class CommonControlsGroupController(QObject):
     def update_correction_position(self) -> None:
         """Updates the US and DS mirror focus moving status."""
         if self._epics.connected:
-            if self._xps_stop.moving:
-                self._xps_stop.moving = False
-
             if self._station_stop.moving:
                 self._station_stop.moving = False
 
-            if self._mirror_stop.moving:
-                self._mirror_stop.moving = False
+            if self._xps_stop.moving:
+                self._xps_stop.moving = False
 
             custom_path = os.path.join(
                 "\\".join(list(self._path.readback.split("\\")[0:-2]))

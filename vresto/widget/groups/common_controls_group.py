@@ -34,7 +34,7 @@ from vresto.model import PathModel
 
 class CommonControlsGroup(QFrame):
 
-    _max_size = QSize(280, 230)
+    _max_size = QSize(280, 270)
 
     def __init__(self, paths: PathModel) -> None:
         super(CommonControlsGroup, self).__init__()
@@ -46,9 +46,11 @@ class CommonControlsGroup(QFrame):
         self.btn_save = QPushButton("QUICK SAVE")
         self.btn_save_as = QPushButton("SAVE AS")
         self.btn_load_correction = QPushButton("LOAD POSITION")
+        self.btn_zero_microscope = QPushButton("ZERO")
 
-        self.check_c_mirrors = QCheckBox("Use focus-correction for C-mirrors.")
+        self.check_c_mirrors = QCheckBox("Use focus-correction for microscope.")
 
+        self.lbl_zero_microscope = QLabel("Microscope focus")
         self.lbl_refraction_index = QLabel("Refraction index options")
         self.lbl_path = QLabel("Unknown")
 
@@ -76,12 +78,13 @@ class CommonControlsGroup(QFrame):
         self.cmb_refraction_index.addItem("Moissanite")
 
     def _configure_check_box(self) -> None:
-        self.check_c_mirrors.setChecked(True)
+        self.check_c_mirrors.setChecked(False)
 
     def _set_object_names(self) -> None:
         """Sets all the object names for the group and the group widgets."""
         self.setObjectName("group-common-controls")
         self.btn_stop_all.setObjectName("btn-stop")
+        self.btn_zero_microscope.setObjectName("btn-pinhole")
         self.btn_reset.setObjectName("btn-reset")
         self.btn_save.setObjectName("btn-save")
         self.btn_save_as.setObjectName("btn-save")
@@ -89,11 +92,13 @@ class CommonControlsGroup(QFrame):
         self.cmb_refraction_index.setObjectName("cmb-refraction")
         self.check_c_mirrors.setObjectName("checkbox-small")
         self.lbl_refraction_index.setObjectName("lbl-refraction")
+        self.lbl_zero_microscope.setObjectName("lbl-refraction")
         self.lbl_path.setObjectName("lbl-path")
 
     def _set_tool_status_tips(self) -> None:
         """Sets all the tool and status tips for the group."""
         self.btn_stop_all.setToolTip("STOP ALL")
+        self.btn_zero_microscope.setToolTip("Sets the microscope focus value to 0.")
         self.btn_stop_all.setStatusTip("Stops all movements.")
         self.btn_reset.setToolTip("Resets all and start from the begging")
         self.btn_save.setToolTip(
@@ -124,18 +129,13 @@ class CommonControlsGroup(QFrame):
         layout.addWidget(
             self.check_c_mirrors, 2, 0, 1, 2, alignment=Qt.AlignmentFlag.AlignCenter
         )
-        layout.addWidget(
-            self.lbl_refraction_index,
-            3,
-            0,
-            1,
-            1,
-            alignment=Qt.AlignmentFlag.AlignCenter,
-        )
-        layout.addWidget(self.cmb_refraction_index, 3, 1, 1, 1)
-        layout.addWidget(self.btn_load_correction, 4, 0, 1, 2)
-        layout.addWidget(self.btn_save, 5, 0, 1, 1)
-        layout.addWidget(self.btn_save_as, 5, 1, 1, 1)
-        layout.addWidget(self.lbl_path, 6, 0, 1, 2)
+        layout.addWidget(self.lbl_zero_microscope, 3, 0, 1, 1, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(self.btn_zero_microscope, 3, 1, 1, 1)
+        layout.addWidget(self.lbl_refraction_index, 4, 0, 1, 1, alignment=Qt.AlignmentFlag.AlignCenter)
+        layout.addWidget(self.cmb_refraction_index, 4, 1, 1, 1)
+        layout.addWidget(self.btn_load_correction, 5, 0, 1, 2)
+        layout.addWidget(self.btn_save, 6, 0, 1, 1)
+        layout.addWidget(self.btn_save_as, 6, 1, 1, 1)
+        layout.addWidget(self.lbl_path, 7, 0, 1, 2)
 
         self.setLayout(layout)

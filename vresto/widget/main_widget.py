@@ -43,7 +43,6 @@ from vresto.widget.groups import (
     CommonControlsGroup,
     CommonControlsExpertGroup,
     DiamondImagesGroup,
-    MirrorGroup,
     MirrorExpertGroup,
     SampleGroup,
     SampleExpertGroup,
@@ -56,7 +55,7 @@ class MainWidget(QMainWindow):
     """The main application widget."""
 
     _size: QSize = QSize(780, 860)
-    _hutch: str = "13-IDD"
+    _hutch: str = "13-BMC"
 
     def __init__(self, paths: PathModel) -> None:
         super(MainWidget, self).__init__()
@@ -72,7 +71,6 @@ class MainWidget(QMainWindow):
         self.common_controls_widget = CommonControlsGroup(paths=self._paths)
         self.common_controls_expert_widget = CommonControlsExpertGroup(paths=self._paths)
         self.diamond_images_widget = DiamondImagesGroup(paths=self._paths)
-        self.mirror_widget = MirrorGroup(paths=self._paths)
         self.mirror_expert_widget = MirrorExpertGroup(paths=self._paths)
         self.sample_widget = SampleGroup(paths=self._paths)
         self.sample_expert_widget = SampleExpertGroup(paths=self._paths)
@@ -86,7 +84,6 @@ class MainWidget(QMainWindow):
             corrections_group=self.corrections_widget,
             common_controls_group=self.common_controls_widget,
             diamond_images_group=self.diamond_images_widget,
-            mirror_group=self.mirror_widget,
             sample_group=self.sample_widget,
         )
 
@@ -144,7 +141,7 @@ class MainWidget(QMainWindow):
         """Configures the main tab widget."""
         # Add tabs
         self.tab_widget.addTab(self.alignment_widget, "ALIGNMENT")
-        self.tab_widget.addTab(self.expert_widget, "EXPERT")
+        # self.tab_widget.addTab(self.expert_widget, "EXPERT")
 
     def _configure_epics_status_widgets(self) -> None:
         """Configures the epics status widgets."""

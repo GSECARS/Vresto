@@ -29,11 +29,10 @@ class PinholeGroupController(QObject):
     pinhole_position_changed: Signal = Signal(str)
     _position: Signal = Signal(float)
 
-    _pinhole_in: float = 0.0
-    _pinhole_out: float = -20.0
+    _pinhole_in: float = 40.0
+    _pinhole_out: float = 20.0
     _pinhole_off: float = -30.0
-    _omega_limit: float = 0.0
-    _us_limit: float = -114.0
+    _omega_limit: float = 90.0
 
     def __init__(
         self,
@@ -41,7 +40,6 @@ class PinholeGroupController(QObject):
         epics_model: EpicsModel,
         pinhole_stage: DoubleValuePV,
         omega_stage: DoubleValuePV,
-        us_mirror: DoubleValuePV,
     ) -> None:
         super(PinholeGroupController, self).__init__()
 
@@ -50,7 +48,6 @@ class PinholeGroupController(QObject):
 
         self._pinhole_stage = pinhole_stage
         self._omega_stage = omega_stage
-        self._us_mirror = us_mirror
 
         self._connect_pinhole_widgets()
         self._configure_pinhole_widgets()
@@ -76,16 +73,8 @@ class PinholeGroupController(QObject):
             MsgBox(msg=f"Wait for omega to stop moving.")
             return None
 
-        if self._us_mirror.moving:
-            MsgBox(msg=f"Wait for the us mirror to stop moving.")
-            return None
-        if (
-            self._omega_stage.readback != self._omega_limit
-            or self._us_mirror.readback > self._us_limit
-        ):
-            MsgBox(
-                msg=f"You forgot to remove the UPSTREAM MIRROR or you are in the MICROSCOPE position."
-            )
+        if self._omega_stage.readback != self._omega_limit:
+            MsgBox(msg=f"You are in the MICROSCOPE position.")
             return None
         self._pinhole_stage.move(value=20.0)
 
@@ -115,18 +104,8 @@ class PinholeGroupController(QObject):
                 if self._omega_stage.moving:
                     MsgBox(msg=f"Wait for omega to stop moving.")
                     return None
-
-                if self._us_mirror.moving:
-                    MsgBox(msg=f"Wait for the us mirror to stop moving.")
-                    return None
-
-                if (
-                    self._omega_stage.readback != self._omega_limit
-                    or self._us_mirror.readback > self._us_limit
-                ):
-                    MsgBox(
-                        msg=f"You forgot to remove the UPSTREAM MIRROR or you are in the MICROSCOPE position."
-                    )
+                if self._omega_stage.readback != self._omega_limit:
+                    MsgBox(msg=f"You are in the MICROSCOPE or Mounting position.")
                     return None
 
             self._pinhole_stage.move(value=value)
@@ -135,31 +114,15 @@ class PinholeGroupController(QObject):
         self._widget.lbl_position.setText(text)
 
     def _pinhole_at_position(self, position: float) -> None:
-        if position == 20:
-            self._widget.btn_20.setEnabled(False)
-            self._widget.btn_in.setEnabled(True)
-            self._widget.btn_out.setEnabled(True)
-            self._widget.btn_off.setEnabled(True)
-        elif position == self._pinhole_in:
-            self._widget.btn_20.setEnabled(True)
+        if position == self._pinhole_in:
             self._widget.btn_in.setEnabled(False)
             self._widget.btn_out.setEnabled(True)
-            self._widget.btn_off.setEnabled(True)
         elif position == self._pinhole_out:
-            self._widget.btn_20.setEnabled(True)
             self._widget.btn_in.setEnabled(True)
             self._widget.btn_out.setEnabled(False)
-            self._widget.btn_off.setEnabled(True)
-        elif position == self._pinhole_off:
-            self._widget.btn_20.setEnabled(True)
-            self._widget.btn_in.setEnabled(True)
-            self._widget.btn_out.setEnabled(True)
-            self._widget.btn_off.setEnabled(False)
         else:
-            self._widget.btn_20.setEnabled(True)
             self._widget.btn_in.setEnabled(True)
             self._widget.btn_out.setEnabled(True)
-            self._widget.btn_off.setEnabled(True)
 
     def update_pinhole_position(self) -> None:
         """Updates the pinhole position label and disables/enables pinhole buttons."""

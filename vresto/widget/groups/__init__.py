@@ -26,7 +26,6 @@ from vresto.widget.groups.corrections_group import CorrectionsGroup
 from vresto.widget.groups.common_controls_group import CommonControlsGroup
 from vresto.widget.groups.common_controls_expert_group import CommonControlsExpertGroup
 from vresto.widget.groups.diamond_images_group import DiamondImagesGroup
-from vresto.widget.groups.mirror_group import MirrorGroup
 from vresto.widget.groups.mirror_expert_group import MirrorExpertGroup
 from vresto.widget.groups.sample_group import SampleGroup
 from vresto.widget.groups.sample_expert_group import SampleExpertGroup

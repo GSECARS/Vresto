@@ -40,43 +40,24 @@ class EpicsConnectionError(Exception):
 
 class EpicsConfig(Enum):
     """Empty Enum to be populated with PVs"""
-    pinhole = "13IDD:m22"
-    pinhole_vertical = "13IDD:m100"
-    pinhole_horizontal = "13IDD:m101"
+    pinhole = "13BMC:m73"
+    pinhole_vertical = "13BMC:m72"
+    pinhole_horizontal = "13BMC:m71"
 
-    sample_horizontal = "13IDD:m98"
-    sample_focus = "13IDD:m99"
-    sample_vertical = "13IDD:m97"
-    sample_omega = "13IDD:Auto1:m1"
+    sample_horizontal = "13BMC:m46"
+    sample_focus = "13BMC:m44"
+    sample_vertical = "13BMC:m45"
+    sample_omega = "13BMC:m33"
 
-    microscope = "13IDD:m67"
-    microscope_vertical = "13IDD:m68"
-    microscope_horizontal = "13IDD:m69"
-    microscope_zoom = "13IDD:m14"
-    microscope_light = "13IDD:FiberIllumPower"
-    microscope_gain = "13IDD_PG3:cam1:Gain"
+    microscope = "13BMC:m77"
+    microscope_zoom = "13BMC:m74"
+    microscope_light = "13BMC:USB3104:Ao2"
+    microscope_gain = "13BMCPG2:cam1:Gain"
 
-    us_mirror = "13IDD:m102"
-    ds_mirror = "13IDD:m103"
-    us_mirror_focus = "13IDD:m65"
-    ds_mirror_focus = "13IDD:m66"
-    us_light = "13IDD:US_IllumPower"
-    ds_light = "13IDD:DS_IllumPower"
-    us_light_switch = "13IDD:US_IllumSplitter"
-    ds_light_switch = "13IDD:DS_IllumSplitter"
+    station_stop = "13BMC:allstop"  # 0: Release, 1: Stop
+    xps_stop = "13BMC_GPD_XPS:allstop"  # 0: Release, 1: Stop
 
-    stage_x = "13IDD:m73"
-
-    ds_carbon_horizontal = "13Mirror:m1"
-    ds_carbon_vertical = "13Mirror:m2"
-    us_carbon_horizontal = "13Mirror:m3"
-    us_carbon_vertical = "13Mirror:m4"
-
-    xps_stop = "13IDD_DAC_XPS16:allstop"
-    station_stop = "13IDD:allstop"  # 0: Release, 1: Stop
-    mirror_stop = "13Mirror:allstop"
-
-    path = "13IDDLF1:cam1:FilePath"
+    path = "13BMCLF1:cam1:FilePath"
 
 
 @dataclass(frozen=False, slots=True)

@@ -25,7 +25,7 @@ from vresto.model import PVModel, DoubleValuePV, StringValuePV, EpicsConfig
 
 
 @dataclass(frozen=True)
-class IDDModel:
+class BMCModel:
 
     pinhole: DoubleValuePV = field(init=False, repr=False, compare=False)
     pinhole_vertical: DoubleValuePV = field(init=False, repr=False, compare=False)
@@ -35,27 +35,11 @@ class IDDModel:
     sample_vertical: DoubleValuePV = field(init=False, repr=False, compare=False)
     sample_omega: DoubleValuePV = field(init=False, repr=False, compare=False)
     microscope: DoubleValuePV = field(init=False, repr=False, compare=False)
-    microscope_vertical: DoubleValuePV = field(init=False, repr=False, compare=False)
-    microscope_horizontal: DoubleValuePV = field(init=False, repr=False, compare=False)
     microscope_zoom: DoubleValuePV = field(init=False, repr=False, compare=False)
     microscope_light: DoubleValuePV = field(init=False, repr=False, compare=False)
     microscope_gain: DoubleValuePV = field(init=False, repr=False, compare=False)
-    us_mirror: DoubleValuePV = field(init=False, repr=False, compare=False)
-    us_mirror_focus: DoubleValuePV = field(init=False, repr=False, compare=False)
-    us_light: DoubleValuePV = field(init=False, repr=False, compare=False)
-    us_light_switch: DoubleValuePV = field(init=False, repr=False, compare=False)
-    ds_mirror: DoubleValuePV = field(init=False, repr=False, compare=False)
-    ds_mirror_focus: DoubleValuePV = field(init=False, repr=False, compare=False)
-    ds_light: DoubleValuePV = field(init=False, repr=False, compare=False)
-    ds_light_switch: DoubleValuePV = field(init=False, repr=False, compare=False)
-    stage_x: DoubleValuePV = field(init=False, repr=False, compare=False)
-    ds_carbon_horizontal: DoubleValuePV = field(init=False, repr=False, compare=False)
-    ds_carbon_vertical: DoubleValuePV = field(init=False, repr=False, compare=False)
-    us_carbon_horizontal: DoubleValuePV = field(init=False, repr=False, compare=False)
-    us_carbon_vertical: DoubleValuePV = field(init=False, repr=False, compare=False)
-    xps_stop: DoubleValuePV = field(init=False, repr=False, compare=False)
     station_stop: DoubleValuePV = field(init=False, repr=False, compare=False)
-    mirror_stop: DoubleValuePV = field(init=False, repr=False, compare=False)
+    xps_stop: DoubleValuePV = field(init=False, repr=False, compare=False)
 
     path: StringValuePV = field(init=False, repr=False, compare=False)
 
@@ -160,20 +144,6 @@ class IDDModel:
             monitor=True,
         )
         self._add_pv(
-            pv_name="microscope_vertical",
-            movable=True,
-            limited=True,
-            rbv_extension=True,
-            monitor=True,
-        )
-        self._add_pv(
-            pv_name="microscope_horizontal",
-            movable=True,
-            limited=True,
-            rbv_extension=True,
-            monitor=True,
-        )
-        self._add_pv(
             pv_name="microscope_zoom",
             movable=True,
             limited=True,
@@ -195,104 +165,6 @@ class IDDModel:
             monitor=True,
         )
         self._add_pv(
-            pv_name="us_mirror",
-            movable=True,
-            limited=True,
-            rbv_extension=True,
-            monitor=True,
-        )
-        self._add_pv(
-            pv_name="us_mirror_focus",
-            movable=True,
-            limited=True,
-            rbv_extension=True,
-            monitor=True,
-        )
-        self._add_pv(
-            pv_name="us_light",
-            movable=True,
-            limited=False,
-            rbv_extension=False,
-            monitor=True,
-        )
-        self._add_pv(
-            pv_name="us_light_switch",
-            movable=True,
-            limited=False,
-            rbv_extension=False,
-            monitor=False,
-        )
-        self._add_pv(
-            pv_name="ds_mirror",
-            movable=True,
-            limited=True,
-            rbv_extension=True,
-            monitor=True,
-        )
-        self._add_pv(
-            pv_name="ds_mirror_focus",
-            movable=True,
-            limited=True,
-            rbv_extension=True,
-            monitor=True,
-        )
-        self._add_pv(
-            pv_name="ds_light",
-            movable=True,
-            limited=False,
-            rbv_extension=False,
-            monitor=True,
-        )
-        self._add_pv(
-            pv_name="ds_light_switch",
-            movable=True,
-            limited=False,
-            rbv_extension=False,
-            monitor=False,
-        )
-        self._add_pv(
-            pv_name="stage_x",
-            movable=True,
-            limited=True,
-            rbv_extension=True,
-            monitor=False,
-        )
-        self._add_pv(
-            pv_name="ds_carbon_horizontal",
-            movable=True,
-            limited=True,
-            rbv_extension=True,
-            monitor=False,
-        )
-        self._add_pv(
-            pv_name="ds_carbon_vertical",
-            movable=True,
-            limited=True,
-            rbv_extension=True,
-            monitor=False,
-        )
-        self._add_pv(
-            pv_name="us_carbon_horizontal",
-            movable=True,
-            limited=True,
-            rbv_extension=True,
-            monitor=False,
-        )
-        self._add_pv(
-            pv_name="us_carbon_vertical",
-            movable=True,
-            limited=True,
-            rbv_extension=True,
-            monitor=False,
-        )
-        self._add_pv(
-            pv_name="xps_stop",
-            movable=True,
-            limited=False,
-            rbv_extension=False,
-            monitor=False,
-        )
-        self._add_pv(
             pv_name="station_stop",
             movable=True,
             limited=False,
@@ -300,7 +172,7 @@ class IDDModel:
             monitor=False,
         )
         self._add_pv(
-            pv_name="mirror_stop",
+            pv_name="xps_stop",
             movable=True,
             limited=False,
             rbv_extension=False,

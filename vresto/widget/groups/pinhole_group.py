@@ -101,10 +101,8 @@ class PinholeGroup(QGroupBox):
         layout_top_buttons = QHBoxLayout()
         layout_top_buttons.setContentsMargins(0, 0, 0, 0)
         layout_top_buttons.setSpacing(5)
-        layout_top_buttons.addWidget(self.btn_20)
         layout_top_buttons.addWidget(self.btn_in)
         layout_top_buttons.addWidget(self.btn_out)
-        layout_top_buttons.addWidget(self.btn_off)
 
         layout = QGridLayout()
         layout.setSpacing(10)

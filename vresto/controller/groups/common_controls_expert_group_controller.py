@@ -37,9 +37,8 @@ class CommonControlsExpertGroupController(QObject):
         password_widget: PasswordFormWidget,
         corrections_model: CorrectionsModel,
         epics_model: EpicsModel,
-        xps_stop: DoubleValuePV,
         station_stop: DoubleValuePV,
-        mirror_stop: DoubleValuePV,
+        xps_stop: DoubleValuePV,
     ) -> None:
         super(CommonControlsExpertGroupController, self).__init__()
 
@@ -48,9 +47,8 @@ class CommonControlsExpertGroupController(QObject):
         self._corrections = corrections_model
         self._epics = epics_model
 
-        self._xps_stop = xps_stop
         self._station_stop = station_stop
-        self._mirror_stop = mirror_stop
+        self._xps_stop = xps_stop
 
         self._connect_common_control_widgets()
 
@@ -63,9 +61,8 @@ class CommonControlsExpertGroupController(QObject):
 
         self._corrections.abort_status = True
 
-        self._xps_stop.move(value=1)
         self._station_stop.move(value=1)
-        self._mirror_stop.move(value=1)
+        self._xps_stop.move(value=1)
 
     def _btn_changed_password_clicked(self) -> None:
         self._password_widget.hide()

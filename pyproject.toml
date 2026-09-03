@@ -1,7 +1,79 @@
 [project]
-name = "vresto"
-version = "0.1.0"
-description = "Add your description here"
-readme = "README.md"
+name = "crystalsweep"
+version = "0.1.3"
+authors = [
+    {name = "Christofanis Skordas", email = "55315750+skordaschristofanis@users.noreply.github.com"}
+]
+maintainers = [
+    {name = "Christofanis Skordas", email = "55315750+skordaschristofanis@users.noreply.github.com"}
+]
+description = "CrystalSweep is beamline control and data acquisition software for single-crystal X-ray diffraction experiments."
+readme = {file = "README.md", content-type = "text/markdown"}
+license = {file = "LICENSE"}
+classifiers = [
+    "Intended Audience :: Education",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.13",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)"
+]
 requires-python = "==3.13.*"
-dependencies = []
+dependencies = [
+    "numpy>=2.5.2",
+    "pyepics>=3.5.10",
+    "pyqt5>=5.15.11",
+    "qtpy>=2.4.3",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.16.5",
+    "ty>=0.0.78",
+]
+
+[project.scripts]
+vresto = "vresto:main"
+
+[project.urls]
+Homepage = "https://github.com/GSECARS/Vresto"
+Issues = "https://github.com/GSECARS/Vresto/issues"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["vresto"]
+include = ["vresto/assets/**"]
+
+[tool.ruff]
+exclude = [
+    ".eggs",
+    ".git",
+    ".pytest_cache",
+    ".pytype",
+    ".ruff_cache",
+    ".venv",
+    ".vscode",
+    "build",
+    "dist",
+]
+line-length = 160
+indent-width = 4
+target-version = "py313"
+
+[tool.ruff.lint]
+select = ["E4", "E7", "E9", "F"]
+ignore = []
+fixable = ["ALL"]
+unfixable = []
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+skip-magic-trailing-comma = false
+line-ending = "auto"
+docstring-code-format = false
+docstring-code-line-length = "dynamic"

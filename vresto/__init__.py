@@ -18,13 +18,17 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 
+from importlib.metadata import PackageNotFoundError, version
+
 from vresto.controller import MainController
-from vresto import _version
 
-__version__ = _version.get_versions()['version']
-__static_version__ = "0.1.7"
 
-if __version__ == "0+unknown":
-    __version__ = __static_version__
+def _get_version() -> str:
+    try:
+        return version("vresto")
+    except PackageNotFoundError:
+        return "dev"
 
-app = MainController()
+
+def main():
+    MainController().run(version=_get_version())

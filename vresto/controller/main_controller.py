@@ -20,28 +20,29 @@
 
 import sys
 import time
-from qtpy.QtWidgets import QApplication
-from qtpy.QtCore import QObject, Signal, QSettings
 
-from vresto.widget import MainWidget
-from vresto.model import MainModel, QtWorkerModel, IDDModel, ImportExportModel, PasswordModel
+from qtpy.QtCore import QObject, QSettings, Signal
+from qtpy.QtWidgets import QApplication
+
 from vresto.controller import PasswordFormController, PasswordRequestController
 from vresto.controller.groups import (
-    PinholeGroupController,
-    PinholeExpertGroupController,
-    MicroscopeGroupController,
-    MicroscopeExpertGroupController,
-    CommonControlsGroupController,
     CommonControlsExpertGroupController,
-    DiamondImagesGroupController,
+    CommonControlsGroupController,
     CorrectionsGroupController,
-    MirrorGroupController,
+    DiamondImagesGroupController,
+    MicroscopeExpertGroupController,
+    MicroscopeGroupController,
     MirrorExpertGroupController,
-    SampleGroupController,
+    MirrorGroupController,
+    PinholeExpertGroupController,
+    PinholeGroupController,
     SampleExpertGroupController,
+    SampleGroupController,
     SavedPositionsExpertGroupController,
     ZeroExpertGroupController,
 )
+from vresto.model import IDDModel, ImportExportModel, MainModel, PasswordModel, QtWorkerModel
+from vresto.widget import MainWidget
 
 
 class MainController(QObject):
@@ -60,7 +61,7 @@ class MainController(QObject):
             horizontal=self._idd.sample_horizontal,
             focus=self._idd.sample_focus,
             us_mirror_focus=self._idd.us_mirror_focus,
-            ds_mirror_focus=self._idd.ds_mirror_focus
+            ds_mirror_focus=self._idd.ds_mirror_focus,
         )
         self._widget = MainWidget(self._model.paths)
         self._settings = QSettings("GSECARS", "Vresto")

@@ -18,10 +18,13 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 
+import os
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
 from epics import caget, caput, camonitor, camonitor_clear
 from typing import Optional
+
+_NO_EPICS = os.environ.get("VRESTO_NO_EPICS", "0") != "0"
 
 from vresto.widget.custom import MsgBox
 
@@ -81,8 +84,11 @@ class DoubleValuePV(PVModel):
         self._create_rbv_string()
 
         if self.monitor:
-            object.__setattr__(self, "readback", round(caget(self._rbv_string), 4))
-            camonitor(self._rbv_string, callback=self._monitor_pv)
+            if _NO_EPICS:
+                object.__setattr__(self, "readback", 0.0)
+            else:
+                object.__setattr__(self, "readback", round(caget(self._rbv_string), 4))
+                camonitor(self._rbv_string, callback=self._monitor_pv)
 
     def _monitor_pv(self, **kwargs) -> None:
 
@@ -164,10 +170,13 @@ class StringValuePV(PVModel):
         self._create_rbv_string()
 
         if self.monitor:
-            object.__setattr__(
-                self, "readback", caget(self._rbv_string, as_string=True)
-            )
-            camonitor(self._rbv_string, callback=self._monitor_pv)
+            if _NO_EPICS:
+                object.__setattr__(self, "readback", "")
+            else:
+                object.__setattr__(
+                    self, "readback", caget(self._rbv_string, as_string=True)
+                )
+                camonitor(self._rbv_string, callback=self._monitor_pv)
 
     def _monitor_pv(self, **kwargs) -> None:
         object.__setattr__(self, "readback", kwargs["char_value"])

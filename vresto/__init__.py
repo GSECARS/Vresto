@@ -18,9 +18,8 @@
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 
+import sys
 from importlib.metadata import PackageNotFoundError, version
-
-from vresto.controller import MainController
 
 
 def _get_version() -> str:
@@ -31,4 +30,16 @@ def _get_version() -> str:
 
 
 def main():
+    import argparse
+    import os
+
+    parser = argparse.ArgumentParser(add_help=False)
+    parser.add_argument("--no-epics", action="store_true")
+    args, remaining = parser.parse_known_args()
+
+    if args.no_epics:
+        os.environ["VRESTO_NO_EPICS"] = "1"
+        sys.argv = [sys.argv[0]] + remaining
+
+    from vresto.controller import MainController
     MainController().run(version=_get_version())

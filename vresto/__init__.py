@@ -29,6 +29,20 @@ def _get_version() -> str:
         return "dev"
 
 
+def _win_local_icon(src: str) -> str:
+    """Copy the .ico to %PROGRAMDATA%\\Vresto so Windows can find it before network shares mount."""
+    import os
+    import shutil
+    dest_dir = os.path.join(os.environ.get("PROGRAMDATA", r"C:\ProgramData"), "Vresto")
+    try:
+        os.makedirs(dest_dir, exist_ok=True)
+        dest = os.path.join(dest_dir, "diamond.ico")
+        shutil.copy2(src, dest)
+        return dest
+    except OSError:
+        return src
+
+
 def main():
     import argparse
     import os
@@ -45,7 +59,7 @@ def main():
         if sys.platform == "darwin":
             icon = str(icons_dir / "diamond.icns")
         elif sys.platform == "win32":
-            icon = str(icons_dir / "diamond.ico")
+            icon = _win_local_icon(str(icons_dir / "diamond.ico"))
         else:
             icon = str(icons_dir / "diamond.png")
         make_shortcut(sys.argv[0], name="Vresto", icon=icon, terminal=False)
